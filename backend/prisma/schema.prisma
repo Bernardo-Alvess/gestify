@@ -1,0 +1,95 @@
+generator client {
+  provider = "prisma-client-js"
+  //previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Modelo da tabela 'company'
+model Company {
+  id              String         @id @default(uuid()) @db.Uuid
+  password        String
+  email           String         @unique
+  name            String
+  corporateReason String
+  cnpj            String         @unique
+  users           User[]
+  status          Status[]
+  serviceOrders   ServiceOrder[]
+  products        Product[]
+}
+
+// Modelo da tabela 'users'
+model User {
+  id                      String         @id @default(uuid()) @db.Uuid
+  email                   String         @unique
+  name                    String
+  document                String         @unique
+  address                 String?
+  number                  String?
+  userType                String
+  companyId               String         @db.Uuid
+  company                 Company        @relation(fields: [companyId], references: [id])
+  serviceOrders           ServiceOrder[]
+  technicianServiceOrders ServiceOrder[] @relation("Technician")
+  clientServiceOrders     ServiceOrder[] @relation("Client")
+}
+
+// Modelo da tabela 'status'
+model Status {
+  id            String         @id @default(uuid()) @db.Uuid
+  name          String
+  companyId     String         @db.Uuid
+  company       Company        @relation(fields: [companyId], references: [id])
+  serviceOrders ServiceOrder[]
+}
+
+// Modelo da tabela 'service_orders'
+model ServiceOrder {
+  id           String   @id @default(uuid()) @db.Uuid
+  description  String?
+  defect       String?
+  report       String?
+  extras       String?
+  date         DateTime @default(now())
+  companyId    String   @db.Uuid
+  statusId     String   @db.Uuid
+  userId       String   @db.Uuid
+  technicianId String   @db.Uuid
+  clientId     String   @db.Uuid
+
+  company    Company               @relation(fields: [companyId], references: [id])
+  status     Status                @relation(fields: [statusId], references: [id])
+  user       User                  @relation(fields: [userId], references: [id])
+  technician User                  @relation("Technician", fields: [technicianId], references: [id])
+  client     User                  @relation("Client", fields: [clientId], references: [id])
+  products   ProductServiceOrder[]
+}
+
+// Modelo da tabela 'products'
+model Product {
+  id            String                @id @default(uuid()) @db.Uuid
+  name          String
+  price         Float
+  cost          Float?
+  unityType     String?
+  minQtd        Int?
+  qtd           Int?
+  companyId     String                @db.Uuid
+  company       Company               @relation(fields: [companyId], references: [id])
+  serviceOrders ProductServiceOrder[]
+}
+
+model ProductServiceOrder {
+  id             String  @id @default(uuid()) @db.Uuid
+  productId      String? @db.Uuid // Pode ser nulo
+  serviceOrderId String? @db.Uuid // Pode ser nulo
+
+  product      Product?      @relation(fields: [productId], references: [id])
+  serviceOrder ServiceOrder? @relation(fields: [serviceOrderId], references: [id])
+
+  @@unique([productId, serviceOrderId])
+}
