@@ -1,6 +1,5 @@
 generator client {
   provider = "prisma-client-js"
-  //previewFeatures = ["driverAdapters"]
 }
 
 datasource db {
@@ -8,7 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// Modelo da tabela 'company'
 model Company {
   id              String         @id @default(uuid()) @db.Uuid
   password        String
@@ -22,7 +20,6 @@ model Company {
   products        Product[]
 }
 
-// Modelo da tabela 'users'
 model User {
   id                      String         @id @default(uuid()) @db.Uuid
   email                   String         @unique
@@ -38,7 +35,6 @@ model User {
   clientServiceOrders     ServiceOrder[] @relation("Client")
 }
 
-// Modelo da tabela 'status'
 model Status {
   id            String         @id @default(uuid()) @db.Uuid
   name          String
@@ -47,7 +43,6 @@ model Status {
   serviceOrders ServiceOrder[]
 }
 
-// Modelo da tabela 'service_orders'
 model ServiceOrder {
   id           String   @id @default(uuid()) @db.Uuid
   description  String?
@@ -69,7 +64,6 @@ model ServiceOrder {
   products   ProductServiceOrder[]
 }
 
-// Modelo da tabela 'products'
 model Product {
   id            String                @id @default(uuid()) @db.Uuid
   name          String
