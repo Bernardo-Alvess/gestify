@@ -21,6 +21,20 @@ class CompanyController {
             }
         })
     }
+
+    async deleteCompany(req: Request, res: Response) {
+        const companyId = req.params.id
+
+        console.log(req.params.id)
+
+        await this.repository.deleteCompany(companyId);
+
+        res.json({ msg: "deleted" })
+    }
+
+    async getAllCompanies(req: Request, res: Response) {
+
+    }
 }
 
 const companyRepository = new CompanyRepository()

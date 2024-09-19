@@ -6,4 +6,12 @@ export class CompanyRepository implements ICompanyRepository {
     async createCompany(company: Company) {
         await prisma.company.create({ data: company })
     }
+
+    async deleteCompany(id: string) {
+        await prisma.company.delete({
+            where: {
+                id,
+            }
+        })
+    }
 }
