@@ -4,6 +4,7 @@ import { createCompanySchema } from "../lib/schemas/company/create-company-schem
 import { CompanyRepository } from "../repositories/implementations/CompanyRepository"
 import { Request, Response, NextFunction } from 'express'
 import { hashPassword } from "../util/hash-password";
+import { generateToken } from "../util/generate-token";
 
 class CompanyController {
     constructor(
@@ -18,10 +19,14 @@ class CompanyController {
             const company = new Company({ email, password, name, corporateReason, cnpj });
             await this.repository.createCompany(company)
 
+
+            const token = generateToken({ id: company.id, ownerId: company.id })
+
             res.json({
                 company: {
                     email, password, name, corporateReason, cnpj
-                }
+                },
+                token
             })
         } catch (e) {
             next(e)
