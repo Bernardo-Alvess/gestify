@@ -3,6 +3,7 @@ import { Company } from "../entities/Company/Company";
 import { createCompanySchema } from "../lib/schemas/company/create-company-schema";
 import { CompanyRepository } from "../repositories/implementations/CompanyRepository"
 import { Request, Response, NextFunction } from 'express'
+import { hashPassword } from "../util/hash-password";
 
 class CompanyController {
     constructor(
@@ -11,7 +12,9 @@ class CompanyController {
 
     async createCompany(req: Request, res: Response, next: NextFunction) {
         try {
-            const { email, password, name, corporateReason, cnpj } = req.body;
+            const { email, password: plainPassword, name, corporateReason, cnpj } = req.body;
+            const password = hashPassword(plainPassword)
+
             const company = new Company({ email, password, name, corporateReason, cnpj });
             await this.repository.createCompany(company)
 
