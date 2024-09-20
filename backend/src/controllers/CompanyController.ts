@@ -1,4 +1,4 @@
-import { Company } from "../entities/Company";
+import { Company } from "../entities/Company/Company";
 import { CompanyRepository } from "../repositories/implementations/CompanyRepository"
 import { Request, Response } from 'express'
 
@@ -32,8 +32,19 @@ class CompanyController {
         res.json({ msg: "deleted" })
     }
 
-    async getAllCompanies(req: Request, res: Response) {
+    async getCompanies(req: Request, res: Response) {
 
+        const companyes = await this.repository.getCompanies();
+        res.json({ companyes })
+
+    }
+
+    async updateCompany(req: Request, res: Response) {
+        const { id, email, password, name, corporateReason } = req.body
+
+        const updatedCompany = await this.repository.updateCompany(id, { email, password, name, corporateReason })
+
+        res.json({ updatedCompany })
     }
 }
 

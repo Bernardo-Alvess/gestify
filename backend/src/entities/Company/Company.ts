@@ -1,6 +1,7 @@
 import { randomUUID } from 'node:crypto'
 
 interface ICompanyProps {
+    id?: string;
     email: string;
     password: string;
     name: string;
@@ -17,7 +18,11 @@ export class Company {
     public cnpj: string;
 
     constructor(data: ICompanyProps) {
-        this.id = randomUUID()
+        if (!data.id) {
+            this.id = randomUUID()
+        } else {
+            this.id = data.id
+        }
         this.email = data.email;
         this.password = data.password;
         this.name = data.name;

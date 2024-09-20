@@ -11,5 +11,12 @@ companyRouter.post('/', (req, res) => {
     companyController.createCompany(req, res)
 })
 
+companyRouter.get('/', (req, res) => {
+    companyController.getCompanies(req, res)
+})
+
+companyRouter.put('/', (req, res) => {
+    companyController.updateCompany(req, res)
+})
 
 export { companyRouter }
