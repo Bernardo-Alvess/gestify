@@ -1,4 +1,4 @@
-export interface UpdateCompanyDto {
+export interface IUpdateCompanyDto {
     email: string;
     password: string;
     name: string;

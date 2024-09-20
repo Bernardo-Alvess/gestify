@@ -1,5 +1,5 @@
 import { Company } from "../../entities/Company/Company";
-import { UpdateCompanyDto } from "../../entities/Company/dtos/UpdateCompanyDto";
+import { IUpdateCompanyDto } from "../../entities/Company/dtos/IUpdateCompanyDto";
 import { prisma } from "../../lib/prisma";
 import { ICompanyRepository } from "../ICompanyRepository";
 
@@ -15,7 +15,7 @@ export class CompanyRepository implements ICompanyRepository {
         return undefined
     }
 
-    async updateCompany(id: string, companyData: UpdateCompanyDto): Promise<Company | undefined> {
+    async updateCompany(id: string, companyData: IUpdateCompanyDto): Promise<Company | undefined> {
         await prisma.company.update({
             where: { id },
             data: {

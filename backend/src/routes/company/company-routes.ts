@@ -1,22 +1,27 @@
 import { Router } from "express";
 import { companyController } from "../../controllers/CompanyController";
+import { createCompanySchema } from "../../lib/schemas/company/create-company-schema";
+import { z } from "zod";
 
 const companyRouter = Router()
 
-companyRouter.delete('/:id', (req, res) => {
-    companyController.deleteCompany(req, res)
+companyRouter.delete('/:id', (req, res, next) => {
+    const idSchema = z.string().uuid()
+    idSchema.parse(req.params.id)
+    companyController.deleteCompany(req, res, next)
 })
 
-companyRouter.post('/', (req, res) => {
-    companyController.createCompany(req, res)
+companyRouter.post('/', (req, res, next) => {
+    createCompanySchema.parse(req.body)
+    companyController.createCompany(req, res, next)
 })
 
-companyRouter.get('/', (req, res) => {
-    companyController.getCompanies(req, res)
+companyRouter.get('/', (req, res, next) => {
+    companyController.getCompanies(req, res, next)
 })
 
-companyRouter.put('/', (req, res) => {
-    companyController.updateCompany(req, res)
+companyRouter.put('/', (req, res, next) => {
+    companyController.updateCompany(req, res, next)
 })
 
 export { companyRouter }
