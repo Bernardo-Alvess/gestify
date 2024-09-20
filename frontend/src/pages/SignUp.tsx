@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Toaster, toast } from 'sonner';
+import { toast } from 'sonner';
 
 import Bro from '../public/assets/signup-page/bro.svg';
 import GestifyText from '../public/assets/gestify_texto.svg';
@@ -18,7 +18,7 @@ export const SignUp = () => {
 		confirmPassword: '',
 	});
 
-	const handleSubmit = async (e) => {
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
 		if (formData.password.length < 8) {
@@ -44,7 +44,7 @@ export const SignUp = () => {
 		//que o usuário cadastrado é owner no token, facilitar a minha vida ou piorar com tudo isso
 	};
 
-	const handleChange = (event) => {
+	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setFormData({ ...formData, [event.target.name]: event.target.value });
 	};
 
