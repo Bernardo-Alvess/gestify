@@ -15,8 +15,12 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-	return <RouterProvider router={router} />;
-	<Toaster richColors />;
+	return (
+		<>
+			<RouterProvider router={router} />
+			<Toaster invert richColors />;
+		</>
+	);
 }
 
 export default App;
