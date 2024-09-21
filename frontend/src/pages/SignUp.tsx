@@ -5,9 +5,11 @@ import Bro from '../public/assets/signup-page/bro.svg';
 import GestifyText from '../public/assets/gestify_texto.svg';
 import { createCompany } from '../http/create-company';
 import { useCookies } from 'react-cookie';
+import { useNavigate } from 'react-router-dom';
 
 export const SignUp = () => {
 	const [cookies, setCookie, removeCookie] = useCookies();
+	const navigate = useNavigate();
 
 	const [formData, setFormData] = useState({
 		cnpj: '',
@@ -42,6 +44,10 @@ export const SignUp = () => {
 		setCookie('jwt', token, { path: '/' });
 		//#TODO: levar usuário para a home após fazer o cadastro, passando o id como query param, acrescentar
 		//que o usuário cadastrado é owner no token, facilitar a minha vida ou piorar com tudo isso
+
+		alert(`${id} ${token}`);
+
+		navigate(`/home/${id}`);
 	};
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

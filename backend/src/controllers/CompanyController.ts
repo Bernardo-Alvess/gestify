@@ -9,7 +9,8 @@ import { generateToken } from "../util/generate-token";
 class CompanyController {
     constructor(
         private repository: CompanyRepository
-    ) { }
+    ) {
+    }
 
     async createCompany(req: Request, res: Response, next: NextFunction) {
         try {
@@ -17,15 +18,13 @@ class CompanyController {
             const password = hashPassword(plainPassword)
 
             const company = new Company({ email, password, name, corporateReason, cnpj });
-            await this.repository.createCompany(company)
 
+            await this.repository.createCompany(company)
 
             const token = generateToken({ id: company.id, ownerId: company.id })
 
             res.json({
-                company: {
-                    email, password, name, corporateReason, cnpj
-                },
+                id: company.id,
                 token
             })
         } catch (e) {
