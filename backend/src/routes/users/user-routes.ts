@@ -1,10 +1,13 @@
 import { Router } from "express";
 import { userController } from "../../controllers/UserController";
 import { z } from "zod";
+import { createUserSchema } from "../../lib/schemas/user/create-user-schema";
+import { updateUserSchema } from "../../lib/schemas/user/update-user-schema";
 
 const userRouter = Router()
 
 userRouter.post('/', (req, res, next) => {
+    createUserSchema.parse(req.body)
     userController.createUser(req, res, next)
 })
 
@@ -23,6 +26,7 @@ userRouter.delete('/:id', (req, res, next) => {
     userController.deleteUser(req, res, next)
 })
 userRouter.put('/', (req, res, next) => {
+    updateUserSchema.parse(req.body)
     userController.updateUser(req, res, next)
 })
 

@@ -10,9 +10,9 @@ export class UserController {
 
     async createUser(req: Request, res: Response, next: NextFunction) {
         try {
-            const { name, email, password, document, number, address, userType, companyId } = req.body
+            const { id, name, email, password, document, number, address, userType, companyId } = req.body
 
-            const user = new User({ name, email, password, document, number, address, userType, companyId })
+            const user = new User({ name, email, password, document, number, address, userType, companyId }, id)
 
             await this.repository.createUser(user)
 
