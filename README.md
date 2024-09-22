@@ -14,4 +14,5 @@ Um aplicativo web para gestão de ordens de serviço
 ## Frontend
 1. Vá para a pasta do frontend `cd frontend` 
 1. Instale as dependências com `npm install`
-2. Inicie com `npm run dev`
+2. Crie o arquivo .env com o link da API
+3. Inicie com `npm run dev`
