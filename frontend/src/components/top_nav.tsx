@@ -1,4 +1,4 @@
-import CachorroTeste from '../public/assets/home-page/img/cachorro.jpg';
+import CachorroTeste from '../public/assets/home-page/img/cachorro_perfil.jpg';
 import IconSettings from '../public/assets/home-page/icons/settings_icon.svg';
 import IconNotification from '../public/assets/home-page/icons/notification_icon.svg';
 
@@ -23,7 +23,7 @@ const TopNav = () => {
                 </li>
             </ul>
         </nav>
-    );
+    )
 }
 
 export default TopNav

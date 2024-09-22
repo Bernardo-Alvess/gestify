@@ -39,7 +39,7 @@ export const Home = () => {
 						<h1 className='text-2xl font-bold'>Dashboard</h1>
 						<p className='text-sm text-gray-500'>23/09/2024</p>
 					</div>
-
+					
 					{/* navegacao */}
 					<TopNav />
 				</header>
@@ -51,7 +51,6 @@ export const Home = () => {
 					<InfoCard icon={IconProducts} title="Produtos" value={"27"} />
 					<InfoCard icon={IconUsers} title="Usuários" value={"9"} />
 				</div>
-				
 			</main>
 		</div>
 	);

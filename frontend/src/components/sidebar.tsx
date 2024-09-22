@@ -49,6 +49,6 @@ const Sidebar: React.FC<SidebarProps> = ({ sidebarOpen, }) => {
             </nav>
         </aside>
     );
-};
+}
 
 export default Sidebar;

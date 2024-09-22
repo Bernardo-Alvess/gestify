@@ -19,6 +19,6 @@ const InfoCard: React.FC<InfoCardProps>  = ({ icon,title, value }) => {
       </div>
     </div>
   );
-};
+}
 
 export default InfoCard;
