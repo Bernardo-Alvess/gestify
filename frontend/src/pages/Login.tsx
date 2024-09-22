@@ -8,7 +8,7 @@ import { toast } from 'sonner';
 import { login } from '../http/login';
 
 export const Login = () => {
-	const [cookies, setCookie, removeCookie] = useCookies();
+	const [setCookie] = useCookies();
 	const navigate = useNavigate();
 
 	const [formData, setFormData] = useState({
