@@ -11,4 +11,4 @@ Um aplicativo web para gestão de ordens de serviço
 
 ## Frontend
 1. Instale as dependências com `npm install`
-2. Inicie com `npm run start`
+2. Inicie com `npm run dev`
