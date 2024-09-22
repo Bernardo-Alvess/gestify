@@ -24,6 +24,7 @@ model User {
   id                      String         @id @default(uuid()) @db.Uuid
   email                   String         @unique
   name                    String
+  password                String
   document                String         @unique
   address                 String?
   number                  String?
