@@ -18,6 +18,8 @@ export const Home = () => {
         users: 0,
     });
 
+    const today = new Date().toLocaleDateString('pt-BR');	
+
     const toggleSidebar = () => {
         setSidebarOpen(!sidebarOpen);
     };
@@ -45,7 +47,7 @@ export const Home = () => {
                 <header className='flex justify-between'>
                     <div className='pt-16 md:pt-16 lg:pt-0'>
                         <h1 className='text-2xl font-bold'>Dashboard</h1>
-                        <p className='text-sm text-gray-500'>23/09/2024</p>
+                        <p className='text-sm text-gray-500'>{today}</p>
                     </div>
                     <TopNav />
                 </header>
