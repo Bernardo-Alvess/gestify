@@ -32,7 +32,6 @@ export const SignUp = () => {
 			toast.error('Senhas não coincidem');
 			return;
 		}
-
 		const { id, token } = await createCompany({
 			cnpj: formData.cnpj,
 			corporateReason: formData.corporateReason,
@@ -41,13 +40,23 @@ export const SignUp = () => {
 			password: formData.password,
 		});
 
+		if (!token) {
+			toast.error('Erro ao criar a conta');
+			return;
+		}
+
 		setCookie('jwt', token, { path: '/' });
 		//#TODO: levar usuário para a home após fazer o cadastro, passando o id como query param, acrescentar
 		//que o usuário cadastrado é owner no token, facilitar a minha vida ou piorar com tudo isso
 
-		alert(`${id} ${token}`);
+		//alert(`${id} ${token}`);
 
 		navigate(`/home/${id}`);
+		
+			
+
+	
+		
 	};
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

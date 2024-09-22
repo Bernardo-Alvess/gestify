@@ -4,15 +4,15 @@ Um aplicativo web para gestão de ordens de serviço
 # Como rodar
 
 ## Backend
-1. Vá para a pasta do backend cd backend
-2. Instale as dependências com npm i
-3. Gere o banco de dados com npx prisma generate
+1. Vá para a pasta do backend `cd backend`
+2. Instale as dependências com `npm i`
+3. Gere o banco de dados com `npx prisma generate`
 4. Crie o arquivo .env com o link do BD
-5. Inicie o servidor com npm run dev:server
-6. Caso alguma biblioteca apareça como erro, use o comando: npm i @types/"nome_da_biblioteca" -D
-
+5. Inicie o servidor com `npm run dev:server`
+6. Caso alguma biblioteca apareça como erro, use o comando: `npm i @types/"nome_da_biblioteca" -D`
+   
 ## Frontend
-1. Vá para a pasta do frontend cd frontend
-2. Instale as dependências com npm install
-3. Crie o arquivo .env com o link da API
-4. Inicie com npm run dev
+1. Vá para a pasta do frontend `cd frontend` 
+1. Instale as dependências com `npm install`
+2. Crie o arquivo .env com o link da API
+3. Inicie com `npm run dev`

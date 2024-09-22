@@ -24,21 +24,24 @@ export const Login = () => {
 			return;
 		}
 
-		try {
-			const { id, token } = await login({
-				email: formData.email,
-				password: formData.password,
-			});
+		console.table([formData.email, formData.password]);
 
-			setCookie('jwt', token, { path: '/' });
-			//#TODO: levar usuário para a home após fazer o cadastro, passando o id como query param, acrescentar
+		const { id, token } = await login({
+			email: formData.email,
+			password: formData.password,
+		});
 
-			alert(`${id} ${token}`);
-
-			navigate(`/home/${id}`);
-		} catch {
-			toast.error('Erro ao fazer login');
+		if (!token) {
+			toast.error('Erro ao entrar na conta');
+			return;
 		}
+
+		setCookie('jwt', token, { path: '/' });
+		//#TODO: levar usuário para a home após fazer o cadastro, passando o id como query param, acrescentar
+
+		//alert(`${id} ${token}`);
+
+		navigate(`/home/${id}`);
 	};
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -74,7 +77,7 @@ export const Login = () => {
 						className="flex flex-col gap-10 items-center justify-center h-fit text-slate-600"
 					>
 						<input
-							type="text"
+							type="email"
 							placeholder="Email"
 							name="email"
 							value={formData.email}
