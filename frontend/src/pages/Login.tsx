@@ -8,7 +8,7 @@ import { toast } from 'sonner';
 import { login } from '../http/login';
 
 export const Login = () => {
-	const [setCookie] = useCookies();
+	const [cookies, setCookie] = useCookies();
 	const navigate = useNavigate();
 
 	const [formData, setFormData] = useState({
@@ -38,10 +38,6 @@ export const Login = () => {
 
 		setCookie('jwt', token, { path: '/' });
 		setCookie('id', id, { path: '/' });
-
-		//#TODO: levar usuário para a home após fazer o cadastro, passando o id como query param, acrescentar
-
-		//alert(`${id} ${token}`);
 
 		navigate(`/home/${id}`);
 	};
