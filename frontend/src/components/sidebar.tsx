@@ -29,24 +29,25 @@ const Sidebar: React.FC<SidebarProps> = ({ sidebarOpen, }) => {
                         <img className='w-6' src={IconHome} alt="Ícone Home" />
                         <span>Home</span>
                     </Link>
-                    <a href="#services" className='flex items-center space-x-3 hover:text-blue-500'>
+                    <Link to="/services" className='flex items-center space-x-3 hover:text-blue-500'>
                         <img className='w-6' src={IconServices} alt="Ícone Serviços" />
                         <span>Serviços</span>
-                    </a>
-                    <a href="#products" className='flex items-center space-x-3 hover:text-blue-500'>
+                    </Link>
+                    <Link to="/products" className='flex items-center space-x-3 hover:text-blue-500'>
                         <img className='w-6' src={IconProducts} alt="Ícone Produtos" />
                         <span>Produtos</span>
-                    </a>
-                    <a href="#clients" className='flex items-center space-x-3 hover:text-blue-500'>
+                    </Link>
+                    <Link to="/clients" className='flex items-center space-x-3 hover:text-blue-500'>
                         <img className='w-6' src={IconClients} alt="Ícone Clientes" />
                         <span>Clientes</span>
-                    </a>
-                    <a href="#clients" className='flex items-center space-x-3 hover:text-blue-500'>
+                    </Link>
+                    <Link to="/users" className='flex items-center space-x-3 hover:text-blue-500'>
                         <img className='w-6' src={IconUsers} alt="Ícone Usuários" />
                         <span>Usuários</span>
-                    </a>
+                    </Link>
                 </ul>
             </nav>
+
         </aside>
     );
 }

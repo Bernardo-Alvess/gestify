@@ -3,7 +3,7 @@ import React from "react";
 interface InfoCardProps {
     icon: string;
     title: string;
-    value: string;
+    value: number;
 }
 
 const InfoCard: React.FC<InfoCardProps>  = ({ icon,title, value }) => {
