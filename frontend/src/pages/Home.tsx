@@ -23,9 +23,8 @@ export const Home = () => {
     };
 
     useEffect(() => {
-        // Carregar dados da API
         const fetchData = async () => {
-            const response = await fetch('/api/statistics');
+            const response = await fetch('');
             const data = await response.json();
             setStatistics(data);
         };
