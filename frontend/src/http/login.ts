@@ -13,6 +13,4 @@ export const login = async (data: ILoginData) => {
     })
     const { id, token } = await response.json()
     return { id, token }
-
-    // return { id: 'beecb49a-ae75-41f7-8482-43b723ce0ce4', token: 'eyJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6IkphdmFJblVzZSIsImV4cCI6MTcyNjk0ODA1NiwiaWF0IjoxNzI2OTQ4MDU2fQ.cEcWtXXu92WdGuPFTHBATKNrjVp5BlatKSbiHUn3Cv0' }
 }
