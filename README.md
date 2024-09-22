@@ -10,7 +10,6 @@ Um aplicativo web para gestão de ordens de serviço
 4. Crie o arquivo .env com o link do BD
 5. Inicie o servidor com `npm run dev:server`
 6. Caso alguma biblioteca apareça como erro, use o comando: `npm i @types/"nome_da_biblioteca" -D`
-   
 ## Frontend
 1. Vá para a pasta do frontend `cd frontend` 
 1. Instale as dependências com `npm install`
