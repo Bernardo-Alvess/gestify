@@ -37,6 +37,8 @@ export const Login = () => {
 		}
 
 		setCookie('jwt', token, { path: '/' });
+		setCookie('id', id, { path: '/' });
+
 		//#TODO: levar usuário para a home após fazer o cadastro, passando o id como query param, acrescentar
 
 		//alert(`${id} ${token}`);
