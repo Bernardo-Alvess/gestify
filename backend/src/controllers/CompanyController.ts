@@ -5,11 +5,16 @@ import { CompanyRepository } from "../repositories/implementations/CompanyReposi
 import { Request, Response, NextFunction } from 'express'
 import { hashPassword } from "../util/hash-password";
 import { generateToken } from "../util/generate-token";
+import { UserRepository } from "../repositories/implementations/UserRepository";
+import { User } from "../entities/User/User";
+import { UserType } from "../entities/User/user-type";
 
 class CompanyController {
     constructor(
-        private repository: CompanyRepository
-    ) { }
+        private repository: CompanyRepository,
+        private userRepository: UserRepository
+    ) {
+    }
 
     async createCompany(req: Request, res: Response, next: NextFunction) {
         try {
@@ -17,9 +22,19 @@ class CompanyController {
             const password = hashPassword(plainPassword)
 
             const company = new Company({ email, password, name, corporateReason, cnpj });
+
             await this.repository.createCompany(company)
 
+            const user = new User({
+                name: company.name,
+                email: company.email,
+                password: company.password,
+                document: company.cnpj,
+                userType: UserType.owner,
+                companyId: company.id
+            }, company.id)
 
+            await this.userRepository.createUser(user)
             const token = generateToken({ id: company.id, ownerId: company.id })
 
             res.json({
@@ -63,6 +78,7 @@ class CompanyController {
 }
 
 const companyRepository = new CompanyRepository()
-const companyController = new CompanyController(companyRepository)
+const userRepository = new UserRepository()
+const companyController = new CompanyController(companyRepository, userRepository)
 
 export { companyController }
