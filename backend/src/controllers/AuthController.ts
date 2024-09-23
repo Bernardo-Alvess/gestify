@@ -2,7 +2,6 @@ import { NextFunction, Request, Response } from "express"
 import bcrypt from 'bcrypt'
 import { AuthRepository } from "../repositories/implementations/AuthRepository"
 import { generateToken } from "../util/generate-token"
-import { ZodError } from "zod"
 
 export class AuthController {
     constructor(
@@ -21,7 +20,19 @@ export class AuthController {
 
             if (result) {
                 const token = generateToken({ id: user.id, ownerId: user.companyId })
-                return res.json({ id: user.id, token })
+                res.cookie(
+                    'jwt', token, {
+                    maxAge: 3 * 24 * 60 * 60 * 1000,
+                    secure: false,
+                    httpOnly: true
+                })
+                res.cookie(
+                    'id', user.id, {
+                    maxAge: 3 * 24 * 60 * 60 * 1000,
+                    secure: false,
+                    httpOnly: true
+                })
+                return res.json({ logged: true })
             }
 
             return res.status(400).json({ message: 'Invalid password' })
