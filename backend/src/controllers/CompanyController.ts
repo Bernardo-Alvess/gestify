@@ -23,9 +23,7 @@ class CompanyController {
             const token = generateToken({ id: company.id, ownerId: company.id })
 
             res.json({
-                company: {
-                    email, password, name, corporateReason, cnpj
-                },
+                id: company.id,
                 token
             })
         } catch (e) {
