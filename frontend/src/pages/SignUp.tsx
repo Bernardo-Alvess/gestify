@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { toast } from 'sonner';
 
 import Bro from '../public/assets/signup-page/bro.svg';
@@ -6,9 +6,12 @@ import GestifyText from '../public/assets/gestify_texto.svg';
 import { createCompany } from '../http/create-company';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/auth';
+import { loginUser } from '../http/login';
 
 export const SignUp = () => {
-	const [cookies, setCookie, removeCookie] = useCookies();
+	const { login } = useContext(AuthContext);
+	const [cookies, setCookie] = useCookies(['jwt', 'id']);
 	const navigate = useNavigate();
 
 	const [formData, setFormData] = useState({
@@ -32,7 +35,8 @@ export const SignUp = () => {
 			toast.error('Senhas não coincidem');
 			return;
 		}
-		const { id, token } = await createCompany({
+
+		const { created } = await createCompany({
 			cnpj: formData.cnpj,
 			corporateReason: formData.corporateReason,
 			name: formData.name,
@@ -40,23 +44,22 @@ export const SignUp = () => {
 			password: formData.password,
 		});
 
-		if (!token) {
+		if (!created) {
 			toast.error('Erro ao criar a conta');
 			return;
 		}
 
-		setCookie('jwt', token, { path: '/' });
-		//#TODO: levar usuário para a home após fazer o cadastro, passando o id como query param, acrescentar
-		//que o usuário cadastrado é owner no token, facilitar a minha vida ou piorar com tudo isso
+		await loginUser({
+			email: formData.email,
+			password: formData.password,
+		});
 
-		//alert(`${id} ${token}`);
+		const jwtCookie = cookies.jwt;
+		const idCookies = cookies.id;
 
-		navigate(`/home/${id}`);
-		
-			
-
-	
-		
+		login(jwtCookie);
+		console.log(cookies);
+		navigate(`/home/${idCookies}`);
 	};
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

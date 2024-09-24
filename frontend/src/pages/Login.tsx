@@ -1,15 +1,21 @@
+//imports fixos
+import { toast } from 'sonner';
+import { useNavigate } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
+import { useContext, useState } from 'react';
+
+//imports locais
 import GestifyLogo from '../public/assets/gestify_simbolo.svg';
 import Cuate from '../public/assets/login-page/cuate.svg';
 import GestifyText from '../public/assets/gestify_texto.svg';
-import { useNavigate } from 'react-router-dom';
-import { useCookies } from 'react-cookie';
-import { useState } from 'react';
-import { toast } from 'sonner';
-import { login } from '../http/login';
+import { loginUser } from '../http/login';
+import { AuthContext } from '../context/auth';
+import { Link } from 'react-router-dom';
 
 export const Login = () => {
-	const [cookies, setCookie] = useCookies();
+	const { login } = useContext(AuthContext);
 	const navigate = useNavigate();
+	const [cookies, setCookie] = useCookies(['jwt', 'id']);
 
 	const [formData, setFormData] = useState({
 		email: '',
@@ -24,22 +30,23 @@ export const Login = () => {
 			return;
 		}
 
-		console.table([formData.email, formData.password]);
-
-		const { id, token } = await login({
+		const { logged } = await loginUser({
 			email: formData.email,
 			password: formData.password,
 		});
 
-		if (!token) {
+		if (!logged) {
 			toast.error('Erro ao entrar na conta');
 			return;
 		}
 
-		setCookie('jwt', token, { path: '/' });
-		setCookie('id', id, { path: '/' });
+		// setCookie('id', cookies.id, { path: '/', maxAge: 3 * 24 * 60 * 60 });
+		// setCookie('jwt', cookies.jwt, { path: '/', maxAge: 3 * 24 * 60 * 60 });
 
-		navigate(`/home/${id}`);
+		console.log(cookies);
+
+		login(cookies.jwt);
+		navigate(`/home/${cookies.id}`);
 	};
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -110,12 +117,12 @@ export const Login = () => {
 							<p className="text-base">
 								Primeiro acesso?{' '}
 								<span className="text-primary">
-									<a
-										href="#"
+									<Link
+										to="/signup"
 										className="decoration-none underline"
 									>
 										Acesse aqui
-									</a>
+									</Link>
 								</span>
 							</p>
 						</div>
