@@ -12,10 +12,10 @@ export const createCompany = async (data: ICreateCompanyData) => {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(data),
     })
 
-    const { id, token } = await response.json()
+    const { created } = await response.json()
 
-    return { id, token }
+    return { created }
 }

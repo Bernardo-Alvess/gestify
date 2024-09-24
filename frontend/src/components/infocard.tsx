@@ -14,7 +14,7 @@ const InfoCard: React.FC<InfoCardProps> = ({ icon, title, value }) => {
 			</div>
 			<div className="w-0.5 h-12 bg-gray-300 mx-3"></div>
 			<div className="w-2/3 text-center">
-				<p className="text-gray-500">{title}</p>
+				<p className="text-gray-500 truncate">{title}</p>
 				<p className="text-3xl font-bold text-black">{value}</p>
 			</div>
 		</div>
