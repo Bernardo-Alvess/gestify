@@ -38,9 +38,6 @@ export class User {
         this.document = data.document
         this.userType = data.userType
         this.companyId = data.companyId
-
-
-
     }
 
 }

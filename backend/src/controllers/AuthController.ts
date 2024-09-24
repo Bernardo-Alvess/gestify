@@ -14,7 +14,7 @@ export class AuthController {
 
             const user = await this.repository.findUser(email)
 
-            if (!user) return res.status(400).json({ messsage: 'User not found' })
+            if (!user) return res.status(400).json({ message: 'User not found' })
 
             const result = await bcrypt.compare(password, user.password)
 
@@ -22,15 +22,20 @@ export class AuthController {
                 const token = generateToken({ id: user.id, ownerId: user.companyId })
                 res.cookie(
                     'jwt', token, {
-                    maxAge: 3 * 24 * 60 * 60 * 1000,
-                    secure: false,
-                    httpOnly: true
+                        path: '/',
+                        maxAge: 3 * 24 * 60 * 60 * 1000,
+                        secure: false,
+                        httpOnly: false,
+                        sameSite: 'none'
                 })
                 res.cookie(
                     'id', user.id, {
-                    maxAge: 3 * 24 * 60 * 60 * 1000,
-                    secure: false,
-                    httpOnly: true
+                        path: '/',
+                        maxAge: 3 * 24 * 60 * 60 * 1000,
+                        secure: false,
+                        httpOnly: false,
+                        sameSite: 'none'
+
                 })
                 return res.json({ logged: true })
             }

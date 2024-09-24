@@ -8,11 +8,13 @@ import { generateToken } from "../util/generate-token";
 import { UserRepository } from "../repositories/implementations/UserRepository";
 import { User } from "../entities/User/User";
 import { UserType } from "../entities/User/user-type";
+import { AuthController, authController } from "./AuthController";
 
 class CompanyController {
     constructor(
         private repository: CompanyRepository,
-        private userRepository: UserRepository
+        private userRepository: UserRepository,
+        private authController: AuthController
     ) {
     }
 
@@ -35,12 +37,8 @@ class CompanyController {
             }, company.id)
 
             await this.userRepository.createUser(user)
-            const token = generateToken({ id: company.id, ownerId: company.id })
 
-            res.json({
-                id: company.id,
-                token
-            })
+            return res.status(201).json({ created: true })
         } catch (e) {
             next(e)
         }
@@ -79,6 +77,6 @@ class CompanyController {
 
 const companyRepository = new CompanyRepository()
 const userRepository = new UserRepository()
-const companyController = new CompanyController(companyRepository, userRepository)
+const companyController = new CompanyController(companyRepository, userRepository, authController)
 
 export { companyController }
