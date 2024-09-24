@@ -44,7 +44,6 @@ export const Login = () => {
 		// setCookie('jwt', cookies.jwt, { path: '/', maxAge: 3 * 24 * 60 * 60 });
 
 		console.log(cookies);
-
 		login();
 		navigate(`/home/${cookies.id}`);
 	};
