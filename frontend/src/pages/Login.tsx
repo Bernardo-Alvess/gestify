@@ -45,7 +45,7 @@ export const Login = () => {
 
 		console.log(cookies);
 
-		login(cookies.jwt);
+		login();
 		navigate(`/home/${cookies.id}`);
 	};
 
