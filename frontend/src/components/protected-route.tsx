@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import { AuthContext } from '../context/auth';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
+import { Login } from '../pages/Login';
 
 interface ProtectedRouteProps {
 	children: JSX.Element;
@@ -13,7 +14,7 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
 	const location = useLocation();
 
 	if (!isAuthenticated) {
-		return <Navigate to="/login" />;
+		return <Login />;
 	}
 
 	if (location.pathname === '/') {

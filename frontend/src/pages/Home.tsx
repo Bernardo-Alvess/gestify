@@ -11,10 +11,6 @@ import Sidebar from '../components/sidebar';
 import TopNav from '../components/top_nav';
 
 export const Home = () => {
-	const [cookies, setCookie] = useCookies(['id', 'jwt']);
-	console.log(cookies.id);
-	console.log(cookies);
-
 	const [statistics, setStatistics] = useState({
 		openOrders: 0,
 		clients: 0,
