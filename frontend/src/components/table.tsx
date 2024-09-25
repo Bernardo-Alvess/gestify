@@ -49,7 +49,7 @@ const Table: React.FC<TableProps> = ({
 	};
 
 	return (
-		<div className="bg-white p-4 rounded-lg shadow-lg w-full">
+		<div className="bg-white p-4 rounded-lg shadow-lg w-full overflow-y-auto">
 			<div className="flex justify-between items-center p-2">
 				<div className="flex gap-2">
 					<img className="w-5" src={icon} alt="Ícone da Tabela" />
@@ -68,7 +68,7 @@ const Table: React.FC<TableProps> = ({
 				) : null}
 			</div>
 			<div className="overflow-x-auto w-full">
-				<table className="min-w-full table-auto border-collapse w-full">
+				<table className="min-w-full table-auto border-collapse w-full ">
 					<thead>
 						<tr>
 							{columns.map((column: string, index: number) => (
@@ -117,16 +117,18 @@ const Table: React.FC<TableProps> = ({
 						))}
 					</tbody>
 				</table>
-				<div className="w-full flex items-center justify-center p-2">
-					<TablePagination
-						component="div"
-						count={25}
-						page={1}
-						rowsPerPage={10}
-						onPageChange={handleChangePage}
-						onRowsPerPageChange={handleChangeRowsPerPage}
-					/>
-				</div>
+				{actions?.showActions ? (
+					<div className="w-full flex items-center justify-center p-2">
+						<TablePagination
+							component="div"
+							count={25}
+							page={1}
+							rowsPerPage={10}
+							onPageChange={handleChangePage}
+							onRowsPerPageChange={handleChangeRowsPerPage}
+						/>
+					</div>
+				) : null}
 			</div>
 		</div>
 	);

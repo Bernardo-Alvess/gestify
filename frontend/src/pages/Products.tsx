@@ -1,3 +1,4 @@
+import SearchBox from '../components/search_box';
 import Sidebar from '../components/sidebar';
 import Table from '../components/table';
 import TopNav from '../components/top_nav';
@@ -30,6 +31,14 @@ export const Products = () => {
 		['007', 'Cadeira Gamer DXRacer', 10, 'DXRacer', 'R$ 1.500,00'],
 		['008', 'Headset HyperX Cloud II', 25, 'HyperX', 'R$ 650,00'],
 		['009', 'Placa de Vídeo Nvidia RTX 3080', 5, 'Nvidia', 'R$ 8.000,00'],
+		['006', 'Memória RAM Corsair 16GB', 40, 'Corsair', 'R$ 600,00'],
+		['007', 'Cadeira Gamer DXRacer', 10, 'DXRacer', 'R$ 1.500,00'],
+		['008', 'Headset HyperX Cloud II', 25, 'HyperX', 'R$ 650,00'],
+		['009', 'Placa de Vídeo Nvidia RTX 3080', 5, 'Nvidia', 'R$ 8.000,00'],
+		['006', 'Memória RAM Corsair 16GB', 40, 'Corsair', 'R$ 600,00'],
+		['007', 'Cadeira Gamer DXRacer', 10, 'DXRacer', 'R$ 1.500,00'],
+		['008', 'Headset HyperX Cloud II', 25, 'HyperX', 'R$ 650,00'],
+		['009', 'Placa de Vídeo Nvidia RTX 3080', 5, 'Nvidia', 'R$ 8.000,00'],
 	];
 
 	const add = () => {
@@ -37,7 +46,7 @@ export const Products = () => {
 	};
 
 	return (
-		<div className="flex h-full">
+		<div className="flex h-full overflow-hidden">
 			<Sidebar />
 			<main className="flex-1 p-10 bg-blue-200 space-y-10">
 				<header className="flex justify-between">
@@ -45,9 +54,10 @@ export const Products = () => {
 						<h1 className="text-2xl font-bold">Dashboard</h1>
 						<p className="text-sm text-gray-500">{today}</p>
 					</div>
+					<SearchBox></SearchBox>
 					<TopNav />
 				</header>
-				<div className="grid grid-cols-12">
+				<div className="grid grid-cols-12 max-h-[600px] overflow-y-scroll">
 					<div className="col-span-12">
 						<Table
 							icon={IconProductBlack}

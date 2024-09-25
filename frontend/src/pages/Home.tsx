@@ -18,6 +18,7 @@ export const Home = () => {
 	const [cookies, setCookie] = useCookies(['id', 'jwt']);
 	console.log(cookies.id);
 	console.log(cookies);
+
 	// dados que vão sair
 	const [statistics, setStatistics] = useState({
 		openOrders: 0,
