@@ -4,7 +4,7 @@ import { AuthRepository } from "../repositories/implementations/AuthRepository"
 import { generateToken } from "../util/generate-token"
 
 const isProduction = process.env.IS_PRODUCTION === 'production'
-
+const cookieDomain = isProduction ? process.env.PRODUCTION_DOMAIN : undefined
 
 export class AuthController {
     constructor(
@@ -28,7 +28,8 @@ export class AuthController {
                         maxAge: 3 * 24 * 60 * 60 * 1000,
                         secure: isProduction,
                         httpOnly: false,
-                        sameSite: 'none'
+                        sameSite: 'none',
+                        domain: cookieDomain
                 })
                 res.cookie(
                     'id', user.id, {
@@ -36,8 +37,8 @@ export class AuthController {
                         maxAge: 3 * 24 * 60 * 60 * 1000,
                         secure: isProduction,
                         httpOnly: false,
-                        sameSite: 'none'
-
+                        sameSite: 'none',
+                        domain: cookieDomain
                 })
                 return res.json({ logged: true })
             }
