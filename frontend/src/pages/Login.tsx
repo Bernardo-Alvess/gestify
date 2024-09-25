@@ -15,7 +15,7 @@ import { Link } from 'react-router-dom';
 export const Login = () => {
 	const { login } = useContext(AuthContext);
 	const navigate = useNavigate();
-	const [cookies, setCookie] = useCookies(['jwt', 'id']);
+	const [cookies] = useCookies(['jwt', 'id']);
 
 	const [formData, setFormData] = useState({
 		email: '',

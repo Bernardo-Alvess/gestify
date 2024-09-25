@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useCookies } from 'react-cookie';
 import { Link } from 'react-router-dom';
 import IconServices from '../public/assets/home-page/icons/services/services_icon.svg';
 import IconServicesBlack from '../public/assets/home-page/icons/services/services_icon_b.svg';
@@ -15,10 +14,6 @@ import Reminder from '../components/reminder';
 import SearchBox from '../components/search_box';
 
 export const Home = () => {
-	const [cookies, setCookie] = useCookies(['id', 'jwt']);
-	console.log(cookies.id);
-	console.log(cookies);
-
 	// dados que vão sair
 	const [statistics, setStatistics] = useState({
 		openOrders: 0,

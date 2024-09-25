@@ -11,7 +11,7 @@ import { loginUser } from '../http/login';
 
 export const SignUp = () => {
 	const { login } = useContext(AuthContext);
-	const [cookies, setCookie] = useCookies(['jwt', 'id']);
+	const [cookies] = useCookies(['jwt', 'id']);
 	const navigate = useNavigate();
 
 	const [formData, setFormData] = useState({
@@ -54,11 +54,10 @@ export const SignUp = () => {
 			password: formData.password,
 		});
 
-		const jwtCookie = cookies.jwt;
 		const idCookies = cookies.id;
 
-		login(jwtCookie);
-		console.log(cookies);
+		login();
+
 		navigate(`/home/${idCookies}`);
 	};
 

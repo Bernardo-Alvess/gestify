@@ -4,8 +4,6 @@ import Table from '../components/table';
 import TopNav from '../components/top_nav';
 import IconProductBlack from '../public/assets/home-page/icons/products/products_icon_b.svg';
 
-import { Pagination } from '@mui/material';
-
 export const Products = () => {
 	const today = new Date().toLocaleDateString('pt-BR');
 	const column_table_2 = [
