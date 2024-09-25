@@ -3,11 +3,13 @@ import bcrypt from 'bcrypt'
 import { AuthRepository } from "../repositories/implementations/AuthRepository"
 import { generateToken } from "../util/generate-token"
 
+const isProduction = process.env.IS_PRODUCTION === 'production'
+
+
 export class AuthController {
     constructor(
         private repository: AuthRepository
     ) { }
-
     async login(req: Request, res: Response, next: NextFunction) {
         try {
             const { email, password } = req.body
@@ -24,7 +26,7 @@ export class AuthController {
                     'jwt', token, {
                         path: '/',
                         maxAge: 3 * 24 * 60 * 60 * 1000,
-                        secure: false,
+                        secure: isProduction,
                         httpOnly: false,
                         sameSite: 'none'
                 })
@@ -32,7 +34,7 @@ export class AuthController {
                     'id', user.id, {
                         path: '/',
                         maxAge: 3 * 24 * 60 * 60 * 1000,
-                        secure: false,
+                        secure: isProduction,
                         httpOnly: false,
                         sameSite: 'none'
 
