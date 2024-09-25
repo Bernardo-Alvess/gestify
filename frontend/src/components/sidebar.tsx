@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import GestifyLogo from '../public/assets/gestify_texto.svg';
-import IconHome from '../public/assets/home-page/icons/home_icon.svg';
-import IconServices from '../public/assets/home-page/icons/services_icon.svg';
-import IconProducts from '../public/assets/home-page/icons/products_icon.svg';
-import IconUsers from '../public/assets/home-page/icons/user_icon.svg';
-import IconClients from '../public/assets/home-page/icons/clients_icon.svg';
-import IconMenu from '../public/assets/home-page/icons/menu_icon.svg';
+import IconHomeGrey from '../public/assets/home-page/icons/home/home_icon_g.svg';
+import IconServicesGrey from '../public/assets/home-page/icons/services/services_icon_g.svg';
+import IconProductsGrey from '../public/assets/home-page/icons/products/products_icon_g.svg';
+import IconUsersGrey from '../public/assets/home-page/icons/users/user_icon_g.svg';
+import IconClientsGrey from '../public/assets/home-page/icons/clients/clients_icon_g.svg';
+import IconMenu from '../public/assets/home-page/icons/generic/menu_icon.svg';
 import { useCookies } from 'react-cookie';
 
 const Sidebar = () => {
@@ -58,7 +58,7 @@ const Sidebar = () => {
 						>
 							<img
 								className="w-6"
-								src={IconHome}
+								src={IconHomeGrey}
 								alt="Ícone Home"
 							/>
 							<span>Home</span>
@@ -69,7 +69,7 @@ const Sidebar = () => {
 						>
 							<img
 								className="w-6"
-								src={IconServices}
+								src={IconServicesGrey}
 								alt="Ícone Serviços"
 							/>
 							<span>Serviços</span>
@@ -80,7 +80,7 @@ const Sidebar = () => {
 						>
 							<img
 								className="w-6"
-								src={IconProducts}
+								src={IconProductsGrey}
 								alt="Ícone Produtos"
 							/>
 							<span>Produtos</span>
@@ -91,7 +91,7 @@ const Sidebar = () => {
 						>
 							<img
 								className="w-6"
-								src={IconClients}
+								src={IconClientsGrey}
 								alt="Ícone Clientes"
 							/>
 							<span>Clientes</span>
@@ -102,7 +102,7 @@ const Sidebar = () => {
 						>
 							<img
 								className="w-6"
-								src={IconUsers}
+								src={IconUsersGrey}
 								alt="Ícone Usuários"
 							/>
 							<span>Usuários</span>
