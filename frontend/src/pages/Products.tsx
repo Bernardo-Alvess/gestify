@@ -44,7 +44,7 @@ export const Products = () => {
 	};
 
 	return (
-		<div className="flex h-full overflow-hidden">
+		<div className="flex h-screen overflow-hidden">
 			<Sidebar />
 			<main className="flex-1 p-10 bg-blue-200 space-y-10">
 				<header className="flex justify-between">
@@ -55,7 +55,7 @@ export const Products = () => {
 					<SearchBox></SearchBox>
 					<TopNav />
 				</header>
-				<div className="grid grid-cols-12 max-h-[600px] overflow-y-scroll">
+				<div className="grid grid-cols-12 max-h-[80%] overflow-y-scroll">
 					<div className="col-span-12">
 						<Table
 							icon={IconProductBlack}
