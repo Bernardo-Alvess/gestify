@@ -55,7 +55,7 @@ export const Products = () => {
 					<SearchBox></SearchBox>
 					<TopNav />
 				</header>
-				<div className="grid grid-cols-12 overflow-y-scroll max-h-[500px] lg:max-h-[700px]">
+				<div className="grid grid-cols-12 overflow-y-scroll max-h-[500px] lg:max-h-[550px] xl:max-h-[700px]">
 					<div className="col-span-12">
 						<Table
 							icon={IconProductBlack}
