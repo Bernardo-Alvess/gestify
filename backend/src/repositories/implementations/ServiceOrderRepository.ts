@@ -1,3 +1,4 @@
+import { IUpdateServiceOrderDto } from "../../entities/ServiceOrder/dtos/IUpdateServiceOrderDto";
 import { ServiceOrder } from "../../entities/ServiceOrder/ServiceOrder";
 import { prisma } from "../../lib/prisma";
 import { IServiceOrderRepository } from "../IServiceOrderRepository";
@@ -25,7 +26,7 @@ export class ServiceOrderRepository implements IServiceOrderRepository {
         return await prisma.serviceOrder.findMany()
     }
 
-    async updateServiceOrder(id: string, data: ServiceOrder): Promise<void> {
+    async updateServiceOrder(id: string, data: IUpdateServiceOrderDto): Promise<void> {
         await prisma.serviceOrder.update({
             where: { id },
             data: data
