@@ -1,20 +1,19 @@
 import { randomUUID } from 'node:crypto'
 
 interface IServiceOrderProps {
-    id?: string | null;
-    description?: string | null;
-    defect?: string | null;
-    report?: string | null;
-    extras?: string | null;
+    id?: string;
+    description?: string;
+    defect?: string;
+    report?: string;
+    extras?: string;
     companyId: string;
     statusId: string;
     userId: string;
-    technicianId?: string | null;
-    clientId?: string | null;
+    technicianId?: string;
+    clientId?: string;
 }
-
 export class ServiceOrder {
-    id?: string | null;
+    id?: string
     description?: string | null
     defect?: string | null
     report?: string | null
@@ -23,8 +22,8 @@ export class ServiceOrder {
     companyId: string;
     statusId: string;
     userId: string;
-    technicianId?: string | null;
-    clientId?: string | null;
+    technicianId?: string | null
+    clientId?: string | null
 
     constructor(data: IServiceOrderProps) {
         if (data.id) {
