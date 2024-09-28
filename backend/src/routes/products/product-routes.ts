@@ -3,7 +3,6 @@ import  { productController }  from '../../controllers/ProductController';
 import { createProductSchema} from "../../lib/schemas/products/create-product-schema";
 import { z } from "zod";
 
-
 const productRouter = Router();
 
 productRouter.delete('/:id', (req, res, next) => {
@@ -24,8 +23,5 @@ productRouter.get('/', (req, res, next) => {
 productRouter.put('/', (req, res, next) => {
     productController.updateProduct(req, res, next)
 })
-
-
-
 
 export { productRouter };
