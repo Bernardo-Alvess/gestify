@@ -54,14 +54,14 @@ model ServiceOrder {
   companyId    String   @db.Uuid
   statusId     String   @db.Uuid
   userId       String   @db.Uuid
-  technicianId String   @db.Uuid
-  clientId     String   @db.Uuid
+  technicianId String?  @db.Uuid
+  clientId     String?  @db.Uuid
 
   company    Company               @relation(fields: [companyId], references: [id])
   status     Status                @relation(fields: [statusId], references: [id])
   user       User                  @relation(fields: [userId], references: [id])
-  technician User                  @relation("Technician", fields: [technicianId], references: [id])
-  client     User                  @relation("Client", fields: [clientId], references: [id])
+  technician User?                 @relation("Technician", fields: [technicianId], references: [id])
+  client     User?                 @relation("Client", fields: [clientId], references: [id])
   products   ProductServiceOrder[]
 }
 
