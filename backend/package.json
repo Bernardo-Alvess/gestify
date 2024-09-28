@@ -17,7 +17,9 @@
     "zod": "^3.23.8"
   },
   "scripts": {
-    "dev:server": "ts-node-dev --respawn src/server.ts"
+    "dev:server": "ts-node-dev --respawn src/server.ts",
+    "build": "npm install && tsc && prisma generate && prisma migrate deploy",
+    "start": "node ./dist/server.js"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17"
