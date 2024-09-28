@@ -49,7 +49,7 @@ export class ServiceOrderController {
     async updateServiceOrders(req: Request, res: Response, next: NextFunction) {
         try {
             const id = req.params.id
-            const { description, report, defect, extras, statusId, userId, technicianId, clientId, products } = req.body
+            const { description, report, defect, extras, statusId, userId, technicianId, clientId } = req.body
 
             await this.repository.updateServiceOrder(id, { description, report, defect, extras, statusId, userId, technicianId, clientId })
 
