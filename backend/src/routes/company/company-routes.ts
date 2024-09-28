@@ -2,6 +2,7 @@ import { Router } from "express";
 import { companyController } from "../../controllers/CompanyController";
 import { createCompanySchema } from "../../lib/schemas/company/create-company-schema";
 import { z } from "zod";
+import { updateCompanySchema } from "../../lib/schemas/company/udpate-company-schema";
 
 const companyRouter = Router()
 
@@ -21,6 +22,7 @@ companyRouter.get('/', (req, res, next) => {
 })
 
 companyRouter.put('/', (req, res, next) => {
+    updateCompanySchema.parse(req.body)
     companyController.updateCompany(req, res, next)
 })
 

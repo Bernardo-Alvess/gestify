@@ -32,7 +32,12 @@ export class CompanyRepository implements ICompanyRepository {
     }
 
     async createCompany(company: Company) {
-        await prisma.company.create({ data: company })
+        try {
+            await prisma.company.create({ data: company })
+        } catch (e) {
+            if (e instanceof Error)
+                throw new Error(e.message)
+        }
     }
 
     async deleteCompany(id: string) {
