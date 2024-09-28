@@ -9,5 +9,5 @@ const router = Router()
 router.use('/api/company', companyRouter)
 router.use('/api/user', userRouter)
 router.use('/api/auth', authRouter)
-router.use('/api/serviceOrder', serviceOrderRouter)
+router.use('/api/service-order', serviceOrderRouter)
 export { router }
