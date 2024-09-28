@@ -13,12 +13,11 @@ class ProductController {
             const {name, price, cost, unityType, minQtd, qtd, companyId} = req.body;
 
             const product = new Product({name, price, cost, unityType, minQtd, qtd, companyId});
-            console.log(product);
             await this.repository.createProduct(product);
 
             res.status(201).json({
                 message: "Product created successfully",
-                product: { name, price, cost, unityType, minQtd, qtd, companyId }
+                product
               });
 
         } catch (e) {

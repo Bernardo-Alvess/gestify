@@ -1,4 +1,3 @@
-import { Company } from "@prisma/client";
 import { randomUUID } from 'node:crypto'
 
 interface IProductProps {
