@@ -89,14 +89,16 @@ const Table: React.FC<TableProps> = ({
 					<tbody>
 						{data.map((row: string[], index: number) => (
 							<tr key={index} className="hover:bg-gray-100">
-								{row.map((cell: string, cellIndex: number) => (
-									<td
-										key={cellIndex}
-										className="px-4 py-2 text-xs font-medium border-none underline"
-									>
-										{cell}
-									</td>
-								))}
+								{Object.values(row).map(
+									(cell: string, cellIndex: number) => (
+										<td
+											key={cellIndex}
+											className="px-4 py-2 text-xs font-medium border-none underline"
+										>
+											{cell}
+										</td>
+									)
+								)}
 								{actions?.showActions ? (
 									<td className="px-4 py-2 text-xs font-medium border-none flex gap-3">
 										<button onClick={() => edit(row)}>
