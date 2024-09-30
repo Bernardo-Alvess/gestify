@@ -32,7 +32,7 @@ const router = createBrowserRouter([
 		element: <ProtectedRoute children={<Products />} />,
 	},
 	{
-		path: '/services',
+		path: '/orders',
 		element: <ProtectedRoute children={<ServiceOrders />} />,
 	},
 ]);
