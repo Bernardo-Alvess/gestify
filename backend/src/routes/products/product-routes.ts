@@ -25,5 +25,3 @@ productRouter.put('/', (req, res, next) => {
 })
 
 export { productRouter };
-
-//teste pra ver se adiciona mesmo
