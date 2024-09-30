@@ -73,6 +73,7 @@ model Product {
   unityType     String?
   minQtd        Int?
   qtd           Int?
+  
   companyId     String                @db.Uuid
   company       Company               @relation(fields: [companyId], references: [id])
   serviceOrders ProductServiceOrder[]
