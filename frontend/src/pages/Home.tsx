@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import IconServices from '../public/assets/home-page/icons/services/services_icon.svg';
-import IconServicesBlack from '../public/assets/home-page/icons/services/services_icon_b.svg';
+import IconOrders from '../public/assets/home-page/icons/orders/orders_icon.svg';
+import IconOrdersBlack from '../public/assets/home-page/icons/orders/orders_icon_b.svg';
 import IconProductsBlack from '../public/assets/home-page/icons/products/products_icon_b.svg';
 import IconProducts from '../public/assets/home-page/icons/products/products_icon.svg';
 import IconUsers from '../public/assets/home-page/icons/users/user_icon.svg';
@@ -88,7 +88,7 @@ export const Home = () => {
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
 					<Link to="/services">
 						<InfoCard
-							icon={IconServices}
+							icon={IconOrders}
 							title="Ordens de Serviço"
 							value={statistics.openOrders}
 						/>
@@ -127,7 +127,7 @@ export const Home = () => {
 					</div>
 					<div className="col-span-5">
 						<Table
-							icon={IconServicesBlack}
+							icon={IconOrdersBlack}
 							title="Ordens para entrega"
 							columns={column_table_2}
 							data={data_table_2}

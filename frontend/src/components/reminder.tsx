@@ -1,6 +1,6 @@
 import IconPlus from '../public/assets/home-page/icons/generic/plus_icon.svg';
 import IconMenuDots from '../public/assets/home-page/icons/generic/ellipses_icon.svg';
-import IconServices from '../public/assets/home-page/icons/services/services_icon_g.svg';
+import IconServices from '../public/assets/home-page/icons/orders/orders_icon_g.svg';
 import IconUsers from '../public/assets/home-page/icons/users/user_icon.svg';
 import IconDate from '../public/assets/home-page/icons/generic/date_icon.svg';
 import IconDelete from '../public/assets/home-page/icons/generic/delete_icon.svg';
