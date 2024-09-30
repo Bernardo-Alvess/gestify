@@ -2,7 +2,7 @@ import SearchBox from '../components/search_box';
 import Sidebar from '../components/sidebar';
 import Table from '../components/table';
 import TopNav from '../components/top_nav';
-import IconProductBlack from '../public/assets/home-page/icons/products/products_icon_b.svg';
+import IconOrdersBlack from '../public/assets/home-page/icons/orders/orders_icon_b.svg';
 
 export const ServiceOrders = () => {
 	const today = new Date().toLocaleDateString('pt-BR');
@@ -47,7 +47,7 @@ export const ServiceOrders = () => {
 				<div className="grid grid-cols-12 overflow-y-scroll max-h-[500px] lg:max-h-[550px] xl:max-h-[700px]">
 					<div className="col-span-12">
 						<Table
-							icon={IconProductBlack}
+							icon={IconOrdersBlack}
 							title="Ordens de Serviço"
 							columns={column_table_2}
 							data={data_table_2}

@@ -64,7 +64,7 @@ const Sidebar = () => {
 							<span>Home</span>
 						</Link>
 						<Link
-							to="/services"
+							to="/orders"
 							className="flex items-center space-x-3 hover:text-blue-500"
 						>
 							<img
