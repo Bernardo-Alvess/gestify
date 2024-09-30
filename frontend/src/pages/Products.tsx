@@ -75,7 +75,7 @@ export const Products = () => {
 							icon={IconProductBlack}
 							title="Produtos em estoque"
 							columns={column_table_2}
-							data={products}
+							data={data_table_2}
 							actions={{
 								showActions: true,
 								actionButtonText: 'Adicionar Produto',
