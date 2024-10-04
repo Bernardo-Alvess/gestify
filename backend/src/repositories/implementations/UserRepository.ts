@@ -23,17 +23,39 @@ export class UserRepository implements IUserRepository {
 
         return undefined
     }
-    async getUsers(): Promise<User[] | undefined | User> {
+
+    async getUsers(userType?: string): Promise<User[] | undefined | User> {
+        if (userType) {
+            const data = await prisma.user.findMany({
+                where: {
+                    userType
+                }
+            })
+            if (data) {
+                const users = mapUserEntity(data)
+                return users
+            }
+        } else {
         const data = await prisma.user.findMany()
         if (data) {
             const users = mapUserEntity(data)
             return users
         }
-
-        return undefined
-
-
+        }
     }
+
+    // async getClients(): Promise<User[] | undefined> {
+    //     const data = await prisma.user.findMany({
+    //         where: {
+    //             userType: 'CLIENT'
+    //         }
+    //     })
+    //     if(data){
+    //         const users = mapUserEntity()
+    //     } return data
+    //     return undefined
+    // }
+
     async updateUser(id: string, user: IUpdateUserDto): Promise<void | undefined> {
         await prisma.user.update({
             where: { id },
@@ -54,6 +76,8 @@ export class UserRepository implements IUserRepository {
                 id: user.companyId
             }
         })
+
+        console.log(data)
 
         if (data) {
             await prisma.user.create({

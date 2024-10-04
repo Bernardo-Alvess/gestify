@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express'
 import { UserRepository } from '../repositories/implementations/UserRepository'
 import { User } from '../entities/User/User'
 import { generateToken } from '../util/generate-token'
+import { UserType } from '../entities/User/user-type'
 
 export class UserController {
     constructor(
@@ -63,6 +64,11 @@ export class UserController {
 
     async getUsers(req: Request, res: Response, next: NextFunction) {
         try {
+            if ('usertype' in req.query) {
+                const userTypeParam = (req.query.usertype as string).toUpperCase()
+                const users = await this.repository.getUsers(userTypeParam)
+                return res.status(200).json({ users })
+            }
             const users = await this.repository.getUsers()
             res.status(200).json({ users })
         } catch (e) {

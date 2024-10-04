@@ -2,7 +2,7 @@ import { z } from 'zod'
 import { UserType } from '../../../entities/User/user-type'
 
 export const createUserSchema = z.object({
-    id: z.string().uuid().nullable(),
+    id: z.string().uuid().nullable().optional(),
     name: z.string().min(2, "Name must be atleast 2 characters long"),
     email: z.string().email(),
     password: z.string().min(8, "Password must be atleast 8 characters long"),
