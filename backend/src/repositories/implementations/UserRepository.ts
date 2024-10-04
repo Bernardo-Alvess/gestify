@@ -1,10 +1,10 @@
 import { User } from "../../entities/User/User";
 import { prisma } from "../../lib/prisma";
 import { IUserRepository } from "../IUserRepository";
-import { Company } from "../../entities/Company/Company";
 import { UserType } from "../../entities/User/user-type";
 import { IUpdateUserDto } from "../../entities/User/dtos/IUpdateUserDto";
 import { mapUserEntity } from "../../util/map-user-entity";
+import { IGetUserDto } from "../../entities/User/dtos/UGetUserDto";
 
 export class UserRepository implements IUserRepository {
     async getUserById(id: string): Promise<User | undefined> {
@@ -23,26 +23,60 @@ export class UserRepository implements IUserRepository {
 
         return undefined
     }
-
-    async getUsers(userType?: string): Promise<User[] | undefined | User> {
+    async getUsers(userType?: string, except?: string): Promise<IGetUserDto[] | undefined> {
         if (userType) {
-            const data = await prisma.user.findMany({
+
+            const users = await prisma.user.findMany({
                 where: {
                     userType
+                },
+                select: {
+                    email: true,
+                    name: true,
+                    document: true,
+                    address: true,
+                    number: true,
+                    userType: true
                 }
             })
-            if (data) {
-                const users = mapUserEntity(data)
-                return users
-            }
-        } else {
-        const data = await prisma.user.findMany()
-        if (data) {
-            const users = mapUserEntity(data)
-            return users
+
+            if (users) return users
         }
+        else if (except) {
+
+            const users = await prisma.user.findMany({
+                where: {
+                    userType: {
+                        not: except
+                    }
+                },
+                select: {
+                    email: true,
+                    name: true,
+                    document: true,
+                    address: true,
+                    number: true,
+                    userType: true
+                }
+            })
+
+            if (users) return users
+
+        } else {
+            const users = await prisma.user.findMany({
+                select: {
+                    email: true,
+                    name: true,
+                    document: true,
+                    address: true,
+                    number: true,
+                    userType: true
+                }
+            })
+            if (users) return users
         }
     }
+
 
     // async getClients(): Promise<User[] | undefined> {
     //     const data = await prisma.user.findMany({

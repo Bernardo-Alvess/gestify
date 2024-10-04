@@ -65,8 +65,14 @@ export class UserController {
     async getUsers(req: Request, res: Response, next: NextFunction) {
         try {
             if ('usertype' in req.query) {
+                console.log('usertype')
                 const userTypeParam = (req.query.usertype as string).toUpperCase()
-                const users = await this.repository.getUsers(userTypeParam)
+                const users = await this.repository.getUsers(userTypeParam, undefined)
+                return res.status(200).json({ users })
+            } else if ('except' in req.query) {
+                console.log('except')
+                const exceptParam = (req.query.except as string).toUpperCase()
+                const users = await this.repository.getUsers(undefined, exceptParam)
                 return res.status(200).json({ users })
             }
             const users = await this.repository.getUsers()
