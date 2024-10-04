@@ -2,7 +2,6 @@ import editIcon from '../public/assets/table/edit.svg';
 import eyeIcon from '../public/assets/table/eye.svg';
 import deleteIcon from '../public/assets/table/trash-2.svg';
 import addIcon from '../public/assets/table/simbolo_mais.svg';
-import { TablePagination } from '@mui/material';
 
 interface TableProps {
 	icon: string;
