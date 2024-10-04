@@ -17,7 +17,7 @@ export class UserController {
 
             await this.repository.createUser(user)
 
-            const token = generateToken({ id: user.id, ownerId: companyId })
+            const token = generateToken({ id: user.id, ownerId: companyId, userType: user.userType })
 
             res.status(201).json({ id: user.id, token })
 
@@ -52,6 +52,7 @@ export class UserController {
 
     async updateUser(req: Request, res: Response, next: NextFunction) {
         try {
+            console.log('controller')
             const { id, name, email, password, document, number, address, userType } = req.body
 
             await this.repository.updateUser(id, { name, email, password, document, number, address, userType })

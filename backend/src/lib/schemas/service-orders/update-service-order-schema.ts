@@ -9,11 +9,6 @@ export const updateServiceOrderSchema = z.object({
         extras: z.string().optional().nullable(),
         statusId: z.string().uuid(),
         technicianId: z.string().uuid().optional(),
-        clientId: z.string().uuid().optional(),
-        products: z.array(
-            z.object({
-                productId: z.string().uuid().optional().nullable()
-            })
-        ).optional()
+        clientId: z.string().uuid().optional()
     })
 })
