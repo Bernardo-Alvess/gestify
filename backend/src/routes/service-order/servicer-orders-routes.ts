@@ -5,14 +5,14 @@ import { auth } from "../../middleware/auth";
 import { updateServiceOrderSchema } from "../../lib/schemas/service-orders/update-service-order-schema";
 const serviceOrderRouter = Router()
 
-serviceOrderRouter.get('/count', (req, res, next) => {
+serviceOrderRouter.get('/count', auth, (req, res, next) => {
     serviceOrderController.getSoCount(req, res, next)
 })
 serviceOrderRouter.get('/:id', (req, res, next) => {
     serviceOrderController.getServiceOrder(req, res, next);
 })
 
-serviceOrderRouter.get('/', (req, res, next) => {
+serviceOrderRouter.get('/', auth, (req, res, next) => {
     serviceOrderController.getServiceOrders(req, res, next)
 })
 

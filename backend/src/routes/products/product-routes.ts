@@ -18,7 +18,7 @@ productRouter.post('/', adminMiddleware, (req, res, next) => {
     productController.createProduct(req, res, next)
 })
 
-productRouter.get('/', (req, res, next) => {
+productRouter.get('/', auth, (req, res, next) => {
     productController.getProducts(req, res, next)
 })
 

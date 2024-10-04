@@ -13,7 +13,7 @@ statusRouter.get('/:id', (req, res, next) => {
     statusController.getStatus(req, res, next)
 })
 
-statusRouter.get('/', (req, res, next) => {
+statusRouter.get('/', auth, (req, res, next) => {
     statusController.getAllStatus(req, res, next)
 })
 

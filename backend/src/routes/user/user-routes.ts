@@ -4,6 +4,7 @@ import { z } from "zod";
 import { createUserSchema } from "../../lib/schemas/user/create-user-schema";
 import { updateUserSchema } from "../../lib/schemas/user/update-user-schema";
 import { adminMiddleware } from "../../middleware/admin-auth";
+import { auth } from "../../middleware/auth";
 
 const userRouter = Router()
 
@@ -12,16 +13,11 @@ userRouter.post('/', adminMiddleware, (req, res, next) => {
     userController.createUser(req, res, next)
 })
 
-userRouter.get('/rotateste', adminMiddleware, (req, res, next) => {
-    console.log(req.body)
-    res.send('alo')
-})
-
-userRouter.get('/userCount', (req, res, next) => {
+userRouter.get('/userCount', auth, (req, res, next) => {
     userController.getUserCount(req, res, next)
 })
 
-userRouter.get('/', (req, res, next) => {
+userRouter.get('/', auth, (req, res, next) => {
     userController.getUsers(req, res, next)
 })
 
