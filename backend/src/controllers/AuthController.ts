@@ -26,7 +26,8 @@ export class AuthController {
                     'jwt', token, {
                         path: '/',
                         maxAge: 3 * 24 * 60 * 60 * 1000,
-                        secure: isProduction,
+                        //secure: isProduction,
+                        secure: true,
                         httpOnly: false,
                         sameSite: 'none',
                         domain: cookieDomain
@@ -35,7 +36,8 @@ export class AuthController {
                     'id', user.id, {
                         path: '/',
                         maxAge: 3 * 24 * 60 * 60 * 1000,
-                        secure: isProduction,
+                        //secure: isProduction,
+                        secure: true,
                         httpOnly: false,
                         sameSite: 'none',
                         domain: cookieDomain

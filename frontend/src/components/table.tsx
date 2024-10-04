@@ -117,7 +117,7 @@ const Table: React.FC<TableProps> = ({
 						))}
 					</tbody>
 				</table>
-				{actions?.showActions ? (
+				{/* {actions?.showActions ? (
 					<div className="w-full flex items-center justify-center p-2">
 						<TablePagination
 							component="div"
@@ -128,7 +128,7 @@ const Table: React.FC<TableProps> = ({
 							onRowsPerPageChange={handleChangeRowsPerPage}
 						/>
 					</div>
-				) : null}
+				) : null} */}
 			</div>
 		</div>
 	);
