@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt'
 import { AuthRepository } from "../repositories/implementations/AuthRepository"
 import { generateToken } from "../util/generate-token"
 
-const isProduction = process.env.NODE_ENV === 'production'
+const isProduction = process.env.IS_PRODUCTION === 'production'
 const cookieDomain = isProduction ? process.env.PRODUCTION_DOMAIN : undefined
 
 export class AuthController {

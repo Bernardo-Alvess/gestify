@@ -70,6 +70,15 @@ export class UserController {
         }
     }
 
+    async getUserCount(req: Request, res: Response, next: NextFunction) {
+        try {
+            const userCount = await this.repository.getUserCount()
+            res.status(200).json({ userCount })
+        } catch (e) {
+            next(e)
+        }
+    }
+
 }
 
 const repository = new UserRepository()

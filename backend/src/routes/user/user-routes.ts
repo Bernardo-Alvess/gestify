@@ -6,9 +6,15 @@ import { updateUserSchema } from "../../lib/schemas/user/update-user-schema";
 
 const userRouter = Router()
 
+
+
 userRouter.post('/', (req, res, next) => {
     createUserSchema.parse(req.body)
     userController.createUser(req, res, next)
+})
+
+userRouter.get('/userCount', (req, res, next) => {
+    userController.getUserCount(req, res, next)
 })
 
 userRouter.get('/', (req, res, next) => {
@@ -20,14 +26,16 @@ userRouter.get('/:id', (req, res, next) => {
     idSchema.parse(req.params.id)
     userController.getUserById(req, res, next)
 })
+
+userRouter.put('/', (req, res, next) => {
+    updateUserSchema.parse(req.body)
+    userController.updateUser(req, res, next)
+})
+
 userRouter.delete('/:id', (req, res, next) => {
     const idSchema = z.string().uuid()
     idSchema.parse(req.params.id)
     userController.deleteUser(req, res, next)
-})
-userRouter.put('/', (req, res, next) => {
-    updateUserSchema.parse(req.body)
-    userController.updateUser(req, res, next)
 })
 
 export { userRouter }

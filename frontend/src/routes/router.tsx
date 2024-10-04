@@ -6,7 +6,6 @@ import { Login } from '../pages/Login';
 import { Products } from '../pages/Products';
 import { ServiceOrders } from '../pages/ServiceOrders';
 import { Clients } from '../pages/Clients';
-
 const router = createBrowserRouter([
 	{
 		path: '/',

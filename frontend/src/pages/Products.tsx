@@ -1,11 +1,15 @@
+import { useEffect, useState } from 'react';
 import SearchBox from '../components/search_box';
 import Sidebar from '../components/sidebar';
 import Table from '../components/table';
 import TopNav from '../components/top_nav';
 import IconProductBlack from '../public/assets/home-page/icons/products/products_icon_b.svg';
+import { getProducts } from '../http/get-products';
 
 export const Products = () => {
 	const today = new Date().toLocaleDateString('pt-BR');
+	const [products, setProducts] = useState([]);
+
 	const column_table_2 = [
 		'Código',
 		'Nome',
@@ -43,6 +47,16 @@ export const Products = () => {
 		alert('ADDDD');
 	};
 
+	useEffect(() => {
+		const fetchProducts = async () => {
+			const data = await getProducts();
+			console.log(data);
+			setProducts(data);
+		};
+
+		fetchProducts();
+	}, []);
+
 	return (
 		<div className="flex h-screen overflow-hidden">
 			<Sidebar />
@@ -55,7 +69,7 @@ export const Products = () => {
 					<SearchBox></SearchBox>
 					<TopNav />
 				</header>
-				<div className="grid grid-cols-12 overflow-y-scroll max-h-[500px] lg:max-h-[550px] xl:max-h-[650px]">
+				<div className="grid grid-cols-12 max-h-[80%] overflow-y-scroll">
 					<div className="col-span-12">
 						<Table
 							icon={IconProductBlack}
