@@ -36,7 +36,6 @@ export const Home = () => {
 		['123', '23/09/2024', 'Lorenzo Cardoso', 'SSD'],
 		['123', '23/09/2024', 'Lorenzo Cardoso', 'SSD'],
 		['123', '23/09/2024', 'Lorenzo Cardoso', 'SSD'],
-		['123', '23/09/2024', 'Lorenzo Cardoso', 'SSD'],
 	];
 
 	const [reminders, setReminders] = useState<Reminder[]>(() => {

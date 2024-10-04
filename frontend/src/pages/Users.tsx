@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import SearchBox from '../components/search_box';
 import Sidebar from '../components/sidebar';
 import Table from '../components/table';
@@ -7,53 +7,28 @@ import IconProductBlack from '../public/assets/home-page/icons/products/products
 import { getUsers } from '../http/get-users';
 
 export const Users = () => {
-	const [users, setUsers] = useState([]);
+	const [users, setUsers] = useState([{}]);
 	const today = new Date().toLocaleDateString('pt-BR');
-	const column_table_2 = [
-		'Código',
-		'Nome',
-		'Quantidade',
-		'Marca',
-		'Preço venda',
-	];
-
-	const data_table_2 = [
-		['001', 'Notebook Dell Inspiron', 15, 'Dell', 'R$ 4.500,00'],
-		['002', 'Mouse Gamer Logitech', 50, 'Logitech', 'R$ 250,00'],
-		['003', 'Teclado Mecânico Razer', 30, 'Razer', 'R$ 750,00'],
-		['004', 'Monitor LG UltraWide', 20, 'LG', 'R$ 1.200,00'],
-		['005', 'SSD Kingston 480GB', 100, 'Kingston', 'R$ 350,00'],
-		['006', 'Memória RAM Corsair 16GB', 40, 'Corsair', 'R$ 600,00'],
-		['007', 'Cadeira Gamer DXRacer', 10, 'DXRacer', 'R$ 1.500,00'],
-		['008', 'Headset HyperX Cloud II', 25, 'HyperX', 'R$ 650,00'],
-		['009', 'Placa de Vídeo Nvidia RTX 3080', 5, 'Nvidia', 'R$ 8.000,00'],
-		['010', 'Fonte Corsair 750W', 35, 'Corsair', 'R$ 550,00'],
-		['006', 'Memória RAM Corsair 16GB', 40, 'Corsair', 'R$ 600,00'],
-		['007', 'Cadeira Gamer DXRacer', 10, 'DXRacer', 'R$ 1.500,00'],
-		['008', 'Headset HyperX Cloud II', 25, 'HyperX', 'R$ 650,00'],
-		['009', 'Placa de Vídeo Nvidia RTX 3080', 5, 'Nvidia', 'R$ 8.000,00'],
-		['006', 'Memória RAM Corsair 16GB', 40, 'Corsair', 'R$ 600,00'],
-		['007', 'Cadeira Gamer DXRacer', 10, 'DXRacer', 'R$ 1.500,00'],
-		['008', 'Headset HyperX Cloud II', 25, 'HyperX', 'R$ 650,00'],
-		['009', 'Placa de Vídeo Nvidia RTX 3080', 5, 'Nvidia', 'R$ 8.000,00'],
-		['006', 'Memória RAM Corsair 16GB', 40, 'Corsair', 'R$ 600,00'],
-		['007', 'Cadeira Gamer DXRacer', 10, 'DXRacer', 'R$ 1.500,00'],
-		['008', 'Headset HyperX Cloud II', 25, 'HyperX', 'R$ 650,00'],
-		['009', 'Placa de Vídeo Nvidia RTX 3080', 5, 'Nvidia', 'R$ 8.000,00'],
-	];
+	const columns = ['Email', 'Nome', 'CPF/CNPJ', 'Número', 'Endereço', 'Tipo'];
 
 	const add = () => {
 		alert('ADDDD');
 	};
 
-	useEffect(() => {
-		const fetchUsers = async () => {
-			const data = await getUsers();
+	const fetchUsers = useCallback(async () => {
+		const data = await getUsers(undefined, 'CLIENT');
+		if (data !== users) {
 			setUsers(data);
-		};
-	}, [users]);
+		}
 
-	console.log(users);
+		//		setUsers(arr);
+	}, []);
+
+	useEffect(() => {
+		fetchUsers();
+	}, [fetchUsers]);
+
+	console.log(Object.keys(users[0]));
 
 	return (
 		<div className="flex h-screen overflow-hidden">
@@ -72,7 +47,7 @@ export const Users = () => {
 						<Table
 							icon={IconProductBlack}
 							title="Produtos em estoque"
-							columns={column_table_2}
+							columns={columns}
 							data={users}
 							actions={{
 								showActions: true,

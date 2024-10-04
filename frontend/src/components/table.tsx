@@ -8,7 +8,7 @@ interface TableProps {
 	icon: string;
 	title: string;
 	columns: string[];
-	data: any[][];
+	data: Record<string, any>[];
 	actions?: {
 		showActions: boolean;
 		actionButtonText: string;
@@ -87,7 +87,7 @@ const Table: React.FC<TableProps> = ({
 						</tr>
 					</thead>
 					<tbody>
-						{data.map((row: string[], index: number) => (
+						{data.map((row: Record<string, any>, index: number) => (
 							<tr key={index} className="hover:bg-gray-100">
 								{Object.values(row).map(
 									(cell: string, cellIndex: number) => (
