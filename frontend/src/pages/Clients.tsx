@@ -1,35 +1,29 @@
+import { useCallback, useEffect, useState } from 'react';
 import SearchBox from '../components/search_box';
 import Sidebar from '../components/sidebar';
 import Table from '../components/table';
 import TopNav from '../components/top_nav';
 import IconClientsBlack from '../public/assets/home-page/icons/clients/clients_icon_b.svg';
+import { getUsers } from '../http/get-users';
 
 export const Clients = () => {
-	const today = new Date().toLocaleDateString('pt-BR');
-	const column_table_2 = [
-		'Código',
-		'Nome',
-		'Email',
-		'Telefone',
-		'Endereço',
-	];
+	const [clients, setClients] = useState([{}]);
 
-	const data_table_2 = [
-		['001', 'Cliente A', 'tecnicoa@gmail.com', '(51)99999-9999', 'Av. Paulista, 123'],
-		['002', 'Cliente B', 'tecnicob@gmail.com', '(51)99999-9999', 'Av. Paulista, 123'],
-		['003', 'Cliente C', 'tecnicoc@gmail.com', '(51)99999-9999', 'Av. Paulista, 123'],
-		['004', 'Cliente D', 'tecnicod@gmail.com', '(51)99999-9999', 'Av. Paulista, 123'],
-		['005', 'Cliente E', 'tecnicoe@gmail.com', '(51)99999-9999', 'Av. Paulista, 123'],
-		['006', 'Cliente F', 'tecnicof@gmail.com', '(51)99999-9999', 'Av. Paulista, 123'],
-		['007', 'Cliente G', 'tecnicog@gmail.com', '(51)99999-9999', 'Av. Paulista, 123'],
-		['008', 'Cliente H', 'tecnicoh@gmail.com', '(51)99999-9999', 'Av. Paulista, 123'],
-		['009', 'Cliente I', 'tecnicoi@gmail.com', '(51)99999-9999', 'Av. Paulista, 123'],
-		['010', 'Cliente J', 'tecnicoj@gmail.com', '(51)99999-9999', 'Av. Paulista, 123'],
-	];
+	const today = new Date().toLocaleDateString('pt-BR');
+	const columns = ['Email', 'Nome', 'CPF/CNPJ', 'Número', 'Endereço', 'Tipo'];
 
 	const add = () => {
 		alert('ADDDD');
 	};
+
+	const fetchClients = useCallback(async () => {
+		const data = await getUsers('CLIENT', undefined);
+		if(data !== clients) setClients(clients);
+	}, []);
+
+	useEffect(() => {
+		fetchClients();
+	}, [fetchClients]);
 
 	return (
 		<div className="flex h-screen overflow-hidden">
@@ -48,8 +42,8 @@ export const Clients = () => {
 						<Table
 							icon={IconClientsBlack}
 							title="Clientes"
-							columns={column_table_2}
-							data={data_table_2}
+							columns={columns}
+							data={clients}
 							actions={{
 								showActions: true,
 								actionButtonText: 'Adicionar Cliente',

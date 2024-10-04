@@ -24,9 +24,7 @@ export const Products = () => {
 
 	const fetchProducts = useCallback(async () => {
 		const data = await getProducts();
-		if (data !== products) {
-			setProducts(data);
-		}
+		if (data !== products) setProducts(data);
 	}, []);
 
 	useEffect(() => {
