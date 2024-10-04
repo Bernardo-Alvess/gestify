@@ -4,34 +4,31 @@ import Sidebar from '../components/sidebar';
 import Table from '../components/table';
 import TopNav from '../components/top_nav';
 import IconProductBlack from '../public/assets/home-page/icons/products/products_icon_b.svg';
-import { getProducts } from '../http/get-products';
+import { getUsers } from '../http/get-users';
 
-export const Products = () => {
+export const Users = () => {
+	const [users, setUsers] = useState([{}]);
 	const today = new Date().toLocaleDateString('pt-BR');
-	const [products, setProducts] = useState([]);
-
-	const column_table_2 = [
-		'Código',
-		'Nome',
-		'Quantidade',
-		'Marca',
-		'Preço venda',
-	];
+	const columns = ['Email', 'Nome', 'CPF/CNPJ', 'Número', 'Endereço', 'Tipo'];
 
 	const add = () => {
 		alert('ADDDD');
 	};
 
-	const fetchProducts = useCallback(async () => {
-		const data = await getProducts();
-		if (data !== products) {
-			setProducts(data);
+	const fetchUsers = useCallback(async () => {
+		const data = await getUsers(undefined, 'CLIENT');
+		if (data !== users) {
+			setUsers(data);
 		}
+
+		//		setUsers(arr);
 	}, []);
 
 	useEffect(() => {
-		fetchProducts();
-	}, [fetchProducts]);
+		fetchUsers();
+	}, [fetchUsers]);
+
+	console.log(Object.keys(users[0]));
 
 	return (
 		<div className="flex h-screen overflow-hidden">
@@ -50,8 +47,8 @@ export const Products = () => {
 						<Table
 							icon={IconProductBlack}
 							title="Produtos em estoque"
-							columns={column_table_2}
-							data={products}
+							columns={columns}
+							data={users}
 							actions={{
 								showActions: true,
 								actionButtonText: 'Adicionar Produto',

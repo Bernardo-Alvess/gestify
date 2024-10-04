@@ -4,6 +4,7 @@ import { SignUp } from '../pages/SignUp';
 import { ProtectedRoute } from '../components/protected-route';
 import { Login } from '../pages/Login';
 import { Products } from '../pages/Products';
+import { Users } from '../pages/Users';
 import { ServiceOrders } from '../pages/ServiceOrders';
 import { Clients } from '../pages/Clients';
 const router = createBrowserRouter([
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
 	{
 		path: '/products',
 		element: <ProtectedRoute children={<Products />} />,
+	},
+	{
+		path: '/users',
+		element: <ProtectedRoute children={<Users />} />,
 	},
 	{
 		path: '/orders',
