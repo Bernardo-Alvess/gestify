@@ -1,11 +1,15 @@
+import { useEffect, useState } from 'react';
 import SearchBox from '../components/search_box';
 import Sidebar from '../components/sidebar';
 import Table from '../components/table';
 import TopNav from '../components/top_nav';
 import IconProductBlack from '../public/assets/home-page/icons/products/products_icon_b.svg';
+import { getProducts } from '../http/get-products';
 
 export const Products = () => {
 	const today = new Date().toLocaleDateString('pt-BR');
+	const [products, setProducts] = useState([]);
+
 	const column_table_2 = [
 		'Código',
 		'Nome',
@@ -42,6 +46,16 @@ export const Products = () => {
 	const add = () => {
 		alert('ADDDD');
 	};
+
+	useEffect(() => {
+		const fetchProducts = async () => {
+			const data = await getProducts();
+			console.log(data);
+			setProducts(data);
+		};
+
+		fetchProducts();
+	}, []);
 
 	return (
 		<div className="flex h-screen overflow-hidden">
