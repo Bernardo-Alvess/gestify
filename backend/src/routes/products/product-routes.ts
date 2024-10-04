@@ -24,4 +24,4 @@ productRouter.put('/', (req, res, next) => {
     productController.updateProduct(req, res, next)
 })
 
-export { productRouter };
+export { productRouter }
