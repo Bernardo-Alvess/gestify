@@ -22,31 +22,17 @@ const Table: React.FC<TableProps> = ({
 	data,
 	actions,
 }) => {
-	const edit = (rowData: string[]) => {
+	const edit = (rowData: Record<string, any>) => {
 		alert(`Edit: ${rowData}`);
 	};
 
-	const view = (rowData: string[]) => {
+	const view = (rowData: Record<string, any>) => {
 		alert(`View: ${rowData}`);
 	};
 
-	const del = (rowData: string[]) => {
+	const del = (rowData: Record<string, any>) => {
 		alert(`Delete: ${rowData}`);
 	};
-
-	const handleChangePage = () =>
-		//event: React.MouseEvent<HTMLButtonElement> | null,
-		//newPage: number
-		{
-			// setPage(newPage);
-		};
-
-	const handleChangeRowsPerPage = () =>
-		//event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-		{
-			// setRowsPerPage(parseInt(event.target.value, 10));
-			// setPage(0);
-		};
 
 	return (
 		<div className="bg-white p-4 rounded-lg shadow-lg w-full overflow-y-auto">
@@ -119,18 +105,6 @@ const Table: React.FC<TableProps> = ({
 						))}
 					</tbody>
 				</table>
-				{/* {actions?.showActions ? (
-					<div className="w-full flex items-center justify-center p-2">
-						<TablePagination
-							component="div"
-							count={25}
-							page={1}
-							rowsPerPage={10}
-							onPageChange={handleChangePage}
-							onRowsPerPageChange={handleChangeRowsPerPage}
-						/>
-					</div>
-				) : null} */}
 			</div>
 		</div>
 	);
