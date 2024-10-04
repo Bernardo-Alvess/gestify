@@ -5,7 +5,7 @@ import { ProtectedRoute } from '../components/protected-route';
 import { Login } from '../pages/Login';
 import { Products } from '../pages/Products';
 import { ServiceOrders } from '../pages/ServiceOrders';
-
+import { Clients } from '../pages/Clients';
 const router = createBrowserRouter([
 	{
 		path: '/',
@@ -34,6 +34,10 @@ const router = createBrowserRouter([
 	{
 		path: '/orders',
 		element: <ProtectedRoute children={<ServiceOrders />} />,
+	},
+	{
+		path: '/clients',
+		element: <ProtectedRoute children={<Clients />} />,
 	},
 ]);
 
