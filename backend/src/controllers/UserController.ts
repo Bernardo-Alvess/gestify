@@ -12,14 +12,12 @@ export class UserController {
 
     async createUser(req: Request, res: Response, next: NextFunction) {
         try {
-            const { id, name, email, password, document, number, address, userType, companyId } = req.body
-
+            const companyId = (req as CustomRequest).token.ownerId
+            const { id, name, email, password, document, number, address, userType } = req.body
             const user = new User({ name, email, password, document, number, address, userType, companyId }, id)
 
             await this.repository.createUser(user)
-
             const token = generateToken({ id: user.id, ownerId: companyId, userType: user.userType })
-
             res.status(201).json({ id: user.id, token })
 
         } catch (e) {
@@ -67,18 +65,21 @@ export class UserController {
     async getUsers(req: Request, res: Response, next: NextFunction) {
         try {
             const companyId = (req as CustomRequest).token.ownerId
+
             if ('usertype' in req.query) {
-                console.log('usertype')
                 const userTypeParam = (req.query.usertype as string).toUpperCase()
                 const users = await this.repository.getUsers(userTypeParam, undefined)
                 return res.status(200).json({ users })
-            } else if ('except' in req.query) {
-                console.log('except')
+
+            } else if ('except' in req.query) {    
                 const exceptParam = (req.query.except as string).toUpperCase()
                 const users = await this.repository.getUsers(companyId, undefined, exceptParam)
                 return res.status(200).json({ users })
+
             }
+
             const users = await this.repository.getUsers(companyId)
+
             res.status(200).json({ users })
         } catch (e) {
             next(e)
