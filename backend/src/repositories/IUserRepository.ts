@@ -8,7 +8,7 @@ import { IGetUserDto } from "../entities/User/dtos/UGetUserDto";
 export interface IUserRepository {
     createUser(user: User, company: Company): Promise<void>
     getUserById(id: string): Promise<User | undefined>
-    getUsers(userType?: string, except?: string): Promise<IGetUserDto[] | undefined | User>
+    getUsers(companyId: string, userType?: string, except?: string): Promise<IGetUserDto[] | undefined | User>
     updateUser(id: string, user: IUpdateUserDto): Promise<void | undefined>
     deleteUser(id: string): Promise<void>
 }
