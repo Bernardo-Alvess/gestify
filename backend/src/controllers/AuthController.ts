@@ -21,7 +21,8 @@ export class AuthController {
             const result = await bcrypt.compare(password, user.password)
 
             if (result) {
-                const token = generateToken({ id: user.id, ownerId: user.companyId })
+                const token = generateToken({ id: user.id, ownerId: user.companyId, userType: user.userType })
+
                 res.cookie(
                     'jwt', token, {
                         path: '/',

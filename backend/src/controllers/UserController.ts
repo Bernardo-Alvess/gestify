@@ -3,6 +3,7 @@ import { UserRepository } from '../repositories/implementations/UserRepository'
 import { User } from '../entities/User/User'
 import { generateToken } from '../util/generate-token'
 import { UserType } from '../entities/User/user-type'
+import { CustomRequest } from '../middleware/auth'
 
 export class UserController {
     constructor(
@@ -17,7 +18,7 @@ export class UserController {
 
             await this.repository.createUser(user)
 
-            const token = generateToken({ id: user.id, ownerId: companyId })
+            const token = generateToken({ id: user.id, ownerId: companyId, userType: user.userType })
 
             res.status(201).json({ id: user.id, token })
 
@@ -52,6 +53,7 @@ export class UserController {
 
     async updateUser(req: Request, res: Response, next: NextFunction) {
         try {
+            console.log('controller')
             const { id, name, email, password, document, number, address, userType } = req.body
 
             await this.repository.updateUser(id, { name, email, password, document, number, address, userType })
@@ -64,6 +66,7 @@ export class UserController {
 
     async getUsers(req: Request, res: Response, next: NextFunction) {
         try {
+            const companyId = (req as CustomRequest).token.ownerId
             if ('usertype' in req.query) {
                 console.log('usertype')
                 const userTypeParam = (req.query.usertype as string).toUpperCase()
@@ -72,10 +75,10 @@ export class UserController {
             } else if ('except' in req.query) {
                 console.log('except')
                 const exceptParam = (req.query.except as string).toUpperCase()
-                const users = await this.repository.getUsers(undefined, exceptParam)
+                const users = await this.repository.getUsers(companyId, undefined, exceptParam)
                 return res.status(200).json({ users })
             }
-            const users = await this.repository.getUsers()
+            const users = await this.repository.getUsers(companyId)
             res.status(200).json({ users })
         } catch (e) {
             next(e)

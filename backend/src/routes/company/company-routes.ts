@@ -3,10 +3,11 @@ import { companyController } from "../../controllers/CompanyController";
 import { createCompanySchema } from "../../lib/schemas/company/create-company-schema";
 import { z } from "zod";
 import { updateCompanySchema } from "../../lib/schemas/company/udpate-company-schema";
+import { auth } from "../../middleware/auth";
 
 const companyRouter = Router()
 
-companyRouter.delete('/:id', (req, res, next) => {
+companyRouter.delete('/:id', auth, (req, res, next) => {
     const idSchema = z.string().uuid()
     idSchema.parse(req.params.id)
     companyController.deleteCompany(req, res, next)
@@ -21,7 +22,7 @@ companyRouter.get('/', (req, res, next) => {
     companyController.getCompanies(req, res, next)
 })
 
-companyRouter.put('/', (req, res, next) => {
+companyRouter.put('/', auth, (req, res, next) => {
     updateCompanySchema.parse(req.body)
     companyController.updateCompany(req, res, next)
 })

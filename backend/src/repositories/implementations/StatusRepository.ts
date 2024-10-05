@@ -35,8 +35,10 @@ export class StatusRepository implements IStatusRepository {
         return undefined
     }
 
-    async getAllStatus(): Promise<Status[]> {
-        return await prisma.status.findMany()
+    async getAllStatus(companyId: string): Promise<Status[]> {
+        return await prisma.status.findMany({
+            where: { companyId }
+        })
     }
 
 }

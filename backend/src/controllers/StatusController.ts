@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { StatusRepository } from "../repositories/implementations/StatusRepository";
 import { Status } from "../entities/Status/Status";
+import { CustomRequest } from "../middleware/auth";
 
 export class StatusController {
     constructor(
@@ -22,7 +23,8 @@ export class StatusController {
 
     async getAllStatus(req: Request, res: Response, next: NextFunction) {
         try {
-            const status = await this.repository.getAllStatus()
+            const companyId = (req as CustomRequest).token.ownerId
+            const status = await this.repository.getAllStatus(companyId)
             res.json({ status })
         } catch (e) {
             next(e)
