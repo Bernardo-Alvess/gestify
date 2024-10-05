@@ -3,7 +3,6 @@ import { prisma } from "../../lib/prisma";
 import { IUserRepository } from "../IUserRepository";
 import { UserType } from "../../entities/User/user-type";
 import { IUpdateUserDto } from "../../entities/User/dtos/IUpdateUserDto";
-import { mapUserEntity } from "../../util/map-user-entity";
 import { IGetUserDto } from "../../entities/User/dtos/UGetUserDto";
 
 export class UserRepository implements IUserRepository {
