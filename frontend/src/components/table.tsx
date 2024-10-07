@@ -78,21 +78,30 @@ const Table: React.FC<TableProps> = ({
 									(cell: string, cellIndex: number) => (
 										<td
 											key={cellIndex}
-											className="px-4 py-2 text-xs font-medium border-none underline"
+											className="px-4 py-2 text-xs font-medium border-none underline truncate text-left"
 										>
-											{cell}
+											{cell ? cell : 'N/A'}
 										</td>
 									)
 								)}
 								{actions?.showActions ? (
-									<td className="px-4 py-2 text-xs font-medium border-none flex gap-3">
-										<button onClick={() => edit(row)}>
+									<td className="px-4 py-2 text-xs font-medium border-none flex gap-1">
+										<button
+											className="size-7"
+											onClick={() => edit(row)}
+										>
 											<img src={editIcon} alt="Edit" />
 										</button>
-										<button onClick={() => view(row)}>
+										<button
+											className="size-7"
+											onClick={() => view(row)}
+										>
 											<img src={eyeIcon} alt="View" />
 										</button>
-										<button onClick={() => del(row)}>
+										<button
+											className="size-7"
+											onClick={() => del(row)}
+										>
 											<img
 												src={deleteIcon}
 												alt="Delete"

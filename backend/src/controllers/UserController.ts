@@ -68,7 +68,7 @@ export class UserController {
 
             if ('usertype' in req.query) {
                 const userTypeParam = (req.query.usertype as string).toUpperCase()
-                const users = await this.repository.getUsers(userTypeParam, undefined)
+                const users = await this.repository.getUsers(companyId, userTypeParam, undefined)
                 return res.status(200).json({ users })
 
             } else if ('except' in req.query) {    
