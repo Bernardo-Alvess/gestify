@@ -5,10 +5,11 @@ import Table from '../components/table';
 import TopNav from '../components/top_nav';
 import IconClientsBlack from '../public/assets/home-page/icons/clients/clients_icon_b.svg';
 import { getUsers } from '../http/get-users';
+import { useCookies } from 'react-cookie';
 
 export const Clients = () => {
 	const [clients, setClients] = useState([{}]);
-
+	const [cookies] = useCookies();
 	const today = new Date().toLocaleDateString('pt-BR');
 	const columns = ['Email', 'Nome', 'CPF/CNPJ', 'Número', 'Endereço', 'Tipo'];
 
@@ -17,13 +18,15 @@ export const Clients = () => {
 	};
 
 	const fetchClients = useCallback(async () => {
-		const data = await getUsers('CLIENT', undefined);
-		if(data !== clients) setClients(clients);
+		const data = await getUsers(cookies.jwt, 'CLIENT', undefined);
+		if (data != clients) setClients(data);
 	}, []);
 
 	useEffect(() => {
 		fetchClients();
 	}, [fetchClients]);
+
+	console.log(clients);
 
 	return (
 		<div className="flex h-screen overflow-hidden">

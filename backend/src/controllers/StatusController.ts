@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { StatusRepository } from "../repositories/implementations/StatusRepository";
 import { Status } from "../entities/Status/Status";
+import { CustomRequest } from "../@types/custom-request";
 
 export class StatusController {
     constructor(
@@ -9,7 +10,8 @@ export class StatusController {
 
     async createStatus(req: Request, res: Response, next: NextFunction) {
         try {
-            const { name, companyId } = req.body
+            const companyId = (req as CustomRequest).token.ownerId
+            const { name } = req.body
             const status = new Status({ name, companyId })
 
             await this.repository.createStatus(status)
@@ -22,7 +24,8 @@ export class StatusController {
 
     async getAllStatus(req: Request, res: Response, next: NextFunction) {
         try {
-            const status = await this.repository.getAllStatus()
+            const companyId = (req as CustomRequest).token.ownerId
+            const status = await this.repository.getAllStatus(companyId)
             res.json({ status })
         } catch (e) {
             next(e)

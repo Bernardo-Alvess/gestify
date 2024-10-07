@@ -3,7 +3,6 @@ import { prisma } from "../../lib/prisma";
 import { IUserRepository } from "../IUserRepository";
 import { UserType } from "../../entities/User/user-type";
 import { IUpdateUserDto } from "../../entities/User/dtos/IUpdateUserDto";
-import { mapUserEntity } from "../../util/map-user-entity";
 import { IGetUserDto } from "../../entities/User/dtos/UGetUserDto";
 
 export class UserRepository implements IUserRepository {
@@ -23,12 +22,13 @@ export class UserRepository implements IUserRepository {
 
         return undefined
     }
-    async getUsers(userType?: string, except?: string): Promise<IGetUserDto[] | undefined> {
+    async getUsers(companyId: string, userType?: string, except?: string): Promise<IGetUserDto[] | undefined> {
         if (userType) {
 
             const users = await prisma.user.findMany({
                 where: {
-                    userType
+                    userType,
+                    companyId
                 },
                 select: {
                     email: true,
@@ -48,7 +48,8 @@ export class UserRepository implements IUserRepository {
                 where: {
                     userType: {
                         not: except
-                    }
+                    },
+                    companyId
                 },
                 select: {
                     email: true,
@@ -64,6 +65,9 @@ export class UserRepository implements IUserRepository {
 
         } else {
             const users = await prisma.user.findMany({
+                where: {
+                    companyId
+                },
                 select: {
                     email: true,
                     name: true,
@@ -98,6 +102,7 @@ export class UserRepository implements IUserRepository {
             }
         })
     }
+
     async deleteUser(id: string): Promise<void> {
         await prisma.user.delete({ where: { id } })
     }

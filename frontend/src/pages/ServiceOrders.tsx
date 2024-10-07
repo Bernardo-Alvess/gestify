@@ -5,17 +5,21 @@ import Table from '../components/table';
 import TopNav from '../components/top_nav';
 import { getServiceOrders } from '../http/get-service-orders';
 import IconOrdersBlack from '../public/assets/home-page/icons/orders/orders_icon_b.svg';
+import { useCookies } from 'react-cookie';
 
 export const ServiceOrders = () => {
 	const [orders, setOrders] = useState([]);
+	const [cookies] = useCookies();
 	const today = new Date().toLocaleDateString('pt-BR');
 	const column_table_2 = [
-		'Código',
+		'Id',
+		'Descrição',
+		'Defeito',
+		'Report',
+		'Observações',
+		'Status',
+		'Técnicno',
 		'Cliente',
-		'Responsável',
-		'Preço custo',
-		'Valor Total',
-		'Lucro',
 	];
 
 	const add = () => {
@@ -23,7 +27,7 @@ export const ServiceOrders = () => {
 	};
 
 	const fetchServiceOrders = useCallback(async () => {
-		const data = await getServiceOrders();
+		const data = await getServiceOrders(cookies.jwt);
 		if (data !== orders) setOrders(data);
 	}, []);
 

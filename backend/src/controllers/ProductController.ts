@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { ProductRepository } from "../repositories/implementations/ProductRepository";
 import { Product } from "../entities/Products/Product";
 import { IUpdateProductDto } from "../entities/Products/dtos/IUpdateProductDto";
+import { CustomRequest } from "../@types/custom-request";
 
 class ProductController {
     constructor(
@@ -10,7 +11,8 @@ class ProductController {
 
     async createProduct(req: Request, res: Response, next: NextFunction) {
         try {
-            const { name, price, cost, unityType, minQtd, qtd, companyId } = req.body;
+            const companyId = (req as CustomRequest).token.ownerId
+            const { name, price, cost, unityType, minQtd, qtd } = req.body;
 
             const product = new Product({ name, price, cost, unityType, minQtd, qtd, companyId });
             await this.repository.createProduct(product);
@@ -37,7 +39,8 @@ class ProductController {
 
     async getProducts(req: Request, res: Response, next: NextFunction) {
         try {
-            const products = await this.repository.getProducts();
+            const companyId = (req as CustomRequest).token.ownerId
+            const products = await this.repository.getProducts(companyId);
             res.json({ products });
         } catch (e) {
             next(e);
