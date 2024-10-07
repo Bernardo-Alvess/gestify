@@ -6,7 +6,6 @@ export const createServiceOrderSchema = z.object({
     defect: z.string().optional().nullable(),
     report: z.string().optional().nullable(),
     extras: z.string().optional().nullable(),
-    companyId: z.string().uuid(),
     userId: z.string().uuid(),
     statusId: z.string().uuid(),
     technicianId: z.string().uuid().optional(),

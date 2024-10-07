@@ -2,8 +2,7 @@ import { Request, Response, NextFunction } from 'express'
 import { UserRepository } from '../repositories/implementations/UserRepository'
 import { User } from '../entities/User/User'
 import { generateToken } from '../util/generate-token'
-import { UserType } from '../entities/User/user-type'
-import { CustomRequest } from '../middleware/auth'
+import { CustomRequest } from '../@types/custom-request'
 
 export class UserController {
     constructor(

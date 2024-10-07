@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { StatusRepository } from "../repositories/implementations/StatusRepository";
 import { Status } from "../entities/Status/Status";
-import { CustomRequest } from "../middleware/auth";
+import { CustomRequest } from "../@types/custom-request";
 
 export class StatusController {
     constructor(
@@ -10,7 +10,8 @@ export class StatusController {
 
     async createStatus(req: Request, res: Response, next: NextFunction) {
         try {
-            const { name, companyId } = req.body
+            const companyId = (req as CustomRequest).token.ownerId
+            const { name } = req.body
             const status = new Status({ name, companyId })
 
             await this.repository.createStatus(status)

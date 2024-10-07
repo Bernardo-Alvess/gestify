@@ -1,11 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import jwt, { JwtPayload } from 'jsonwebtoken'
 import 'dotenv/config'
+import { CustomRequest } from "../@types/custom-request";
 const SECRET_KEY = process.env.JWT_SECRET ?? 'abc123';
 
-export interface CustomRequest extends Request {
-    token: JwtPayload;
-}
 
 export const auth = async (req: Request, res: Response, next: NextFunction) => {
     try {

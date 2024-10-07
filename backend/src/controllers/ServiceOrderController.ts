@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express'
 
 import { ServiceOrderRepository } from "../repositories/implementations/ServiceOrderRepository";
 import { ServiceOrder } from '../entities/ServiceOrder/ServiceOrder';
+import { CustomRequest } from '../@types/custom-request';
 
 export class ServiceOrderController {
     constructor(
@@ -10,7 +11,8 @@ export class ServiceOrderController {
 
     async createServiceOrder(req: Request, res: Response, next: NextFunction) {
         try {
-            const { id, description, defect, extras, companyId, clientId, technicianId, statusId, userId } = req.body
+            const companyId = (req as CustomRequest).token.ownerId
+            const { id, description, defect, extras, clientId, technicianId, statusId, userId } = req.body
 
             const serviceOrder = new ServiceOrder({ id, description, defect, extras, companyId, clientId, technicianId, statusId, userId })
 
@@ -35,16 +37,13 @@ export class ServiceOrderController {
 
     async getServiceOrders(req: Request, res: Response, next: NextFunction) {
         try {
-            const serviceOrders = await this.repository.getServiceOrders()
-
+            const companyId = (req as CustomRequest).token.ownerId;
+            const serviceOrders = await this.repository.getServiceOrders(companyId)
             res.json({ serviceOrders })
         } catch (e) {
             next(e)
         }
     }
-
-
-    // TODO: implementar DTO para update de OS
 
     async updateServiceOrders(req: Request, res: Response, next: NextFunction) {
         try {
