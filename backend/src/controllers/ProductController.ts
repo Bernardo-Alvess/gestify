@@ -39,7 +39,8 @@ class ProductController {
 
     async getProducts(req: Request, res: Response, next: NextFunction) {
         try {
-            const products = await this.repository.getProducts();
+            const companyId = (req as CustomRequest).token.ownerId
+            const products = await this.repository.getProducts(companyId);
             res.json({ products });
         } catch (e) {
             next(e);

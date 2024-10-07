@@ -29,6 +29,7 @@ export class ServiceOrderRepository implements IServiceOrderRepository {
                 companyId
             },
             select: {
+                id: true,
                 description: true,
                 defect: true,
                 report: true,

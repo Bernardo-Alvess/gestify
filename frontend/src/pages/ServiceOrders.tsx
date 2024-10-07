@@ -12,12 +12,14 @@ export const ServiceOrders = () => {
 	const [cookies] = useCookies();
 	const today = new Date().toLocaleDateString('pt-BR');
 	const column_table_2 = [
-		'Código',
+		'Id',
+		'Descrição',
+		'Defeito',
+		'Report',
+		'Observações',
+		'Status',
+		'Técnicno',
 		'Cliente',
-		'Responsável',
-		'Preço custo',
-		'Valor Total',
-		'Lucro',
 	];
 
 	const add = () => {
