@@ -22,12 +22,13 @@ export class UserRepository implements IUserRepository {
 
         return undefined
     }
-    async getUsers(userType?: string, except?: string): Promise<IGetUserDto[] | undefined> {
+    async getUsers(companyId: string, userType?: string, except?: string): Promise<IGetUserDto[] | undefined> {
         if (userType) {
 
             const users = await prisma.user.findMany({
                 where: {
-                    userType
+                    userType,
+                    companyId
                 },
                 select: {
                     email: true,
@@ -47,7 +48,8 @@ export class UserRepository implements IUserRepository {
                 where: {
                     userType: {
                         not: except
-                    }
+                    },
+                    companyId
                 },
                 select: {
                     email: true,
@@ -63,6 +65,9 @@ export class UserRepository implements IUserRepository {
 
         } else {
             const users = await prisma.user.findMany({
+                where: {
+                    companyId
+                },
                 select: {
                     email: true,
                     name: true,

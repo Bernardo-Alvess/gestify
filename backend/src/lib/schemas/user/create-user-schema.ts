@@ -12,6 +12,6 @@ export const createUserSchema = z.object({
     userType: z.nativeEnum(UserType, {
         errorMap: () => ({ message: 'Invalid user type, must be of: ADMIN, TECHNICIAN, CLIENT OR OWNER' })
     }),
-    companyId: z.string().uuid()
+    //companyId: z.string().uuid()
 
 }).strict()
