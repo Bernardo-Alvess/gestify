@@ -5,28 +5,27 @@ import { IProductRepository } from '../IProductRepository';
 import { IUpdateProductDto } from '../../entities/Products/dtos/IUpdateProductDto'; 
 
 export class ProductRepository implements IProductRepository {
+  async getProduct(id: string): Promise<Product | undefined> {
+    const data = await prisma.product.findUnique({
+      where: { id },
+    });
 
-    async getProduct(id: string): Promise<Product | undefined> {
-        const data = await prisma.product.findUnique({
-          where: { id },
-        });
-    
-        if (data) return new Product({ ...data });
-    
-        return undefined;
-      }
+    if (data) return new Product({ ...data });
 
-      async updateProduct(id: string, productData: IUpdateProductDto): Promise<Product | undefined> {
-        await prisma.product.update({
-          where: { id },
-          data: {
-            ...productData,
-          },
-        });
-    
-        const product = this.getProduct(id);
-        return product;
-      }
+    return undefined;
+  }
+
+  async updateProduct(id: string, productData: IUpdateProductDto): Promise<Product | undefined> {
+    await prisma.product.update({
+      where: { id },
+      data: {
+        ...productData,
+      },
+    });
+
+    const product = this.getProduct(id);
+    return product;
+  }
 
   async getProducts(companyId: string): Promise<Product[]> {
     return await prisma.product.findMany({
@@ -36,16 +35,43 @@ export class ProductRepository implements IProductRepository {
     });
       }
 
-      async createProduct(product: Product){
-        await prisma.product.create({
-          data: product ,
-        });
-      }
+  async createProduct(product: Product) {
+    await prisma.product.create({
+      data: product,
+    });
+  }
 
-      async deleteProduct(id: string): Promise<void> {
-        await prisma.product.delete({
-          where: { id },
-        });
+  async deleteProduct(id: string): Promise<void> {
+    await prisma.product.delete({
+      where: { id },
+    });
+  }
+
+  async getProductCount(companyId: string): Promise<Number> {
+    const count = await prisma.product.count({
+      where: {
+        companyId
       }
+    })
+
+    return count
+  }
+
+  async getLowStockProducts(companyId: string): Promise<Product[]> {
+    const products = prisma.product.findMany({
+      where: {
+        qtd: {
+          lte: prisma.product.fields.minQtd,
+          not: null
+        },
+        minQtd: {
+          not: null
+        }
+      }
+    })
+
+    return products
+
+  }
 
 }

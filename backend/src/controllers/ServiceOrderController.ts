@@ -70,7 +70,8 @@ export class ServiceOrderController {
 
     async getSoCount(req: Request, res: Response, next: NextFunction) {
         try {
-            const count = await this.repository.getSoCount()
+            const companyId = (req as CustomRequest).token.ownerId
+            const count = await this.repository.getSoCount(companyId)
             res.json({ count })
         } catch (e) {
             next(e)
