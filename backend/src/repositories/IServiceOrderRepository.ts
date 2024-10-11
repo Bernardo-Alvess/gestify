@@ -8,5 +8,5 @@ export interface IServiceOrderRepository {
     getServiceOrders(companyId: string): Promise<IGetServiceOrderDto[]>;
     updateServiceOrder(id: string, data: IUpdateServiceOrderDto): Promise<void>;
     deleteServiceOrder(id: string): Promise<void>;
-    getSoCount(): Promise<Number>
+    getSoCount(companyId: string): Promise<Number>
 }

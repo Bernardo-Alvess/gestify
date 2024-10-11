@@ -56,7 +56,11 @@ export class ServiceOrderRepository implements IServiceOrderRepository {
 
     }
 
-    async getSoCount(): Promise<Number> {
-        return await prisma.serviceOrder.count()
+    async getSoCount(companyId: string): Promise<Number> {
+        return await prisma.serviceOrder.count({
+            where: {
+                companyId
+            }
+        })
     }
 }

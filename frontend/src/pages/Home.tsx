@@ -85,7 +85,7 @@ export const Home = () => {
 					<TopNav />
 				</header>
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-					<Link to="/services">
+					<Link to="/orders">
 						<InfoCard
 							icon={IconOrders}
 							title="Ordens de Serviço"
