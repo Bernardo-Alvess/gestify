@@ -12,8 +12,8 @@ export class UserController {
     async createUser(req: Request, res: Response, next: NextFunction) {
         try {
             const companyId = (req as CustomRequest).token.ownerId
-            const { id, name, email, password, document, number, address, userType } = req.body
-            const user = new User({ name, email, password, document, number, address, userType, companyId }, id)
+            const { id, name, email, password, document, number, neighborhood, city, address, userType } = req.body
+            const user = new User({ name, email, password, document, number, address, neighborhood, city, userType, companyId }, id)
 
             await this.repository.createUser(user)
             const token = generateToken({ id: user.id, ownerId: companyId, userType: user.userType })

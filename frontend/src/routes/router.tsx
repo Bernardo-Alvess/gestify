@@ -7,6 +7,7 @@ import { Products } from '../pages/Products';
 import { Users } from '../pages/Users';
 import { ServiceOrders } from '../pages/ServiceOrders';
 import { Clients } from '../pages/Clients';
+import { ViewUser } from '../pages/ViewUser';
 const router = createBrowserRouter([
 	{
 		path: '/',
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
 	{
 		path: '/clients',
 		element: <ProtectedRoute children={<Clients />} />,
+	},
+	{
+		path: '/view-user/:id',
+		element: <ProtectedRoute children={<ViewUser />} />,
 	},
 ]);
 

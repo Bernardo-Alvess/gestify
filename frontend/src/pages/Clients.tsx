@@ -11,7 +11,15 @@ export const Clients = () => {
 	const [clients, setClients] = useState([{}]);
 	const [cookies] = useCookies();
 	const today = new Date().toLocaleDateString('pt-BR');
-	const columns = ['Email', 'Nome', 'CPF/CNPJ', 'Número', 'Endereço', 'Tipo'];
+	const columns = [
+		'Id',
+		'Email',
+		'Nome',
+		'CPF/CNPJ',
+		'Número',
+		'Endereço',
+		'Tipo',
+	];
 
 	const add = () => {
 		alert('ADDDD');
@@ -52,6 +60,7 @@ export const Clients = () => {
 								actionButtonText: 'Adicionar Cliente',
 								action: add,
 							}}
+							viewPage="/view-user"
 						/>
 					</div>
 				</div>
