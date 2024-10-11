@@ -11,4 +11,5 @@ export interface IUserRepository {
     getUsers(companyId: string, userType?: string, except?: string): Promise<IGetUserDto[] | undefined | User>
     updateUser(id: string, user: IUpdateUserDto): Promise<void | undefined>
     deleteUser(id: string): Promise<void>
+    getUserCount(companyId: string, userType?: string, except?: string): Promise<number>
 }

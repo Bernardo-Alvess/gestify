@@ -24,7 +24,6 @@ export class UserRepository implements IUserRepository {
     }
     async getUsers(companyId: string, userType?: string, except?: string): Promise<IGetUserDto[] | undefined> {
         if (userType) {
-
             const users = await prisma.user.findMany({
                 where: {
                     userType,
@@ -81,18 +80,35 @@ export class UserRepository implements IUserRepository {
         }
     }
 
+    async getUserCount(companyId: string, userType?: string, except?: string): Promise<number> {
+        if (userType) {
+            const count = await prisma.user.count({
+                where: {
+                    userType,
+                    companyId
+                }
+            })
+            return count
 
-    // async getClients(): Promise<User[] | undefined> {
-    //     const data = await prisma.user.findMany({
-    //         where: {
-    //             userType: 'CLIENT'
-    //         }
-    //     })
-    //     if(data){
-    //         const users = mapUserEntity()
-    //     } return data
-    //     return undefined
-    // }
+        } else if (except) {
+            const count = await prisma.user.count({
+                where: {
+                    userType: {
+                        not: except
+                    },
+                    companyId
+                }
+            })
+            return count
+        }
+
+        const count = await prisma.user.count({
+            where: {
+                companyId
+            }
+        })
+        return count
+    }
 
     async updateUser(id: string, user: IUpdateUserDto): Promise<void | undefined> {
         await prisma.user.update({
@@ -133,11 +149,4 @@ export class UserRepository implements IUserRepository {
             })
         }
     }
-
-    async getUserCount(): Promise<number> {
-        const count = await prisma.user.count()
-
-        return count
-    }
-
 }

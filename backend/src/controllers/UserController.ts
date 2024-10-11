@@ -87,8 +87,20 @@ export class UserController {
 
     async getUserCount(req: Request, res: Response, next: NextFunction) {
         try {
-            const userCount = await this.repository.getUserCount()
-            res.status(200).json({ userCount })
+            const companyId = (req as CustomRequest).token.ownerId
+
+            if ('usertype' in req.query) {
+                const userTypeParam = (req.query.usertype as string).toUpperCase()
+                const count = await this.repository.getUserCount(companyId, userTypeParam, undefined)
+                return res.status(200).json({ count })
+            } else if ('except' in req.query) {
+                const exceptParam = (req.query.except as string).toUpperCase()
+                const count = await this.repository.getUserCount(companyId, undefined, exceptParam)
+                return res.status(200).json({ count })
+            }
+
+            const count = await this.repository.getUserCount(companyId)
+            res.status(200).json({ count })
         } catch (e) {
             next(e)
         }
