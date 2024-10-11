@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
-import SearchBox from '../components/search_box';
+import SearchBox from '../components/search-box';
 import Sidebar from '../components/sidebar';
 import Table from '../components/table';
-import TopNav from '../components/top_nav';
+import TopNav from '../components/top-nav';
 import { getServiceOrders } from '../http/get-service-orders';
 import IconOrdersBlack from '../public/assets/home-page/icons/orders/orders_icon_b.svg';
 import { useCookies } from 'react-cookie';
