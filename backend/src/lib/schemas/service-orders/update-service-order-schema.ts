@@ -5,8 +5,7 @@ export const updateServiceOrderSchema = z.object({
         defect: z.string().optional().nullable(),
         report: z.string().optional().nullable(),
         extras: z.string().optional().nullable(),
-        statusId: z.string().uuid(),
+        status: z.string(),
         technicianId: z.string().uuid().optional(),
         clientId: z.string().uuid().optional()
-
 })

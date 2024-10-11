@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { UserType } from '../../../entities/User/user-type'
+import { UserType } from '../../../entities/User/user-type-enum'
 
 export const createUserSchema = z.object({
     id: z.string().uuid().nullable().optional(),

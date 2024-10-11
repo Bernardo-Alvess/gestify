@@ -1,4 +1,4 @@
-import { UserType } from "../user-type"
+import { UserType } from "../user-type-enum"
 
 export interface IUpdateUserDto {
     email: string

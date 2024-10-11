@@ -1,7 +1,7 @@
 import { User } from "../../entities/User/User";
 import { prisma } from "../../lib/prisma";
 import { IUserRepository } from "../IUserRepository";
-import { UserType } from "../../entities/User/user-type";
+import { UserType } from "../../entities/User/user-type-enum";
 import { IUpdateUserDto } from "../../entities/User/dtos/IUpdateUserDto";
 import { IGetUserDto } from "../../entities/User/dtos/UGetUserDto";
 
@@ -125,7 +125,6 @@ export class UserRepository implements IUserRepository {
 
 
     async createUser(user: User): Promise<void> {
-
         const data = await prisma.company.findUnique({
             where: {
                 id: user.companyId

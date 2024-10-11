@@ -2,7 +2,7 @@ import { ZodUndefinedDef } from "zod";
 import { User } from "../entities/User/User";
 import { Company } from "@prisma/client";
 import { IUpdateUserDto } from "../entities/User/dtos/IUpdateUserDto";
-import { UserType } from "../entities/User/user-type";
+import { UserType } from "../entities/User/user-type-enum";
 import { IGetUserDto } from "../entities/User/dtos/UGetUserDto";
 
 export interface IUserRepository {
