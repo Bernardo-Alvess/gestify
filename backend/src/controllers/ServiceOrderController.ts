@@ -12,9 +12,9 @@ export class ServiceOrderController {
     async createServiceOrder(req: Request, res: Response, next: NextFunction) {
         try {
             const companyId = (req as CustomRequest).token.ownerId
-            const { id, description, defect, extras, clientId, technicianId, statusId, userId } = req.body
+            const { id, description, defect, extras, clientId, technicianId, status, userId } = req.body
 
-            const serviceOrder = new ServiceOrder({ id, description, defect, extras, companyId, clientId, technicianId, statusId, userId })
+            const serviceOrder = new ServiceOrder({ id, description, defect, extras, companyId, clientId, technicianId, status, userId })
 
             await this.repository.createServiceOrder(serviceOrder)
 
@@ -48,9 +48,9 @@ export class ServiceOrderController {
     async updateServiceOrders(req: Request, res: Response, next: NextFunction) {
         try {
             const id = req.params.id
-            const { description, report, defect, extras, statusId, userId, technicianId, clientId } = req.body
+            const { description, report, defect, extras, status, userId, technicianId, clientId } = req.body
 
-            await this.repository.updateServiceOrder(id, { description, report, defect, extras, statusId, userId, technicianId, clientId })
+            await this.repository.updateServiceOrder(id, { description, report, defect, extras, status, userId, technicianId, clientId })
 
             res.send()
         } catch (e) {

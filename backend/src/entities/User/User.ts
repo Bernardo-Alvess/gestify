@@ -1,5 +1,5 @@
 import { randomUUID } from 'node:crypto'
-import { UserType } from './user-type'
+import { UserType } from './user-type-enum'
 
 interface IUserProps {
     email: string

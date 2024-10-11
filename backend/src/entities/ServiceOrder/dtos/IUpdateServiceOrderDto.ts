@@ -3,7 +3,7 @@ export interface IUpdateServiceOrderDto {
     report?: string;
     defect?: string;
     extras?: string;
-    statusId: string;
+    status: string;
     userId: string;
     technicianId?: string;
     clientId?: string;

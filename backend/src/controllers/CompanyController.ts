@@ -7,7 +7,7 @@ import { hashPassword } from "../util/hash-password";
 import { generateToken } from "../util/generate-token";
 import { UserRepository } from "../repositories/implementations/UserRepository";
 import { User } from "../entities/User/User";
-import { UserType } from "../entities/User/user-type";
+import { UserType } from "../entities/User/user-type-enum";
 import { AuthController, authController } from "./AuthController";
 
 class CompanyController {

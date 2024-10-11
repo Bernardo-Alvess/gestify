@@ -1,4 +1,6 @@
 import { randomUUID } from 'node:crypto'
+import { StatusEnum } from './status-enum';
+import { stat } from 'node:fs';
 
 interface IServiceOrderProps {
     id?: string;
@@ -7,23 +9,24 @@ interface IServiceOrderProps {
     report?: string;
     extras?: string;
     companyId: string;
-    statusId: string;
+    status: StatusEnum
     userId: string;
     technicianId?: string;
     clientId?: string;
 }
+
 export class ServiceOrder {
-    id?: string
-    description?: string | null
-    defect?: string | null
-    report?: string | null
-    extras?: string | null
-    date: Date = new Date();
-    companyId: string;
-    statusId: string;
-    userId: string;
-    technicianId?: string | null
-    clientId?: string | null
+    public readonly id?: string
+    public description?: string | null
+    public defect?: string | null
+    public report?: string | null
+    public extras?: string | null
+    public date: Date = new Date();
+    public companyId: string;
+    public status: StatusEnum
+    public userId: string;
+    public technicianId?: string | null
+    public clientId?: string | null
 
     constructor(data: IServiceOrderProps) {
         if (data.id) {
@@ -39,7 +42,7 @@ export class ServiceOrder {
         this.companyId = data.companyId
         this.clientId = data.clientId
         this.technicianId = data.technicianId
-        this.statusId = data.statusId
+        this.status = data.status
         this.userId = data.userId
     }
 
