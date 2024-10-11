@@ -58,6 +58,7 @@ export class ProductRepository implements IProductRepository {
   }
 
   async getLowStockProducts(companyId: string): Promise<Product[]> {
+
     const products = prisma.product.findMany({
       where: {
         qtd: {
@@ -71,7 +72,6 @@ export class ProductRepository implements IProductRepository {
     })
 
     return products
-
   }
 
 }
