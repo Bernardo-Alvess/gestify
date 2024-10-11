@@ -85,8 +85,8 @@ const ViewUser = () => {
 							Cliente: {client?.name || 'N/A'}
 						</p>
 					</div>
-					<div className="w-full h-full flex gap-">
-						<div className="flex">
+					<div className="grid grid-cols-[repeat(auto-fit,minmax(125px,1fr))] overflow-y-scroll max-h-[500px] lg:max-h-[550px] xl:max-h-[700px]">
+						<div className="col-span-4 flex">
 							<div className="p-3 flex flex-col gap-12">
 								<div className="flex flex-col gap-1 w-fit">
 									<label
@@ -218,7 +218,7 @@ const ViewUser = () => {
 								</div>
 							</div>
 						</div>
-						<div className="w-full overflow-x-auto">
+						<div className="col-span-8 h-fit">
 							<Table
 								icon={OrdersIcon}
 								title="Ordens Associadas ao Cliente"
