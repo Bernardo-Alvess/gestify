@@ -31,7 +31,7 @@ export class AuthController {
                         secure: true,
                         httpOnly: false,
                         sameSite: 'none',
-                        domain: cookieDomain
+                        //domain: cookieDomain
                 })
                 res.cookie(
                     'id', user.id, {
@@ -41,7 +41,7 @@ export class AuthController {
                         secure: true,
                         httpOnly: false,
                         sameSite: 'none',
-                        domain: cookieDomain
+                        //domain: cookieDomain
                 })
                 return res.json({ logged: true })
             }
