@@ -35,6 +35,7 @@ export class ServiceOrderRepository implements IServiceOrderRepository {
                 defect: true,
                 report: true,
                 extras: true,
+                date: true,
                 status: true,
                 technicianId: true,
                 clientId: true
