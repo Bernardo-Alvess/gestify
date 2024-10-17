@@ -6,8 +6,10 @@ import TopNav from '../components/top-nav';
 import IconClientsBlack from '../public/assets/home-page/icons/clients/clients_icon_b.svg';
 import { getUsers } from '../http/get-users';
 import { useCookies } from 'react-cookie';
+import { useNavigate } from 'react-router-dom';
 
 export const Clients = () => {
+	const navigate = useNavigate();
 	const [clients, setClients] = useState([{}]);
 	const [cookies] = useCookies();
 	const today = new Date().toLocaleDateString('pt-BR');
@@ -25,7 +27,7 @@ export const Clients = () => {
 	];
 
 	const add = () => {
-		alert('ADDDD');
+		navigate('/create-user');
 	};
 
 	const fetchClients = useCallback(async () => {

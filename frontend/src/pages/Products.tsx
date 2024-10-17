@@ -5,9 +5,11 @@ import Table from '../components/table';
 import TopNav from '../components/top-nav';
 import IconProductBlack from '../public/assets/home-page/icons/products/products_icon_b.svg';
 import { getProducts } from '../http/get-products';
+import { useCookies } from 'react-cookie';
 
 export const Products = () => {
 	const today = new Date().toLocaleDateString('pt-BR');
+	const [cookies] = useCookies(['jwt'])
 	const [products, setProducts] = useState([]);
 
 	const column_table_2 = [
@@ -23,7 +25,7 @@ export const Products = () => {
 	};
 
 	const fetchProducts = useCallback(async () => {
-		const data = await getProducts();
+		const data = await getProducts(cookies.jwt);
 		if (data !== products) setProducts(data);
 	}, []);
 

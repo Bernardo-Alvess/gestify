@@ -40,7 +40,7 @@ export const Login = () => {
 			return;
 		}
 
-		console.log(cookies);
+		toast.success('Entrando...');
 		login();
 		navigate(`/home/${cookies.id}`);
 	};

@@ -9,9 +9,9 @@ export const createUserSchema = z.object({
     document: z.string().min(11, 'document reason must be atleast 11 characters long').max(14, 'Document must have less than 14 characters'),
     number: z.string().min(9, 'Number must have atleast 9 digits').nullable(),
     address: z.string().nullable(),
+    neighborhood: z.string().nullable(),
+    city: z.string().nullable(),
     userType: z.nativeEnum(UserType, {
         errorMap: () => ({ message: 'Invalid user type, must be of: ADMIN, TECHNICIAN, CLIENT OR OWNER' })
     }),
-    //companyId: z.string().uuid()
-
 }).strict()
