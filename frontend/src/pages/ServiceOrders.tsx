@@ -17,6 +17,7 @@ export const ServiceOrders = () => {
 		'Defeito',
 		'Report',
 		'Observações',
+		'Data',
 		'Status',
 		'Técnico',
 		'Cliente',

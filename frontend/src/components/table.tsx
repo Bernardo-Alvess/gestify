@@ -80,7 +80,7 @@ const Table: React.FC<TableProps> = ({
 						{data.map((row: Record<string, any>, index: number) => (
 							<tr key={index} className="hover:bg-gray-100">
 								{Object.values(row).map(
-									(cell: string, cellIndex: number) => (
+									(cell: any, cellIndex: number) => (
 										<td
 											key={cellIndex}
 											className="px-4 py-2 text-xs font-medium border-none underline truncate text-left"

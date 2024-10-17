@@ -16,9 +16,12 @@ export const Clients = () => {
 		'Email',
 		'Nome',
 		'CPF/CNPJ',
-		'Número',
 		'Endereço',
+		'Cidade',
+		'Bairro',
+		'Número',
 		'Tipo',
+		'Data de registro',
 	];
 
 	const add = () => {

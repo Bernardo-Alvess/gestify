@@ -35,6 +35,7 @@ export class ServiceOrderRepository implements IServiceOrderRepository {
                 defect: true,
                 report: true,
                 extras: true,
+                date: true,
                 status: true,
                 technicianId: true,
                 clientId: true
@@ -46,6 +47,17 @@ export class ServiceOrderRepository implements IServiceOrderRepository {
         return await prisma.serviceOrder.findMany({
             where: {
                 clientId
+            },
+            select: {
+                id: true,
+                description: true,
+                defect: true,
+                report: true,
+                extras: true,
+                date: true,
+                status: true,
+                technicianId: true,
+                clientId: true,
             }
         })
     }
