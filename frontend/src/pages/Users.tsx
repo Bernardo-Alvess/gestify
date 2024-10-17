@@ -7,7 +7,7 @@ import IconProductBlack from '../public/assets/home-page/icons/products/products
 import { getUsers } from '../http/get-users';
 import { useCookies } from 'react-cookie';
 
-export const Usevirs = () => {
+export const Users = () => {
 	const [users, setUsers] = useState([{}]);
 	const [cookies] = useCookies();
 	const today = new Date().toLocaleDateString('pt-BR');

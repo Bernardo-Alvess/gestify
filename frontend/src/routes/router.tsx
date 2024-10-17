@@ -8,6 +8,7 @@ import { Users } from '../pages/Users';
 import { ServiceOrders } from '../pages/ServiceOrders';
 import { Clients } from '../pages/Clients';
 import { ViewUser } from '../pages/ViewUser';
+import { CreateClient } from '../pages/CreateClient';
 const router = createBrowserRouter([
 	{
 		path: '/',
@@ -48,6 +49,10 @@ const router = createBrowserRouter([
 	{
 		path: '/view-user/:id',
 		element: <ProtectedRoute children={<ViewUser />} />,
+	},
+	{
+		path: 'create-user',
+		element: <ProtectedRoute children={<CreateClient />} />,
 	},
 ]);
 
