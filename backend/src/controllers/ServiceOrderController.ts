@@ -45,6 +45,16 @@ export class ServiceOrderController {
         }
     }
 
+    async getServiceOrderForClient(req: Request, res: Response, next: NextFunction) {
+        try {
+            const clientId = req.params.id
+            const serviceOrders = await this.repository.getServiceOrdersForClient(clientId)
+            res.status(200).json({ serviceOrders })
+        } catch (e) {
+            next(e)
+        }
+    }
+
     async updateServiceOrders(req: Request, res: Response, next: NextFunction) {
         try {
             const id = req.params.id

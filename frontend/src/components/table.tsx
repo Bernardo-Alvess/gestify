@@ -2,6 +2,7 @@ import editIcon from '../public/assets/table/edit.svg';
 import eyeIcon from '../public/assets/table/eye.svg';
 import deleteIcon from '../public/assets/table/trash-2.svg';
 import addIcon from '../public/assets/table/simbolo_mais.svg';
+import { useNavigate } from 'react-router-dom';
 
 interface TableProps {
 	icon: string;
@@ -13,6 +14,7 @@ interface TableProps {
 		actionButtonText: string;
 		action: () => void;
 	};
+	viewPage?: string;
 }
 const Table: React.FC<TableProps> = ({
 	icon,
@@ -20,13 +22,16 @@ const Table: React.FC<TableProps> = ({
 	columns,
 	data,
 	actions,
+	viewPage,
 }) => {
+	const navigate = useNavigate();
+
 	const edit = (rowData: Record<string, any>) => {
 		alert(`Edit: ${rowData}`);
 	};
 
 	const view = (rowData: Record<string, any>) => {
-		alert(`View: ${rowData}`);
+		navigate(`${viewPage}/${rowData.id}`);
 	};
 
 	const del = (rowData: Record<string, any>) => {

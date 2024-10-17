@@ -11,14 +11,14 @@ export const ServiceOrders = () => {
 	const [orders, setOrders] = useState([]);
 	const [cookies] = useCookies();
 	const today = new Date().toLocaleDateString('pt-BR');
-	const column_table_2 = [
+	const columns = [
 		'Id',
 		'Descrição',
 		'Defeito',
 		'Report',
 		'Observações',
 		'Status',
-		'Técnicno',
+		'Técnico',
 		'Cliente',
 	];
 
@@ -52,7 +52,7 @@ export const ServiceOrders = () => {
 						<Table
 							icon={IconOrdersBlack}
 							title="Ordens de Serviço"
-							columns={column_table_2}
+							columns={columns}
 							data={orders}
 							actions={{
 								showActions: true,

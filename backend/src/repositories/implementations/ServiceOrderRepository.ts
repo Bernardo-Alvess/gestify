@@ -42,6 +42,14 @@ export class ServiceOrderRepository implements IServiceOrderRepository {
         })
     }
 
+    async getServiceOrdersForClient(clientId: string): Promise<IGetServiceOrderDto[]> {
+        return await prisma.serviceOrder.findMany({
+            where: {
+                clientId
+            }
+        })
+    }
+
     async updateServiceOrder(id: string, data: IUpdateServiceOrderDto): Promise<void> {
         await prisma.serviceOrder.update({
             where: { id },

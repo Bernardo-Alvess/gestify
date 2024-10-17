@@ -26,6 +26,9 @@ model User {
   password                String
   document                String         @unique
   address                 String?
+  date                    DateTime       @default(now())
+  neighborhood            String?
+  city                    String?
   number                  String?
   userType                String
   companyId               String         @db.Uuid

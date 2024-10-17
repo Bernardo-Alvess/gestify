@@ -30,12 +30,16 @@ export class UserRepository implements IUserRepository {
                     companyId
                 },
                 select: {
+                    id: true,
                     email: true,
                     name: true,
                     document: true,
                     address: true,
+                    city: true,
+                    neighborhood: true,
                     number: true,
-                    userType: true
+                    userType: true,
+                    date: true,
                 }
             })
 
@@ -51,12 +55,16 @@ export class UserRepository implements IUserRepository {
                     companyId
                 },
                 select: {
+                    id: true,
                     email: true,
                     name: true,
                     document: true,
                     address: true,
+                    city: true,
+                    neighborhood: true,
                     number: true,
-                    userType: true
+                    userType: true,
+                    date: true,
                 }
             })
 
@@ -68,12 +76,16 @@ export class UserRepository implements IUserRepository {
                     companyId
                 },
                 select: {
+                    id: true,
                     email: true,
                     name: true,
                     document: true,
                     address: true,
+                    city: true,
+                    neighborhood: true,
                     number: true,
-                    userType: true
+                    userType: true,
+                    date: true,
                 }
             })
             if (users) return users
