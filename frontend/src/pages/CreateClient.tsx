@@ -1,28 +1,12 @@
-import React, { ReactEventHandler, useState } from 'react';
 import { useCookies } from 'react-cookie';
 
 import UserBlue from '../public/assets/view-user-page/user-blue.svg';
 import TopNav from '../components/top-nav';
 import Sidebar from '../components/sidebar';
 import { createClient, ICreateClient } from '../http/create-client';
-import { emitWarning } from 'process';
 import { toast } from 'sonner';
 
-interface User {
-	id: string;
-	email: string;
-	name: string;
-	document: string;
-	address?: string | null;
-	number?: string | null;
-	city?: string | null;
-	neighborhood?: string | null;
-	date: Date;
-	userType: string;
-}
-
 const CreateClient = () => {
-	const [client, setClient] = useState<User | null>(null);
 	const [cookies] = useCookies();
 	const today = new Date().toLocaleDateString('pt-BR');
 
