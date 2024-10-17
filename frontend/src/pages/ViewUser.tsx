@@ -36,6 +36,7 @@ const ViewUser = () => {
 		'Defeito',
 		'Report',
 		'Observações',
+		'Data',
 		'Status',
 		'Técnico',
 		'Cliente',

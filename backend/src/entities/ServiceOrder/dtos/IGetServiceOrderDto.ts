@@ -4,6 +4,7 @@ export interface IGetServiceOrderDto {
     defect?: string | null;
     report?: string | null;
     extras?: string | null;
+    date: Date;
     status: string;
     technicianId?: string | null;
     clientId?: string | null;
