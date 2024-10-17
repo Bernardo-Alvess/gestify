@@ -9,7 +9,7 @@ export interface ICreateClient {
 }
 
 export const createClient = async (token: string, data: ICreateClient) => {
-    Object.assign(data, { userType: 'CLIENT', password: 'fd2aj!!!ksl;dflkj1243j12lk3jJKL#@JAKlf#j;sldkllll' });
+    Object.assign(data, { userType: 'CLIENT', password: import.meta.env.VITE_CLIENT_PASSWORD });
 
     const response = await fetch(`${import.meta.env.VITE_API_URL}/user`, {
         method: 'POST',
