@@ -9,8 +9,8 @@ serviceOrderRouter.get('/count', auth, (req, res, next) => {
     serviceOrderController.getSoCount(req, res, next)
 })
 
-serviceOrderRouter.get('/client/:id', auth, (req, res, next) => {
-    serviceOrderController.getServiceOrderForClient(req, res, next)
+serviceOrderRouter.get('/client/:id/:type', auth, (req, res, next) => {
+    serviceOrderController.getServiceOrderFor(req, res, next)
 })
 
 serviceOrderRouter.get('/:id', (req, res, next) => {

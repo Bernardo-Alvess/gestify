@@ -2,13 +2,13 @@ import { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 
-import UserBlue from '../public/assets/view-user-page/user-blue.svg';
-import OrdersIcon from '../public/assets/home-page/icons/orders/orders_icon.svg';
-import TopNav from '../components/top-nav';
-import { getUserById } from '../http/get-user-by-id';
-import Table from '../components/table';
-import Sidebar from '../components/sidebar';
-import { fetchOrdersForClient } from '../http/fetch-orders-for-client';
+import UserBlue from '../../public/assets/view-user-page/user-blue.svg';
+import OrdersIcon from '../../public/assets/home-page/icons/orders/orders_icon.svg';
+import TopNav from '../../components/top-nav';
+import { getUserById } from '../../http/get-user-by-id';
+import Table from '../../components/table';
+import Sidebar from '../../components/sidebar';
+import { fetchOrdersForTechnician } from '../../http/fetch-orders-for-technician';
 
 interface User {
 	id: string;
@@ -25,7 +25,7 @@ interface User {
 
 const ViewUser = () => {
 	const { id } = useParams();
-	const [client, setClient] = useState<User | null>(null);
+	const [user, setUser] = useState<User | null>(null);
 	const [orders, setOrders] = useState([{}]);
 	const [cookies] = useCookies();
 	const today = new Date().toLocaleDateString('pt-BR');
@@ -42,39 +42,40 @@ const ViewUser = () => {
 		'Cliente',
 	];
 
-	const fetchClient = useCallback(async () => {
+	const fetchUser = useCallback(async () => {
 		const data = await getUserById(cookies.jwt, id);
-		if (data != client) setClient(data);
+		if (data != user) setUser(data);
 	}, [cookies.jwt, id]);
 
 	const getOrders = useCallback(async () => {
-		const data = await fetchOrdersForClient(
+		const data = await fetchOrdersForTechnician(
 			cookies.jwt,
-			client?.id,
-			client?.name
+			user?.id,
+			user?.name,
+			'TECHNICIAN'
 		);
 		if (data != orders) setOrders(data);
-	}, [client, cookies.jwt]);
+	}, [user, cookies.jwt]);
 
 	useEffect(() => {
-		fetchClient();
-	}, [fetchClient]);
+		fetchUser();
+	}, [fetchUser]);
 
 	useEffect(() => {
-		if (client) {
+		if (user) {
 			getOrders();
 		}
-	}, [client, getOrders]);
+	}, [user, getOrders]);
 
-	console.log(client);
-	console.log(orders);
+	console.log(orders, user);
+
 	return (
 		<div className="flex h-screen overflow-hidden">
 			<Sidebar />
 			<main className="flex-1 p-10 bg-blue-200 space-y-10 h-screen">
 				<header className="flex justify-between">
 					<div className="pt-16 md:pt-16 lg:pt-0">
-						<h1 className="text-2xl font-bold">Clientes</h1>
+						<h1 className="text-2xl font-bold">Usuário</h1>
 						<p className="text-sm text-gray-500">{today}</p>
 					</div>
 					<TopNav />
@@ -83,7 +84,7 @@ const ViewUser = () => {
 					<div className="flex p-2 w-full h-16 items-center gap-2 border-b border-black border-opacity-10">
 						<img src={UserBlue} alt="" />
 						<p className="text-bold text-xl">
-							Cliente: {client?.name || 'N/A'}
+							Usuário: {user?.name || 'N/A'}
 						</p>
 					</div>
 					<div className="grid grid-cols-[repeat(auto-fit,minmax(125px,1fr))] overflow-y-scroll max-h-[500px] lg:max-h-[550px] xl:max-h-[700px]">
@@ -92,16 +93,16 @@ const ViewUser = () => {
 								<div className="flex flex-col gap-1 w-fit">
 									<label
 										className="font-bold text-md"
-										htmlFor="client"
+										htmlFor="user"
 									>
-										Cliente
+										Usuário
 									</label>
 									<input
 										readOnly
 										className="p-1 border rounded-lg"
 										type="text"
-										name="client"
-										value={client?.name || 'N/A'}
+										name="user"
+										value={user?.name || 'N/A'}
 									/>
 								</div>
 								<div className="flex flex-col gap-1 w-fit">
@@ -109,14 +110,14 @@ const ViewUser = () => {
 										className="font-bold text-md"
 										htmlFor="document"
 									>
-										Documento
+										CPF/CPNJ
 									</label>
 									<input
 										readOnly
 										className="p-1 border rounded-lg"
 										type="text"
 										name="document"
-										value={client?.document || 'N/A'}
+										value={user?.document || 'N/A'}
 									/>
 								</div>
 								<div className="flex flex-col gap-1 w-fit">
@@ -131,7 +132,7 @@ const ViewUser = () => {
 										className="p-1 border rounded-lg"
 										type="text"
 										name="phone"
-										value={client?.number || 'N/A'}
+										value={user?.number || 'N/A'}
 									/>
 								</div>
 								<div className="flex flex-col gap-1 w-fit">
@@ -146,7 +147,7 @@ const ViewUser = () => {
 										className="p-1 border rounded-lg"
 										type="text"
 										name="city"
-										value={client?.city || 'N/A'}
+										value={user?.city || 'N/A'}
 									/>
 								</div>
 								<div className="flex flex-col gap-1 w-fit">
@@ -161,7 +162,7 @@ const ViewUser = () => {
 										className="p-1 border rounded-lg"
 										type="text"
 										name="neighborhood"
-										value={client?.neighborhood || 'N/A'}
+										value={user?.neighborhood || 'N/A'}
 									/>
 								</div>
 							</div>
@@ -178,7 +179,7 @@ const ViewUser = () => {
 										className="p-1 border rounded-lg"
 										type="text"
 										name="email"
-										value={client?.email || 'N/A'}
+										value={user?.email || 'N/A'}
 									/>
 								</div>
 								<div className="flex flex-col gap-1 w-fit">
@@ -194,9 +195,9 @@ const ViewUser = () => {
 										type="text"
 										name="date"
 										value={
-											client?.date
+											user?.date
 												? new Date(
-														client.date
+														user.date
 												  ).toLocaleDateString('pt-BR')
 												: 'N/A'
 										}
@@ -214,19 +215,37 @@ const ViewUser = () => {
 										className="p-1 border rounded-lg"
 										type="text"
 										name="address"
-										value={client?.address || 'N/A'}
+										value={user?.address || 'N/A'}
+									/>
+								</div>
+								<div className="flex flex-col gap-1 w-fit">
+									<label
+										className="font-bold text-md"
+										htmlFor="userType"
+									>
+										UserType
+									</label>
+									<input
+										readOnly
+										className="p-1 border rounded-lg"
+										type="text"
+										name="userType"
+										value={user?.userType || 'N/A'}
 									/>
 								</div>
 							</div>
 						</div>
-						<div className="col-span-8 h-fit">
+						{/**
+						 * POR ALGUM MOTIVO OBSCURO NAO QUER FUNCIONAR, NAO TO ENTENDENDO
+						 */}
+						{/* <div className="col-span-8 h-fit">
 							<Table
 								icon={OrdersIcon}
-								title="Ordens Associadas ao Cliente"
+								title="Ordens Associadas ao usuário"
 								columns={columns}
 								data={orders}
 							></Table>
-						</div>
+						</div> */}
 					</div>
 				</div>
 			</main>

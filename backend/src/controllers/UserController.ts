@@ -50,12 +50,12 @@ export class UserController {
 
     async updateUser(req: Request, res: Response, next: NextFunction) {
         try {
-            console.log('controller')
-            const { id, name, email, password, document, number, address, userType } = req.body
+            const id = req.params.id
+            const { name, email, password, document, number, address } = req.body
 
-            await this.repository.updateUser(id, { name, email, password, document, number, address, userType })
+            await this.repository.updateUser(id, { name, email, password, document, number, address })
 
-            res.status(200).send()
+            res.status(200).json({ updated: true })
         } catch (e) {
             next(e)
         }

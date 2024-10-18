@@ -1,39 +1,81 @@
 import { useCookies } from 'react-cookie';
 
-import UserBlue from '../public/assets/view-user-page/user-blue.svg';
-import TopNav from '../components/top-nav';
-import Sidebar from '../components/sidebar';
-import { createClient, ICreateClient } from '../http/create-client';
+import UserBlue from '../../public/assets/view-user-page/user-blue.svg';
+import TopNav from '../../components/top-nav';
+import Sidebar from '../../components/sidebar';
 import { toast } from 'sonner';
+import { useParams } from 'react-router-dom';
+import { useCallback, useEffect, useState } from 'react';
+import { getUserById } from '../../http/get-user-by-id';
+import { updateUser } from '../../http/update-user';
 
-const CreateClient = () => {
+export interface IUpdateUser {
+	name?: string | null | undefined;
+	email?: string | null;
+	document?: string | null;
+	address?: string | null;
+	neighborhood?: string | null;
+	city?: string | null;
+	number?: string | null;
+}
+
+const EditUser = () => {
+	const { id } = useParams();
+	const [user, setUser] = useState<IUpdateUser | null>(null);
 	const [cookies] = useCookies();
 	const today = new Date().toLocaleDateString('pt-BR');
+
+	const fetchUser = useCallback(async () => {
+		const data = await getUserById(cookies.jwt, id);
+		if (data != user) setUser(data);
+	}, [cookies.jwt, id]);
+
+	useEffect(() => {
+		fetchUser();
+	}, [fetchUser]);
+
+	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const { name, value } = e.target;
+		setUser((prevuser) =>
+			prevuser ? { ...prevuser, [name]: value } : null
+		);
+	};
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		const formData = new FormData(e.currentTarget);
-		const client: ICreateClient = {
-			name: formData.get('name')?.toString(),
+		const user: IUpdateUser = {
+			name: formData.get('name')!.toString(),
 			email: formData.get('email')?.toString(),
 			document: formData.get('document')?.toString(),
-			address: formData.get('address')?.toString(),
-			neighborhood: formData.get('neighborhood')?.toString(),
-			city: formData.get('city')?.toString(),
-			number: formData.get('number')?.toString(),
+			address:
+				formData.get('address')?.toString() != ''
+					? formData.get('address')?.toString()
+					: null,
+			neighborhood:
+				formData.get('neighborhood')?.toString() != ''
+					? formData.get('neighborhood')?.toString()
+					: null,
+			city:
+				formData.get('city')?.toString() != ''
+					? formData.get('city')?.toString()
+					: null,
+			number:
+				formData.get('number')?.toString() != ''
+					? formData.get('number')?.toString()
+					: null,
 		};
 
-		//formData.forEach((value, key) => (Object.assign(client, {value, key})))
-		const { id } = await createClient(cookies.jwt, client);
-
-		if (!id) {
-			toast.error('Erro ao criar cliente');
-			return;
+		if (user?.name!.length < 2) {
+			toast.error('Nome menor que 2 caracteres');
 		}
 
-		toast.success('Cliente adicionado');
+		if (user?.document!.length < 11) {
+			toast.error('CPF no tamanho errado');
+		}
 
-		console.log(client);
+		updateUser(cookies.jwt, id, user);
+		toast.success('Usuário atualizado');
 	};
 
 	return (
@@ -42,7 +84,7 @@ const CreateClient = () => {
 			<main className="flex flex-col flex-1 p-10 bg-blue-200 space-y-10 h-screen">
 				<header className="flex justify-between">
 					<div className="pt-16 md:pt-16 lg:pt-0">
-						<h1 className="text-2xl font-bold">Clientes</h1>
+						<h1 className="text-2xl font-bold">Usuários</h1>
 						<p className="text-sm text-gray-500">{today}</p>
 					</div>
 					<TopNav />
@@ -51,12 +93,12 @@ const CreateClient = () => {
 					<div className="flex p-2 w-full h-16 items-center gap-2 border-b border-black border-opacity-10 ">
 						<img src={UserBlue} alt="" />
 						<p className="text-bold text-xl">
-							Adicionar novo cliente ao sistema
+							Alterar Usuário: {user?.name ? user.name : 'N/A'}
 						</p>
 					</div>
 					<div className="flex flex-col gap-10">
 						<form
-							id="create-client-form"
+							id="edit-user-form"
 							className="col-span-4 flex"
 							onSubmit={handleSubmit}
 						>
@@ -73,6 +115,8 @@ const CreateClient = () => {
 										className="p-1 border rounded-lg"
 										type="text"
 										name="name"
+										onChange={handleInputChange}
+										value={user?.name ? user.name : ''}
 									/>
 								</div>
 								<div className="flex flex-col gap-1 w-fit">
@@ -84,9 +128,14 @@ const CreateClient = () => {
 									</label>
 									<input
 										required
+										inputMode="numeric"
 										className="p-1 border rounded-lg"
 										type="text"
 										name="document"
+										onChange={handleInputChange}
+										value={
+											user?.document ? user.document : ''
+										}
 									/>
 								</div>
 								<div className="flex flex-col gap-1 w-fit">
@@ -97,9 +146,12 @@ const CreateClient = () => {
 										Telefone
 									</label>
 									<input
+										inputMode="numeric"
 										className="p-1 border rounded-lg"
 										type="text"
 										name="number"
+										onChange={handleInputChange}
+										value={user?.number ? user.number : ''}
 									/>
 								</div>
 								<div className="flex flex-col gap-1 w-fit">
@@ -113,6 +165,8 @@ const CreateClient = () => {
 										className="p-1 border rounded-lg"
 										type="text"
 										name="city"
+										onChange={handleInputChange}
+										value={user?.city ? user.city : ''}
 									/>
 								</div>
 							</div>
@@ -127,8 +181,10 @@ const CreateClient = () => {
 									<input
 										required
 										className="p-1 border rounded-lg"
-										type="text"
+										type="email"
 										name="email"
+										onChange={handleInputChange}
+										value={user?.email ? user.email : ''}
 									/>
 								</div>
 								<div className="flex flex-col gap-1 w-fit">
@@ -142,6 +198,10 @@ const CreateClient = () => {
 										className="p-1 border rounded-lg"
 										type="text"
 										name="address"
+										onChange={handleInputChange}
+										value={
+											user?.address ? user.address : ''
+										}
 									/>
 								</div>
 								<div className="flex flex-col gap-1 w-fit">
@@ -155,12 +215,18 @@ const CreateClient = () => {
 										className="p-1 border rounded-lg"
 										type="text"
 										name="neighborhood"
+										onChange={handleInputChange}
+										value={
+											user?.neighborhood
+												? user.neighborhood
+												: ''
+										}
 									/>
 								</div>
 							</div>
 						</form>
 						<button
-							form="create-client-form"
+							form="edit-user-form"
 							className="self-center bg-primary p-2 w-60 h-11 rounded-lg text-white font-bold"
 							type="submit"
 						>
@@ -173,4 +239,4 @@ const CreateClient = () => {
 	);
 };
 
-export { CreateClient };
+export { EditUser };

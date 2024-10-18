@@ -1,7 +1,7 @@
 import { getUserById } from "./get-user-by-id"
 
-export const fetchOrdersForClient = async (token: string, id: string | undefined, clientName: string | undefined) => {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/service-order/client/${id}`, {
+export const fetchOrdersForClient = async (token: string, id: string | undefined, clientName: string | undefined, type: string) => {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/service-order/client/${id}/${type}`, {
         headers: {
             'Authorization': `Bearer ${token}`
         }

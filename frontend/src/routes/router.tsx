@@ -4,11 +4,14 @@ import { SignUp } from '../pages/SignUp';
 import { ProtectedRoute } from '../components/protected-route';
 import { Login } from '../pages/Login';
 import { Products } from '../pages/Products';
-import { Users } from '../pages/Users';
+import { Users } from '../pages/Users/Users';
 import { ServiceOrders } from '../pages/ServiceOrders';
-import { Clients } from '../pages/Clients';
-import { ViewUser } from '../pages/ViewUser';
-import { CreateClient } from '../pages/CreateClient';
+import { Clients } from '../pages/Clients/Clients';
+import { ViewClient } from '../pages/Clients/ViewClient';
+import { CreateClient } from '../pages/Clients/CreateClient';
+import { EditClient } from '../pages/Clients/EditClients';
+import { ViewUser } from '../pages/Users/ViewUser';
+import { EditUser } from '../pages/Users/EditUser';
 const router = createBrowserRouter([
 	{
 		path: '/',
@@ -47,12 +50,24 @@ const router = createBrowserRouter([
 		element: <ProtectedRoute children={<Clients />} />,
 	},
 	{
-		path: '/view-user/:id',
-		element: <ProtectedRoute children={<ViewUser />} />,
+		path: '/view-client/:id',
+		element: <ProtectedRoute children={<ViewClient />} />,
 	},
 	{
 		path: 'create-user',
 		element: <ProtectedRoute children={<CreateClient />} />,
+	},
+	{
+		path: '/edit-client/:id',
+		element: <ProtectedRoute children={<EditClient />} />,
+	},
+	{
+		path: '/view-user/:id',
+		element: <ProtectedRoute children={<ViewUser />} />,
+	},
+	{
+		path: '/edit-user/:id',
+		element: <ProtectedRoute children={<EditUser/>}/>
 	},
 ]);
 
