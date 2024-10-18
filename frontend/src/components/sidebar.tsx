@@ -36,7 +36,7 @@ const Sidebar = () => {
 			<aside
 				className={`fixed inset-0 left-0 z-30 w-52 bg-white transform ${
 					sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-				} transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0 p-10 space-y-10`}
+				} transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0 p-5 pl-10 space-y-10`}
 			>
 				{/* logo */}
 				<div>

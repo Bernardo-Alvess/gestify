@@ -6,6 +6,8 @@ import { Login } from '../pages/Login';
 import { Products } from '../pages/Products';
 import { ServiceOrders } from '../pages/ServiceOrders';
 import { Clients } from '../pages/Clients';
+import { ViewOS } from '../pages/ViewOS';
+import { CreateOS } from '../pages/CreateOS';
 
 const router = createBrowserRouter([
 	{
@@ -39,6 +41,14 @@ const router = createBrowserRouter([
 	{
 		path: '/clients',
 		element: <ProtectedRoute children={<Clients />} />,
+	},
+	{
+		path: '/viewos',
+		element: <ViewOS />,
+	},
+	{
+		path: '/createos',
+		element: <CreateOS />,
 	},
 ]);
 
