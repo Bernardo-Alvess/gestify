@@ -44,11 +44,11 @@ const router = createBrowserRouter([
 	},
 	{
 		path: '/viewos',
-		element: <ViewOS />,
+		element: <ProtectedRoute children={<ViewOS />} />,
 	},
 	{
 		path: '/createos',
-		element: <CreateOS />,
+		element: <ProtectedRoute children={<CreateOS />} />,
 	},
 ]);
 
