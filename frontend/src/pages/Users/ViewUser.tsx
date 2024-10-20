@@ -238,14 +238,14 @@ const ViewUser = () => {
 						{/**
 						 * POR ALGUM MOTIVO OBSCURO NAO QUER FUNCIONAR, NAO TO ENTENDENDO
 						 */}
-						{/* <div className="col-span-8 h-fit">
+						<div className="col-span-8 h-fit">
 							<Table
 								icon={OrdersIcon}
 								title="Ordens Associadas ao usuário"
 								columns={columns}
 								data={orders}
 							></Table>
-						</div> */}
+						</div>
 					</div>
 				</div>
 			</main>
