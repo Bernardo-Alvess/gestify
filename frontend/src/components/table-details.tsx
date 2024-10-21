@@ -4,6 +4,7 @@ interface Field {
     label: string;
     value: string;
     placeholder?: string;
+    isTextarea?: boolean;
 }
 
 interface DetailsTableProps {
@@ -13,7 +14,7 @@ interface DetailsTableProps {
     textButton: string;
 }
 
-const DetailsTable: React.FC<DetailsTableProps> = ({ fields, extraComponent, orderId, textButton}) => {
+const DetailsTable: React.FC<DetailsTableProps> = ({ fields, extraComponent, orderId, textButton, }) => {
     const [selectedOption, setSelectedOption] = useState('');
 
     const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -52,17 +53,30 @@ const DetailsTable: React.FC<DetailsTableProps> = ({ fields, extraComponent, ord
                 </select>
             </div>
 
-            <div className="grid grid-cols-12 gap-3">
-                <div className="col-span-8 grid grid-cols-2 gap-5">
+            <div className="grid grid-cols-12 gap-2">
+                <div className="col-span-8 grid grid-cols-2 gap-2">
                     {fields.map((field, index) => (
                         <div key={index}>
                             <label className="block text-sm font-bold">{field.label}</label>
-                            <input
-                                type={field.label === 'Data de abertura' ? 'date' : 'text'}
-                                className={`w-full p-2 border border-gray-300 rounded-lg ${index >= fields.length - 4 ? 'h-32' : 'max-h-12'}`}
-                                placeholder={field.placeholder}
-                                defaultValue={field.value}
-                            />
+                            {field.isTextarea ? (
+                                <textarea
+                                    className="w-full p-2 border border-gray-300 rounded-lg max-h-24"
+                                    placeholder={field.placeholder}
+                                    defaultValue={field.value}
+                                />
+                            ) : field.label === 'Data de abertura' ? (
+                                <input
+                                    type="date"
+                                    className="w-full p-2 border border-gray-300 rounded-lg max-h-24"
+                                    defaultValue={field.value}
+                                />
+                            ) : (
+                                <input
+                                    className="w-full p-2 border border-gray-300 rounded-lg max-h-12"
+                                    value={field.value}
+                                    readOnly
+                                />
+                            )}
                         </div>
                     ))}
                 </div>

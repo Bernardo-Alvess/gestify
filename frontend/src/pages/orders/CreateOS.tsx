@@ -1,30 +1,28 @@
-import SearchBox from '../components/search_box';
-import Sidebar from '../components/sidebar';
-import Table from '../components/table';
-import TopNav from '../components/top_nav';
-import IconProductsBlack from '../public/assets/home-page/icons/products/products_icon_b.svg';
-import IconBackBlue from '../public/assets/home-page/icons/generic/back_icon_b.svg';
-import DetailsTable from '../components/table-details';
+import SearchBox from '../../components/search_box';
+import Sidebar from '../../components/sidebar';
+import Table from '../../components/table';
+import TopNav from '../../components/top_nav';
+import IconProductsBlack from '../../public/assets/home-page/icons/products/products_icon_b.svg';
+import IconBackBlue from '../../public/assets/home-page/icons/generic/back_icon_b.svg';
+import DetailsTable from '../../components/table-details';
 
 export const CreateOS = () => {
     const today = new Date().toLocaleDateString('pt-BR');
-    
+
     const column_table_2 = ['Código', 'Nome', 'Quantidade', 'Marca'];
-    const data_table_2 = Array(10).fill(['123', 'Placa Mãe', '2', 'Asus']);
+
+    const data_table_2 = Array(12).fill(['123', 'Placa Mãe', '2', 'Asus']);
+
     const fields = [
         { label: 'Cliente', value: '', },
         { label: 'Técnico Responsável', value: '', },
         { label: 'Telefone', value: '', },
         { label: 'Data de abertura', value: '', },
-        { label: 'Descrição', value: '', placeholder: 'Digite aqui...', },
-        { label: 'Defeito', value: '', placeholder: 'Digite aqui...', },
-        { label: 'Laudo técnico', value: '', placeholder: 'Digite aqui...', },
-        { label: 'Observações', value: '', placeholder: 'Digite aqui...', },
+        { label: 'Descrição', value: '', placeholder: 'Digite aqui...', isTextarea: true, },
+        { label: 'Defeito', value: '', placeholder: 'Digite aqui...', isTextarea: true, },
+        { label: 'Laudo técnico', value: '', placeholder: 'Digite aqui...', isTextarea: true, },
+        { label: 'Observações', value: '', placeholder: 'Digite aqui...', isTextarea: true, },
     ];
-
-    const add = () => {
-		alert('ADDDD');
-	};
 
     return (
         <div className="flex h-screen overflow-hidden">
@@ -58,13 +56,13 @@ export const CreateOS = () => {
                             columns={column_table_2}
                             data={data_table_2}
                             actions={{
-                                showActions: true,
-                                actionButtonText: 'Add Produto',
-                                action: add,
+                                showActions: false,
+                                actionButtonText: '',
+                                action: () => { },
                             }}
                         />
                     }
-                    textButton="Adicionar Cliente"
+                    textButton="Adicionar Ordem"
                 />
             </main>
         </div>

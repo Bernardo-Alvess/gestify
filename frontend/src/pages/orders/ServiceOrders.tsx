@@ -1,8 +1,8 @@
-import SearchBox from '../components/search_box';
-import Sidebar from '../components/sidebar';
-import Table from '../components/table';
-import TopNav from '../components/top_nav';
-import IconOrdersBlack from '../public/assets/home-page/icons/orders/orders_icon_b.svg';
+import SearchBox from '../../components/search_box';
+import Sidebar from '../../components/sidebar';
+import Table from '../../components/table';
+import TopNav from '../../components/top_nav';
+import IconOrdersBlack from '../../public/assets/home-page/icons/orders/orders_icon_b.svg';
 
 export const ServiceOrders = () => {
 	const today = new Date().toLocaleDateString('pt-BR');

@@ -4,10 +4,10 @@ import { SignUp } from '../pages/SignUp';
 import { ProtectedRoute } from '../components/protected-route';
 import { Login } from '../pages/Login';
 import { Products } from '../pages/Products';
-import { ServiceOrders } from '../pages/ServiceOrders';
+import { ServiceOrders } from '../pages/orders/ServiceOrders';
 import { Clients } from '../pages/Clients';
-import { ViewOS } from '../pages/ViewOS';
-import { CreateOS } from '../pages/CreateOS';
+import { ViewOS } from '../pages/orders/ViewOS';
+import { CreateOS } from '../pages/orders/CreateOS';
 
 const router = createBrowserRouter([
 	{

@@ -1,10 +1,10 @@
-import SearchBox from '../components/search_box';
-import Sidebar from '../components/sidebar';
-import Table from '../components/table';
-import TopNav from '../components/top_nav';
-import IconProductsBlack from '../public/assets/home-page/icons/products/products_icon_b.svg';
-import IconBackBlue from '../public/assets/home-page/icons/generic/back_icon_b.svg';
-import DetailsTable from '../components/table-details';
+import SearchBox from '../../components/search_box';
+import Sidebar from '../../components/sidebar';
+import Table from '../../components/table';
+import TopNav from '../../components/top_nav';
+import IconProductsBlack from '../../public/assets/home-page/icons/products/products_icon_b.svg';
+import IconBackBlue from '../../public/assets/home-page/icons/generic/back_icon_b.svg';
+import DetailsTable from '../../components/table-details';
 
 export const ViewOS = () => {
     const today = new Date().toLocaleDateString('pt-BR');
