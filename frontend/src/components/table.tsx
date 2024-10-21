@@ -38,9 +38,23 @@ const Table: React.FC<TableProps> = ({
 		navigate(`${viewPage}/${rowData.id}`);
 	};
 
-	const del = (rowData: Record<string, any>) => {
-		alert(`Delete: ${deleteAction}`);
+	const del = (rowData: string[]) => {
+		alert(`Delete: ${rowData}`);
 	};
+
+	const handleChangePage = () =>
+		//event: React.MouseEvent<HTMLButtonElement> | null,
+		//newPage: number
+		{
+			// setPage(newPage);
+		};
+
+	const handleChangeRowsPerPage = () =>
+		//event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+		{
+			// setRowsPerPage(parseInt(event.target.value, 10));
+			// setPage(0);
+		};
 
 	return (
 		<div className="bg-white p-4 rounded-lg shadow-lg w-full overflow-y-auto">

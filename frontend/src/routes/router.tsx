@@ -6,12 +6,15 @@ import { Login } from '../pages/Login';
 import { Products } from '../pages/Products';
 import { Users } from '../pages/Users/Users';
 import { ServiceOrders } from '../pages/ServiceOrders';
-import { Clients } from '../pages/Clients/Clients';
 import { ViewClient } from '../pages/Clients/ViewClient';
 import { CreateClient } from '../pages/Clients/CreateClient';
 import { EditClient } from '../pages/Clients/EditClients';
 import { ViewUser } from '../pages/Users/ViewUser';
 import { EditUser } from '../pages/Users/EditUser';
+import { Clients } from '../pages/Clients';
+import { ViewOS } from '../pages/ViewOS';
+import { CreateOS } from '../pages/CreateOS';
+
 const router = createBrowserRouter([
 	{
 		path: '/',
@@ -67,7 +70,15 @@ const router = createBrowserRouter([
 	},
 	{
 		path: '/edit-user/:id',
-		element: <ProtectedRoute children={<EditUser/>}/>
+		element: <ProtectedRoute children={<EditUser />} />,
+	},
+	{
+		path: '/viewos',
+		element: <ProtectedRoute children={<ViewOS />} />,
+	},
+	{
+		path: '/createos',
+		element: <ProtectedRoute children={<CreateOS />} />,
 	},
 ]);
 

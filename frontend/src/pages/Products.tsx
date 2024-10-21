@@ -36,7 +36,7 @@ export const Products = () => {
 	return (
 		<div className="flex h-screen overflow-hidden">
 			<Sidebar />
-			<main className="flex-1 p-10 bg-blue-200 space-y-10 h-screen">
+			<main className="flex-1 p-5 bg-blue-200 space-y-10 h-screen">
 				<header className="flex justify-between">
 					<div className="pt-16 md:pt-16 lg:pt-0">
 						<h1 className="text-2xl font-bold">Dashboard</h1>
