@@ -3,15 +3,20 @@ import Sidebar from '../../components/sidebar';
 import Table from '../../components/table';
 import TopNav from '../../components/top-nav';
 import IconProductsBlack from '../../public/assets/home-page/icons/products/products_icon_b.svg';
-import IconBackBlue from '../../public/assets/home-page/icons/generic/back_icon_b.svg';
 import DetailsTable from '../../components/table-details';
+import { BackPageButton } from '../../components/back-page-button';
+import { useNavigate } from 'react-router-dom';
 
 export const CreateOS = () => {
     const today = new Date().toLocaleDateString('pt-BR');
+    const navigate = useNavigate();
 
     const column_table_2 = ['Código', 'Nome', 'Quantidade', 'Marca'];
-
     const data_table_2 = Array(12).fill(['123', 'Placa Mãe', '2', 'Asus']);
+
+    const add = () => {
+		navigate('/createos');
+	};
 
     const fields = [
         { label: 'Cliente', value: '', },
@@ -37,34 +42,30 @@ export const CreateOS = () => {
                     <TopNav />
                 </header>
 
-                <div className="flex justify-start">
-                    <button
-                        className="bg-white p-2 rounded-lg"
-                        onClick={() => { }}
-                    >
-                        <img className="w-4" src={IconBackBlue} alt="" />
-                    </button>
-                </div>
+                <BackPageButton route="/orders" />
 
                 <DetailsTable
-                    fields={fields}
-                    orderId="123"
-                    extraComponent={
-                        <Table
-                            icon={IconProductsBlack}
-                            title="Produtos utilizados na ordem"
-                            columns={column_table_2}
-                            data={data_table_2}
-                            actions={{
-                                showActions: false,
-                                actionButtonText: '',
-                                action: () => { },
-                            }}
-                        />
-                    }
+					fields={fields}
+					orderId="123"
+					extraComponent={
+						<Table
+							icon={IconProductsBlack}
+							title="Produtos utilizados na ordem"
+							columns={column_table_2}
+							data={data_table_2}
+							actions={{
+								showActions: true,
+								actionButtonText: 'Add Produto',
+								action: add,
+								deleteAction: () => {},
+							}}
+						/>
+					}
                     textButton="Adicionar Ordem"
                 />
             </main>
         </div>
     );
 };
+
+

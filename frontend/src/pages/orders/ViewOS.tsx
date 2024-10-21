@@ -3,8 +3,8 @@ import Sidebar from '../../components/sidebar';
 import Table from '../../components/table';
 import TopNav from '../../components/top-nav';
 import IconProductsBlack from '../../public/assets/home-page/icons/products/products_icon_b.svg';
-import IconBackBlue from '../../public/assets/home-page/icons/generic/back_icon_b.svg';
 import DetailsTable from '../../components/table-details';
+import { BackPageButton } from '../../components/back-page-button';
 
 export const ViewOS = () => {
     const today = new Date().toLocaleDateString('pt-BR');
@@ -35,34 +35,28 @@ export const ViewOS = () => {
                     <TopNav />
                 </header>
 
-                <div className="flex justify-start">
-                    <button
-                        className="bg-white p-2 rounded-lg"
-                        onClick={() => { }}
-                    >
-                        <img className="w-4" src={IconBackBlue} alt="" />
-                    </button>
-                </div>
+                <BackPageButton route="/orders" />
 
                 <DetailsTable
-                    fields={fields}
-                    orderId="123"
-                    extraComponent={
-                        <Table
-                            icon={IconProductsBlack}
-                            title="Produtos utilizados na ordem"
-                            columns={column_table_2}
-                            data={data_table_2}
-                            actions={{
-                                showActions: false,
-                                actionButtonText: '',
-                                action: () => { },
-                            }}
-                        />
-                    }
-                    textButton='Finalizar Ordem'
-                />
+					fields={fields}
+					orderId="123"
+					extraComponent={
+						<Table
+							icon={IconProductsBlack}
+							title="Produtos utilizados na ordem"
+							columns={column_table_2}
+							data={data_table_2}
+							actions={{
+								showActions: false,
+								actionButtonText: '',
+								action: () => {},
+								deleteAction: () => {},
+							}}
+						/>
+					}
+					textButton="Finalizar Ordem"
+				/>
             </main>
         </div>
     );
-};
+}

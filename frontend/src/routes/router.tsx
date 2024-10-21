@@ -4,16 +4,16 @@ import { SignUp } from '../pages/SignUp';
 import { ProtectedRoute } from '../components/protected-route';
 import { Login } from '../pages/Login';
 import { Products } from '../pages/Products';
+import { Users } from '../pages/Users/Users';
 import { ServiceOrders } from '../pages/Orders/ServiceOrders';
-import { Clients } from '../pages/Clients';
-import { ViewOS } from '../pages/Orders/ViewOS';
-import { CreateOS } from '../pages/Orders/CreateOS';
 import { ViewClient } from '../pages/Clients/ViewClient';
 import { CreateClient } from '../pages/Clients/CreateClient';
 import { EditClient } from '../pages/Clients/EditClients';
 import { ViewUser } from '../pages/Users/ViewUser';
 import { EditUser } from '../pages/Users/EditUser';
-import { Users } from '../pages/Users/Users';
+import { ViewOS } from '../pages/Orders/ViewOS';
+import { CreateOS } from '../pages/Orders/CreateOS';
+import { Clients } from '../pages/Clients/Clients';
 
 const router = createBrowserRouter([
 	{
@@ -73,7 +73,7 @@ const router = createBrowserRouter([
 		element: <ProtectedRoute children={<EditUser />} />,
 	},
 	{
-		path: '/viewos',
+		path: '/viewos/:id',
 		element: <ProtectedRoute children={<ViewOS />} />,
 	},
 	{

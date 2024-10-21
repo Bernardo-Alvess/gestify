@@ -12,10 +12,12 @@ export const fetchOrdersForTechnician = async (token: string, id: string | undef
         const hasClient = serviceOrder.clientId ? true : false
         if (hasClient) {
             const client = await getUserById(token, serviceOrder.clientId);
-            serviceOrder.clientId = client
+            serviceOrder.clientId = client.name
         }
         serviceOrder.technicianId = name
     }
+
+    console.log(serviceOrders)
 
     return serviceOrders
 }

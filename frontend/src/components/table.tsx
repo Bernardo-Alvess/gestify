@@ -13,10 +13,10 @@ interface TableProps {
 		showActions: boolean;
 		actionButtonText: string;
 		action: () => void;
+		deleteAction: (id: string) => void;
 	};
 	viewPage?: string;
 	editPage?: string;
-	deleteAction?: string;
 }
 const Table: React.FC<TableProps> = ({
 	icon,
@@ -26,7 +26,6 @@ const Table: React.FC<TableProps> = ({
 	actions,
 	viewPage,
 	editPage,
-	deleteAction,
 }) => {
 	const navigate = useNavigate();
 
@@ -38,23 +37,9 @@ const Table: React.FC<TableProps> = ({
 		navigate(`${viewPage}/${rowData.id}`);
 	};
 
-	const del = (rowData: string[]) => {
-		alert(`Delete: ${rowData}`);
+	const del = (rowData: Record<string, any>) => {
+		actions?.deleteAction(rowData.id);
 	};
-
-	const handleChangePage = () =>
-		//event: React.MouseEvent<HTMLButtonElement> | null,
-		//newPage: number
-		{
-			// setPage(newPage);
-		};
-
-	const handleChangeRowsPerPage = () =>
-		//event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-		{
-			// setRowsPerPage(parseInt(event.target.value, 10));
-			// setPage(0);
-		};
 
 	return (
 		<div className="bg-white p-4 rounded-lg shadow-lg w-full overflow-y-auto">

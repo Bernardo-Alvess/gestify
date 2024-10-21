@@ -64,6 +64,7 @@ export const Clients = () => {
 								showActions: true,
 								actionButtonText: 'Adicionar Cliente',
 								action: add,
+								deleteAction: () => {},
 							}}
 							viewPage="/view-client"
 							editPage="/edit-client"
