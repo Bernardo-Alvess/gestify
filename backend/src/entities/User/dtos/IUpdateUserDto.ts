@@ -1,4 +1,4 @@
-import { UserType } from "../user-type"
+import { UserType } from "../user-type-enum"
 
 export interface IUpdateUserDto {
     email: string
@@ -6,8 +6,5 @@ export interface IUpdateUserDto {
     number?: string | null
     address?: string | null,
     document: string,
-    userType: UserType,
     password: string
 }
-
-//tetse

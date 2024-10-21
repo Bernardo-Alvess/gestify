@@ -2,18 +2,21 @@ import editIcon from '../public/assets/table/edit.svg';
 import eyeIcon from '../public/assets/table/eye.svg';
 import deleteIcon from '../public/assets/table/trash-2.svg';
 import addIcon from '../public/assets/table/simbolo_mais.svg';
-import { TablePagination } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 interface TableProps {
 	icon: string;
 	title: string;
 	columns: string[];
-	data: any[][];
+	data: Record<string, any>[];
 	actions?: {
 		showActions: boolean;
 		actionButtonText: string;
 		action: () => void;
 	};
+	viewPage?: string;
+	editPage?: string;
+	deleteAction?: string;
 }
 const Table: React.FC<TableProps> = ({
 	icon,
@@ -21,13 +24,18 @@ const Table: React.FC<TableProps> = ({
 	columns,
 	data,
 	actions,
+	viewPage,
+	editPage,
+	deleteAction,
 }) => {
-	const edit = (rowData: string[]) => {
-		alert(`Edit: ${rowData}`);
+	const navigate = useNavigate();
+
+	const edit = (rowData: Record<string, any>) => {
+		navigate(`${editPage}/${rowData.id}`);
 	};
 
-	const view = (rowData: string[]) => {
-		alert(`View: ${rowData}`);
+	const view = (rowData: Record<string, any>) => {
+		navigate(`${viewPage}/${rowData.id}`);
 	};
 
 	const del = (rowData: string[]) => {
@@ -35,18 +43,18 @@ const Table: React.FC<TableProps> = ({
 	};
 
 	const handleChangePage = () =>
-	//event: React.MouseEvent<HTMLButtonElement> | null,
-	//newPage: number
-	{
-		// setPage(newPage);
-	};
+		//event: React.MouseEvent<HTMLButtonElement> | null,
+		//newPage: number
+		{
+			// setPage(newPage);
+		};
 
 	const handleChangeRowsPerPage = () =>
-	//event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-	{
-		// setRowsPerPage(parseInt(event.target.value, 10));
-		// setPage(0);
-	};
+		//event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+		{
+			// setRowsPerPage(parseInt(event.target.value, 10));
+			// setPage(0);
+		};
 
 	return (
 		<div className="bg-white p-4 rounded-lg shadow-lg w-full overflow-y-auto">
@@ -87,25 +95,36 @@ const Table: React.FC<TableProps> = ({
 						</tr>
 					</thead>
 					<tbody>
-						{data.map((row: string[], index: number) => (
+						{data.map((row: Record<string, any>, index: number) => (
 							<tr key={index} className="hover:bg-gray-100">
-								{row.map((cell: string, cellIndex: number) => (
-									<td
-										key={cellIndex}
-										className="px-4 py-2 text-xs font-medium border-none underline"
-									>
-										{cell}
-									</td>
-								))}
+								{Object.values(row).map(
+									(cell: any, cellIndex: number) => (
+										<td
+											key={cellIndex}
+											className="px-4 py-2 text-xs font-medium border-none underline truncate text-left"
+										>
+											{cell ? cell : 'N/A'}
+										</td>
+									)
+								)}
 								{actions?.showActions ? (
-									<td className="px-4 py-2 text-xs font-medium border-none flex gap-3">
-										<button onClick={() => edit(row)}>
+									<td className="px-4 py-2 text-xs font-medium border-none flex gap-1">
+										<button
+											className="size-7"
+											onClick={() => edit(row)}
+										>
 											<img src={editIcon} alt="Edit" />
 										</button>
-										<button onClick={() => view(row)}>
+										<button
+											className="size-7"
+											onClick={() => view(row)}
+										>
 											<img src={eyeIcon} alt="View" />
 										</button>
-										<button onClick={() => del(row)}>
+										<button
+											className="size-7"
+											onClick={() => del(row)}
+										>
 											<img
 												src={deleteIcon}
 												alt="Delete"
@@ -117,18 +136,6 @@ const Table: React.FC<TableProps> = ({
 						))}
 					</tbody>
 				</table>
-				{actions?.showActions ? (
-					<div className="w-full flex items-center justify-center p-2">
-						<TablePagination
-							component="div"
-							count={25}
-							page={1}
-							rowsPerPage={10}
-							onPageChange={handleChangePage}
-							onRowsPerPageChange={handleChangeRowsPerPage}
-						/>
-					</div>
-				) : null}
 			</div>
 		</div>
 	);

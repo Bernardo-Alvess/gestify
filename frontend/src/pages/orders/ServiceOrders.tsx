@@ -1,36 +1,40 @@
-import SearchBox from '../../components/search_box';
+import { useCallback, useEffect, useState } from 'react';
+import SearchBox from '../../components/search-box';
 import Sidebar from '../../components/sidebar';
 import Table from '../../components/table';
-import TopNav from '../../components/top_nav';
+import TopNav from '../../components/top-nav';
 import IconOrdersBlack from '../../public/assets/home-page/icons/orders/orders_icon_b.svg';
+import { useCookies } from 'react-cookie';
+import { getServiceOrders } from '../../http/get-service-orders';
 
 export const ServiceOrders = () => {
+	const [orders, setOrders] = useState([]);
+	const [cookies] = useCookies();
 	const today = new Date().toLocaleDateString('pt-BR');
-	const column_table_2 = [
-		'Código',
+	const columns = [
+		'Id',
+		'Descrição',
+		'Defeito',
+		'Report',
+		'Observações',
+		'Data',
+		'Status',
+		'Técnico',
 		'Cliente',
-		'Responsável',
-		'Preço custo',
-		'Valor Total',
-		'Lucro',
-	];
-
-	const data_table_2 = [
-		['001', 'Cliente A', 'Técnico A', 'R$ 3.000,00', 'R$ 4.500,00', 'R$ 1.500,00'],
-		['002', 'Cliente B', 'Técnico B', 'R$ 150,00', 'R$ 250,00', 'R$ 100,00'],
-		['003', 'Cliente C', 'Técnico C', 'R$ 500,00', 'R$ 750,00', 'R$ 250,00'],
-		['004', 'Cliente D', 'Técnico D', 'R$ 900,00', 'R$ 1.200,00', 'R$ 300,00'],
-		['005', 'Cliente E', 'Técnico E', 'R$ 250,00', 'R$ 350,00', 'R$ 100,00'],
-		['006', 'Cliente F', 'Técnico F', 'R$ 400,00', 'R$ 600,00', 'R$ 200,00'],
-		['007', 'Cliente G', 'Técnico G', 'R$ 1.200,00', 'R$ 1.500,00', 'R$ 300,00'],
-		['008', 'Cliente H', 'Técnico H', 'R$ 400,00', 'R$ 650,00', 'R$ 250,00'],
-		['009', 'Cliente I', 'Técnico I', 'R$ 6.000,00', 'R$ 8.000,00', 'R$ 2.000,00'],
-		['010', 'Cliente J', 'Técnico J', 'R$ 400,00', 'R$ 550,00', 'R$ 150,00'],
 	];
 
 	const add = () => {
 		alert('ADDDD');
 	};
+
+	const fetchServiceOrders = useCallback(async () => {
+		const data = await getServiceOrders(cookies.jwt);
+		if (data !== orders) setOrders(data);
+	}, []);
+
+	useEffect(() => {
+		fetchServiceOrders();
+	}, [fetchServiceOrders]);
 
 	return (
 		<div className="flex h-screen overflow-hidden">
@@ -49,8 +53,8 @@ export const ServiceOrders = () => {
 						<Table
 							icon={IconOrdersBlack}
 							title="Ordens de Serviço"
-							columns={column_table_2}
-							data={data_table_2}
+							columns={columns}
+							data={orders}
 							actions={{
 								showActions: true,
 								actionButtonText: 'Adicionar Ordem',

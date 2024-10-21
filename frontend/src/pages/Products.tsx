@@ -1,11 +1,17 @@
-import SearchBox from '../components/search_box';
+import { useCallback, useEffect, useState } from 'react';
+import SearchBox from '../components/search-box';
 import Sidebar from '../components/sidebar';
 import Table from '../components/table';
-import TopNav from '../components/top_nav';
+import TopNav from '../components/top-nav';
 import IconProductBlack from '../public/assets/home-page/icons/products/products_icon_b.svg';
+import { getProducts } from '../http/get-products';
+import { useCookies } from 'react-cookie';
 
 export const Products = () => {
 	const today = new Date().toLocaleDateString('pt-BR');
+	const [cookies] = useCookies(['jwt'])
+	const [products, setProducts] = useState([]);
+
 	const column_table_2 = [
 		'Código',
 		'Nome',
@@ -14,34 +20,18 @@ export const Products = () => {
 		'Preço venda',
 	];
 
-	const data_table_2 = [
-		['001', 'Notebook Dell Inspiron', 15, 'Dell', 'R$ 4.500,00'],
-		['002', 'Mouse Gamer Logitech', 50, 'Logitech', 'R$ 250,00'],
-		['003', 'Teclado Mecânico Razer', 30, 'Razer', 'R$ 750,00'],
-		['004', 'Monitor LG UltraWide', 20, 'LG', 'R$ 1.200,00'],
-		['005', 'SSD Kingston 480GB', 100, 'Kingston', 'R$ 350,00'],
-		['006', 'Memória RAM Corsair 16GB', 40, 'Corsair', 'R$ 600,00'],
-		['007', 'Cadeira Gamer DXRacer', 10, 'DXRacer', 'R$ 1.500,00'],
-		['008', 'Headset HyperX Cloud II', 25, 'HyperX', 'R$ 650,00'],
-		['009', 'Placa de Vídeo Nvidia RTX 3080', 5, 'Nvidia', 'R$ 8.000,00'],
-		['010', 'Fonte Corsair 750W', 35, 'Corsair', 'R$ 550,00'],
-		['006', 'Memória RAM Corsair 16GB', 40, 'Corsair', 'R$ 600,00'],
-		['007', 'Cadeira Gamer DXRacer', 10, 'DXRacer', 'R$ 1.500,00'],
-		['008', 'Headset HyperX Cloud II', 25, 'HyperX', 'R$ 650,00'],
-		['009', 'Placa de Vídeo Nvidia RTX 3080', 5, 'Nvidia', 'R$ 8.000,00'],
-		['006', 'Memória RAM Corsair 16GB', 40, 'Corsair', 'R$ 600,00'],
-		['007', 'Cadeira Gamer DXRacer', 10, 'DXRacer', 'R$ 1.500,00'],
-		['008', 'Headset HyperX Cloud II', 25, 'HyperX', 'R$ 650,00'],
-		['009', 'Placa de Vídeo Nvidia RTX 3080', 5, 'Nvidia', 'R$ 8.000,00'],
-		['006', 'Memória RAM Corsair 16GB', 40, 'Corsair', 'R$ 600,00'],
-		['007', 'Cadeira Gamer DXRacer', 10, 'DXRacer', 'R$ 1.500,00'],
-		['008', 'Headset HyperX Cloud II', 25, 'HyperX', 'R$ 650,00'],
-		['009', 'Placa de Vídeo Nvidia RTX 3080', 5, 'Nvidia', 'R$ 8.000,00'],
-	];
-
 	const add = () => {
 		alert('ADDDD');
 	};
+
+	const fetchProducts = useCallback(async () => {
+		const data = await getProducts(cookies.jwt);
+		if (data !== products) setProducts(data);
+	}, []);
+
+	useEffect(() => {
+		fetchProducts();
+	}, [fetchProducts]);
 
 	return (
 		<div className="flex h-screen overflow-hidden">
@@ -55,13 +45,13 @@ export const Products = () => {
 					<SearchBox></SearchBox>
 					<TopNav />
 				</header>
-				<div className="grid grid-cols-12 overflow-y-scroll max-h-[500px] lg:max-h-[550px] xl:max-h-[650px]">
+				<div className="grid grid-cols-12 max-h-[80%] overflow-y-scroll">
 					<div className="col-span-12">
 						<Table
 							icon={IconProductBlack}
 							title="Produtos em estoque"
 							columns={column_table_2}
-							data={data_table_2}
+							data={products}
 							actions={{
 								showActions: true,
 								actionButtonText: 'Adicionar Produto',

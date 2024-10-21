@@ -1,5 +1,8 @@
 {
   "devDependencies": {
     "@types/cors": "^2.8.17"
+  },
+  "dependencies": {
+    "@types/jsonwebtoken": "^9.0.7"
   }
 }
