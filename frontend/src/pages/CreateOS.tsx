@@ -8,21 +8,23 @@ import DetailsTable from '../components/table-details';
 
 export const CreateOS = () => {
     const today = new Date().toLocaleDateString('pt-BR');
-
+    
     const column_table_2 = ['Código', 'Nome', 'Quantidade', 'Marca'];
-
-    const data_table_2 = Array(12).fill(['123', 'Placa Mãe', '2', 'Asus']);
-
+    const data_table_2 = Array(10).fill(['123', 'Placa Mãe', '2', 'Asus']);
     const fields = [
-        { label: 'Cliente', value: '', isTextarea: true },
-        { label: 'Técnico Responsável', value: '', isTextarea: true },
-        { label: 'Telefone', value: '', isTextarea: true },
-        { label: 'Data de abertura', value: '', isTextarea: true },
-        { label: 'Descrição', value: '', placeholder: 'Digite aqui...', isTextarea: true },
-        { label: 'Defeito', value: '', placeholder: 'Digite aqui...', isTextarea: true },
-        { label: 'Laudo técnico', value: '', placeholder: 'Digite aqui...', isTextarea: true },
-        { label: 'Observações', value: '', placeholder: 'Digite aqui...', isTextarea: true },
+        { label: 'Cliente', value: '', },
+        { label: 'Técnico Responsável', value: '', },
+        { label: 'Telefone', value: '', },
+        { label: 'Data de abertura', value: '', },
+        { label: 'Descrição', value: '', placeholder: 'Digite aqui...', },
+        { label: 'Defeito', value: '', placeholder: 'Digite aqui...', },
+        { label: 'Laudo técnico', value: '', placeholder: 'Digite aqui...', },
+        { label: 'Observações', value: '', placeholder: 'Digite aqui...', },
     ];
+
+    const add = () => {
+		alert('ADDDD');
+	};
 
     return (
         <div className="flex h-screen overflow-hidden">
@@ -48,6 +50,7 @@ export const CreateOS = () => {
 
                 <DetailsTable
                     fields={fields}
+                    orderId="123"
                     extraComponent={
                         <Table
                             icon={IconProductsBlack}
@@ -55,12 +58,13 @@ export const CreateOS = () => {
                             columns={column_table_2}
                             data={data_table_2}
                             actions={{
-                                showActions: false,
-                                actionButtonText: '',
-                                action: () => { },
+                                showActions: true,
+                                actionButtonText: 'Add Produto',
+                                action: add,
                             }}
                         />
                     }
+                    textButton="Adicionar Cliente"
                 />
             </main>
         </div>

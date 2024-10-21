@@ -8,9 +8,7 @@ import DetailsTable from '../components/table-details';
 
 export const ViewOS = () => {
     const today = new Date().toLocaleDateString('pt-BR');
-
     const column_table_2 = ['Código', 'Nome', 'Quantidade', 'Marca'];
-
     const data_table_2 = Array(12).fill(['123', 'Placa Mãe', '2', 'Asus']);
 
     const fields = [
@@ -18,10 +16,10 @@ export const ViewOS = () => {
         { label: 'Técnico Responsável', value: 'Vitor Bernardinho H.' },
         { label: 'Telefone', value: '(51) 99999-9999' },
         { label: 'Data de abertura', value: '30/09/2024' },
-        { label: 'Descrição', value: '', placeholder: 'Digite aqui...', isTextarea: true },
-        { label: 'Defeito', value: '', placeholder: 'Digite aqui...', isTextarea: true },
-        { label: 'Laudo técnico', value: '', placeholder: 'Digite aqui...', isTextarea: true },
-        { label: 'Observações', value: '', placeholder: 'Digite aqui...', isTextarea: true },
+        { label: 'Descrição', value: '', placeholder: 'Digite aqui...',},
+        { label: 'Defeito', value: '', placeholder: 'Digite aqui...',},
+        { label: 'Laudo técnico', value: '', placeholder: 'Digite aqui...',},
+        { label: 'Observações', value: '', placeholder: 'Digite aqui...',},
     ];
 
     return (
@@ -48,6 +46,7 @@ export const ViewOS = () => {
 
                 <DetailsTable
                     fields={fields}
+                    orderId="123"
                     extraComponent={
                         <Table
                             icon={IconProductsBlack}
@@ -61,6 +60,7 @@ export const ViewOS = () => {
                             }}
                         />
                     }
+                    textButton='Finalizar Ordem'
                 />
             </main>
         </div>
