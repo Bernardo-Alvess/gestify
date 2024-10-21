@@ -54,11 +54,14 @@ export class ServiceOrderController {
                 case 'CLIENT':
                     serviceOrders = await this.repository.getServiceOrdersForClient(id)
                     res.status(200).json({ serviceOrders })
+                    break;
                 case 'TECHNICIAN':
                     serviceOrders = await this.repository.getServiceOrdersForTechnician(id)
                     res.status(200).json({ serviceOrders })
+                    break;
                 default:
                     res.status(400).json({ message: 'Invalid type' })
+                    break;
             }
         } catch (e) {
             next(e)

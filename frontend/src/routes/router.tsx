@@ -5,15 +5,15 @@ import { ProtectedRoute } from '../components/protected-route';
 import { Login } from '../pages/Login';
 import { Products } from '../pages/Products';
 import { Users } from '../pages/Users/Users';
-import { ServiceOrders } from '../pages/ServiceOrders';
+import { ServiceOrders } from '../pages/OS/ServiceOrders';
 import { ViewClient } from '../pages/Clients/ViewClient';
 import { CreateClient } from '../pages/Clients/CreateClient';
 import { EditClient } from '../pages/Clients/EditClients';
 import { ViewUser } from '../pages/Users/ViewUser';
 import { EditUser } from '../pages/Users/EditUser';
-import { Clients } from '../pages/Clients';
-import { ViewOS } from '../pages/ViewOS';
-import { CreateOS } from '../pages/CreateOS';
+import { ViewOS } from '../pages/OS/ViewOS';
+import { CreateOS } from '../pages/OS/CreateOS';
+import { Clients } from '../pages/Clients/Clients';
 
 const router = createBrowserRouter([
 	{
@@ -73,7 +73,7 @@ const router = createBrowserRouter([
 		element: <ProtectedRoute children={<EditUser />} />,
 	},
 	{
-		path: '/viewos',
+		path: '/viewos/:id',
 		element: <ProtectedRoute children={<ViewOS />} />,
 	},
 	{
