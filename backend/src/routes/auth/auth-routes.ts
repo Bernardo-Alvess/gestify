@@ -7,7 +7,6 @@ const authRouter = Router()
 authRouter.post('/login', (req, res, next) => {
     console.log(req.body)
     loginUserSchema.parse(req.body)
-    console.log('parse 2')
     authController.login(req, res, next)
 })
 

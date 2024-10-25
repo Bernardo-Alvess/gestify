@@ -8,10 +8,10 @@ import IconUsers from '../public/assets/home-page/icons/users/user_icon.svg';
 import IconClients from '../public/assets/home-page/icons/clients/clients_icon.svg';
 import InfoCard from '../components/infocard';
 import Sidebar from '../components/sidebar';
-import TopNav from '../components/top_nav';
+import TopNav from '../components/top-nav';
 import Table from '../components/table';
 import Reminder from '../components/reminder';
-import SearchBox from '../components/search_box';
+import SearchBox from '../components/search-box';
 
 export const Home = () => {
 	// dados que vão sair
@@ -85,7 +85,7 @@ export const Home = () => {
 					<TopNav />
 				</header>
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-					<Link to="/services">
+					<Link to="/orders">
 						<InfoCard
 							icon={IconOrders}
 							title="Ordens de Serviço"

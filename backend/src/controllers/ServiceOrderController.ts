@@ -12,9 +12,9 @@ export class ServiceOrderController {
     async createServiceOrder(req: Request, res: Response, next: NextFunction) {
         try {
             const companyId = (req as CustomRequest).token.ownerId
-            const { id, description, defect, extras, clientId, technicianId, statusId, userId } = req.body
+            const { id, description, defect, extras, clientId, technicianId, status, userId } = req.body
 
-            const serviceOrder = new ServiceOrder({ id, description, defect, extras, companyId, clientId, technicianId, statusId, userId })
+            const serviceOrder = new ServiceOrder({ id, description, defect, extras, companyId, clientId, technicianId, status, userId })
 
             await this.repository.createServiceOrder(serviceOrder)
 
@@ -45,12 +45,45 @@ export class ServiceOrderController {
         }
     }
 
+    async getServiceOrderFor(req: Request, res: Response, next: NextFunction) {
+        try {
+            const { id, type } = req.params
+            let serviceOrders = {}
+
+            switch (type) {
+                case 'CLIENT':
+                    serviceOrders = await this.repository.getServiceOrdersForClient(id)
+                    res.status(200).json({ serviceOrders })
+                    break;
+                case 'TECHNICIAN':
+                    serviceOrders = await this.repository.getServiceOrdersForTechnician(id)
+                    res.status(200).json({ serviceOrders })
+                    break;
+                default:
+                    res.status(400).json({ message: 'Invalid type' })
+                    break;
+            }
+        } catch (e) {
+            next(e)
+        }
+    }
+
+    async getServiceOrderForTechnician(req: Request, res: Response, next: NextFunction) {
+        try {
+            const technicianId = req.params.id
+            const serviceOrders = await this.repository.getServiceOrdersForTechnician(technicianId)
+            res.status(200).json({ serviceOrders })
+        } catch (e) {
+            next(e)
+        }
+    }
+
     async updateServiceOrders(req: Request, res: Response, next: NextFunction) {
         try {
             const id = req.params.id
-            const { description, report, defect, extras, statusId, userId, technicianId, clientId } = req.body
+            const { description, report, defect, extras, status, userId, technicianId, clientId } = req.body
 
-            await this.repository.updateServiceOrder(id, { description, report, defect, extras, statusId, userId, technicianId, clientId })
+            await this.repository.updateServiceOrder(id, { description, report, defect, extras, status, userId, technicianId, clientId })
 
             res.send()
         } catch (e) {
@@ -70,7 +103,8 @@ export class ServiceOrderController {
 
     async getSoCount(req: Request, res: Response, next: NextFunction) {
         try {
-            const count = await this.repository.getSoCount()
+            const companyId = (req as CustomRequest).token.ownerId
+            const count = await this.repository.getSoCount(companyId)
             res.json({ count })
         } catch (e) {
             next(e)

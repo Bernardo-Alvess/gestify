@@ -36,7 +36,7 @@ const Sidebar = () => {
 			<aside
 				className={`fixed inset-0 left-0 z-30 w-52 bg-white transform ${
 					sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-				} transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0 p-10 space-y-10`}
+				} transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0 p-5 pl-10 space-y-10`}
 			>
 				{/* logo */}
 				<div>
@@ -54,7 +54,7 @@ const Sidebar = () => {
 					<ul className="space-y-5 text-gray-500">
 						<Link
 							to={`/home/${cookies.id}`}
-							className="flex items-center space-x-3 hover:text-blue-500"
+							className="flex items-center space-x-3 hover:text-blue-500 size-6"
 						>
 							<img
 								className="w-6"
@@ -65,18 +65,18 @@ const Sidebar = () => {
 						</Link>
 						<Link
 							to="/orders"
-							className="flex items-center space-x-3 hover:text-blue-500"
+							className="flex items-center space-x-3 hover:text-blue-500 size-5"
 						>
 							<img
-								className="w-6"
+								className=""
 								src={IconOrdersGrey}
 								alt="Ícone Serviços"
 							/>
-							<span>Ordens</span>
+							<span className="pl-1">Ordens</span>
 						</Link>
 						<Link
 							to="/products"
-							className="flex items-center space-x-3 hover:text-blue-500"
+							className="flex items-center space-x-3 hover:text-blue-500 size-6"
 						>
 							<img
 								className="w-6"
@@ -87,7 +87,7 @@ const Sidebar = () => {
 						</Link>
 						<Link
 							to="/clients"
-							className="flex items-center space-x-3 hover:text-blue-500"
+							className="flex items-center space-x-3 hover:text-blue-500 size-6"
 						>
 							<img
 								className="w-6"
@@ -98,7 +98,7 @@ const Sidebar = () => {
 						</Link>
 						<Link
 							to="/users"
-							className="flex items-center space-x-3 hover:text-blue-500"
+							className="flex items-center space-x-3 hover:text-blue-500 size-6"
 						>
 							<img
 								className="w-6"

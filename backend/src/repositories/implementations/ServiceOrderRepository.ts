@@ -11,7 +11,8 @@ export class ServiceOrderRepository implements IServiceOrderRepository {
             data: serviceOrder
         });
     }
-    async getServiceOrder(id: string): Promise<ServiceOrder | undefined> {
+
+    async getServiceOrder(id: string): Promise<IGetServiceOrderDto | undefined> {
         const data = await prisma.serviceOrder.findUnique({
             where: {
                 id
@@ -21,8 +22,8 @@ export class ServiceOrderRepository implements IServiceOrderRepository {
         if (data) return data
 
         return undefined
-
     }
+
     async getServiceOrders(companyId: string): Promise<IGetServiceOrderDto[]> {
         return await prisma.serviceOrder.findMany({
             where: {
@@ -34,13 +35,51 @@ export class ServiceOrderRepository implements IServiceOrderRepository {
                 defect: true,
                 report: true,
                 extras: true,
-                statusId: true,
+                date: true,
+                status: true,
                 technicianId: true,
                 clientId: true
             }
         })
     }
 
+    async getServiceOrdersForClient(clientId: string): Promise<IGetServiceOrderDto[]> {
+        return await prisma.serviceOrder.findMany({
+            where: {
+                clientId
+            },
+            select: {
+                id: true,
+                description: true,
+                defect: true,
+                report: true,
+                extras: true,
+                date: true,
+                status: true,
+                technicianId: true,
+                clientId: true,
+            }
+        })
+    }
+
+    async getServiceOrdersForTechnician(technicianId: string): Promise<IGetServiceOrderDto[]> {
+        return await prisma.serviceOrder.findMany({
+            where: {
+                technicianId
+            },
+            select: {
+                id: true,
+                description: true,
+                defect: true,
+                report: true,
+                extras: true,
+                date: true,
+                status: true,
+                technicianId: true,
+                clientId: true,
+            }
+        })
+    }
     async updateServiceOrder(id: string, data: IUpdateServiceOrderDto): Promise<void> {
         await prisma.serviceOrder.update({
             where: { id },
@@ -56,7 +95,11 @@ export class ServiceOrderRepository implements IServiceOrderRepository {
 
     }
 
-    async getSoCount(): Promise<Number> {
-        return await prisma.serviceOrder.count()
+    async getSoCount(companyId: string): Promise<Number> {
+        return await prisma.serviceOrder.count({
+            where: {
+                companyId
+            }
+        })
     }
 }

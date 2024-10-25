@@ -12,8 +12,8 @@ export class UserController {
     async createUser(req: Request, res: Response, next: NextFunction) {
         try {
             const companyId = (req as CustomRequest).token.ownerId
-            const { id, name, email, password, document, number, address, userType } = req.body
-            const user = new User({ name, email, password, document, number, address, userType, companyId }, id)
+            const { id, name, email, password, document, number, neighborhood, city, address, userType } = req.body
+            const user = new User({ name, email, password, document, number, address, neighborhood, city, userType, companyId }, id)
 
             await this.repository.createUser(user)
             const token = generateToken({ id: user.id, ownerId: companyId, userType: user.userType })
@@ -50,12 +50,12 @@ export class UserController {
 
     async updateUser(req: Request, res: Response, next: NextFunction) {
         try {
-            console.log('controller')
-            const { id, name, email, password, document, number, address, userType } = req.body
+            const id = req.params.id
+            const { name, email, password, document, number, address } = req.body
 
-            await this.repository.updateUser(id, { name, email, password, document, number, address, userType })
+            await this.repository.updateUser(id, { name, email, password, document, number, address })
 
-            res.status(200).send()
+            res.status(200).json({ updated: true })
         } catch (e) {
             next(e)
         }
@@ -87,8 +87,20 @@ export class UserController {
 
     async getUserCount(req: Request, res: Response, next: NextFunction) {
         try {
-            const userCount = await this.repository.getUserCount()
-            res.status(200).json({ userCount })
+            const companyId = (req as CustomRequest).token.ownerId
+
+            if ('usertype' in req.query) {
+                const userTypeParam = (req.query.usertype as string).toUpperCase()
+                const count = await this.repository.getUserCount(companyId, userTypeParam, undefined)
+                return res.status(200).json({ count })
+            } else if ('except' in req.query) {
+                const exceptParam = (req.query.except as string).toUpperCase()
+                const count = await this.repository.getUserCount(companyId, undefined, exceptParam)
+                return res.status(200).json({ count })
+            }
+
+            const count = await this.repository.getUserCount(companyId)
+            res.status(200).json({ count })
         } catch (e) {
             next(e)
         }

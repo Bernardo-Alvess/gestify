@@ -1,4 +1,4 @@
-import { UserType } from "../entities/User/user-type"
+import { UserType } from "../entities/User/user-type-enum"
 
 interface IUserProps {
     id: string,

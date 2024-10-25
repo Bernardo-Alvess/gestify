@@ -2,6 +2,7 @@ import editIcon from '../public/assets/table/edit.svg';
 import eyeIcon from '../public/assets/table/eye.svg';
 import deleteIcon from '../public/assets/table/trash-2.svg';
 import addIcon from '../public/assets/table/simbolo_mais.svg';
+import { useNavigate } from 'react-router-dom';
 
 interface TableProps {
 	icon: string;
@@ -12,7 +13,10 @@ interface TableProps {
 		showActions: boolean;
 		actionButtonText: string;
 		action: () => void;
+		deleteAction: (id: string) => void;
 	};
+	viewPage?: string;
+	editPage?: string;
 }
 const Table: React.FC<TableProps> = ({
 	icon,
@@ -20,17 +24,21 @@ const Table: React.FC<TableProps> = ({
 	columns,
 	data,
 	actions,
+	viewPage,
+	editPage,
 }) => {
+	const navigate = useNavigate();
+
 	const edit = (rowData: Record<string, any>) => {
-		alert(`Edit: ${rowData}`);
+		navigate(`${editPage}/${rowData.id}`);
 	};
 
 	const view = (rowData: Record<string, any>) => {
-		alert(`View: ${rowData}`);
+		navigate(`${viewPage}/${rowData.id}`);
 	};
 
 	const del = (rowData: Record<string, any>) => {
-		alert(`Delete: ${rowData}`);
+		actions?.deleteAction(rowData.id);
 	};
 
 	return (
@@ -75,7 +83,7 @@ const Table: React.FC<TableProps> = ({
 						{data.map((row: Record<string, any>, index: number) => (
 							<tr key={index} className="hover:bg-gray-100">
 								{Object.values(row).map(
-									(cell: string, cellIndex: number) => (
+									(cell: any, cellIndex: number) => (
 										<td
 											key={cellIndex}
 											className="px-4 py-2 text-xs font-medium border-none underline truncate text-left"

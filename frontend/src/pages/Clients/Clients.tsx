@@ -1,20 +1,33 @@
 import { useCallback, useEffect, useState } from 'react';
-import SearchBox from '../components/search_box';
-import Sidebar from '../components/sidebar';
-import Table from '../components/table';
-import TopNav from '../components/top_nav';
-import IconClientsBlack from '../public/assets/home-page/icons/clients/clients_icon_b.svg';
-import { getUsers } from '../http/get-users';
+import SearchBox from '../../components/search-box';
+import Sidebar from '../../components/sidebar';
+import Table from '../../components/table';
+import TopNav from '../../components/top-nav';
+import IconClientsBlack from '../../public/assets/home-page/icons/clients/clients_icon_b.svg';
+import { getUsers } from '../../http/get-users';
 import { useCookies } from 'react-cookie';
+import { useNavigate } from 'react-router-dom';
 
 export const Clients = () => {
+	const navigate = useNavigate();
 	const [clients, setClients] = useState([{}]);
 	const [cookies] = useCookies();
 	const today = new Date().toLocaleDateString('pt-BR');
-	const columns = ['Email', 'Nome', 'CPF/CNPJ', 'Número', 'Endereço', 'Tipo'];
+	const columns = [
+		'Id',
+		'Email',
+		'Nome',
+		'CPF/CNPJ',
+		'Endereço',
+		'Cidade',
+		'Bairro',
+		'Número',
+		'Tipo',
+		'Data de registro',
+	];
 
 	const add = () => {
-		alert('ADDDD');
+		navigate('/create-user');
 	};
 
 	const fetchClients = useCallback(async () => {
@@ -51,7 +64,10 @@ export const Clients = () => {
 								showActions: true,
 								actionButtonText: 'Adicionar Cliente',
 								action: add,
+								deleteAction: () => {},
 							}}
+							viewPage="/view-client"
+							editPage="/edit-client"
 						/>
 					</div>
 				</div>

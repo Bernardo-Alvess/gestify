@@ -1,7 +1,7 @@
 import { User } from "../../entities/User/User";
 import { prisma } from "../../lib/prisma";
 import { IUserRepository } from "../IUserRepository";
-import { UserType } from "../../entities/User/user-type";
+import { UserType } from "../../entities/User/user-type-enum";
 import { IUpdateUserDto } from "../../entities/User/dtos/IUpdateUserDto";
 import { IGetUserDto } from "../../entities/User/dtos/UGetUserDto";
 
@@ -24,19 +24,22 @@ export class UserRepository implements IUserRepository {
     }
     async getUsers(companyId: string, userType?: string, except?: string): Promise<IGetUserDto[] | undefined> {
         if (userType) {
-
             const users = await prisma.user.findMany({
                 where: {
                     userType,
                     companyId
                 },
                 select: {
+                    id: true,
                     email: true,
                     name: true,
                     document: true,
                     address: true,
+                    city: true,
+                    neighborhood: true,
                     number: true,
-                    userType: true
+                    userType: true,
+                    date: true,
                 }
             })
 
@@ -52,12 +55,16 @@ export class UserRepository implements IUserRepository {
                     companyId
                 },
                 select: {
+                    id: true,
                     email: true,
                     name: true,
                     document: true,
                     address: true,
+                    city: true,
+                    neighborhood: true,
                     number: true,
-                    userType: true
+                    userType: true,
+                    date: true,
                 }
             })
 
@@ -69,30 +76,51 @@ export class UserRepository implements IUserRepository {
                     companyId
                 },
                 select: {
+                    id: true,
                     email: true,
                     name: true,
                     document: true,
                     address: true,
+                    city: true,
+                    neighborhood: true,
                     number: true,
-                    userType: true
+                    userType: true,
+                    date: true,
                 }
             })
             if (users) return users
         }
     }
 
+    async getUserCount(companyId: string, userType?: string, except?: string): Promise<number> {
+        if (userType) {
+            const count = await prisma.user.count({
+                where: {
+                    userType,
+                    companyId
+                }
+            })
+            return count
 
-    // async getClients(): Promise<User[] | undefined> {
-    //     const data = await prisma.user.findMany({
-    //         where: {
-    //             userType: 'CLIENT'
-    //         }
-    //     })
-    //     if(data){
-    //         const users = mapUserEntity()
-    //     } return data
-    //     return undefined
-    // }
+        } else if (except) {
+            const count = await prisma.user.count({
+                where: {
+                    userType: {
+                        not: except
+                    },
+                    companyId
+                }
+            })
+            return count
+        }
+
+        const count = await prisma.user.count({
+            where: {
+                companyId
+            }
+        })
+        return count
+    }
 
     async updateUser(id: string, user: IUpdateUserDto): Promise<void | undefined> {
         await prisma.user.update({
@@ -109,7 +137,6 @@ export class UserRepository implements IUserRepository {
 
 
     async createUser(user: User): Promise<void> {
-
         const data = await prisma.company.findUnique({
             where: {
                 id: user.companyId
@@ -133,11 +160,4 @@ export class UserRepository implements IUserRepository {
             })
         }
     }
-
-    async getUserCount(): Promise<number> {
-        const count = await prisma.user.count()
-
-        return count
-    }
-
 }
