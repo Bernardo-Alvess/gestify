@@ -2,9 +2,10 @@
 import { prisma } from "../../lib/prisma";
 import { Product } from '../../entities/Products/Product';
 import { IProductRepository } from '../IProductRepository';
-import { IUpdateProductDto } from '../../entities/Products/dtos/IUpdateProductDto'; 
+import { IUpdateProductDto } from '../../entities/Products/dtos/IUpdateProductDto';
 
 export class ProductRepository implements IProductRepository {
+
   async getProduct(id: string): Promise<Product | undefined> {
     const data = await prisma.product.findUnique({
       where: { id },
@@ -33,7 +34,7 @@ export class ProductRepository implements IProductRepository {
         companyId
       }
     });
-      }
+  }
 
   async createProduct(product: Product) {
     await prisma.product.create({
