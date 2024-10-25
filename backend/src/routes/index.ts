@@ -15,6 +15,6 @@ router.use('/api/auth', authRouter)
 router.use('/api/service-order', serviceOrderRouter)
 router.use('/api/status', statusRouter)
 router.use('/api/product', productRouter)
-router.use('/api/productServiceOrder', productServiceOrderRouter)
+router.use('/api/product-service-order', productServiceOrderRouter)
 
 export { router }

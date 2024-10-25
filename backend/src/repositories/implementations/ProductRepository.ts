@@ -29,11 +29,11 @@ export class ProductRepository implements IProductRepository {
     }
 
     async getProducts(companyId: string): Promise<Product[]> {
-    return await prisma.product.findMany({
-      where: {
-        companyId
-      }
-    });
+      return await prisma.product.findMany({
+        where: {
+          companyId
+        }
+      });
     }
 
     async createProduct(product: Product){
