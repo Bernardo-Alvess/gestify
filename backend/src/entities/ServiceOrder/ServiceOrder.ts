@@ -38,6 +38,7 @@ export class ServiceOrder {
         this.description = data.description
         this.defect = data.defect
         this.extras = data.extras
+        this.report = data.report
         this.date = new Date()
         this.companyId = data.companyId
         this.clientId = data.clientId

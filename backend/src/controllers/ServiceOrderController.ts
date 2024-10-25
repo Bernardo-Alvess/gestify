@@ -12,9 +12,9 @@ export class ServiceOrderController {
     async createServiceOrder(req: Request, res: Response, next: NextFunction) {
         try {
             const companyId = (req as CustomRequest).token.ownerId
-            const { id, description, defect, extras, clientId, technicianId, status, userId } = req.body
-
-            const serviceOrder = new ServiceOrder({ id, description, defect, extras, companyId, clientId, technicianId, status, userId })
+            const { id, description, defect, extras, clientId, technicianId, status, userId, report } = req.body
+            console.log(report)
+            const serviceOrder = new ServiceOrder({ id, description, defect, extras, companyId, clientId, technicianId, status, userId, report })
 
             await this.repository.createServiceOrder(serviceOrder)
 
