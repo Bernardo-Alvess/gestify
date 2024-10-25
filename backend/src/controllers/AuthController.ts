@@ -60,3 +60,5 @@ const repository = new AuthRepository()
 const authController = new AuthController(repository)
 
 export { authController }
+
+
