@@ -56,6 +56,7 @@ export const Products = () => {
 								showActions: true,
 								actionButtonText: 'Adicionar Produto',
 								action: add,
+								deleteAction: () => {},
 							}}
 						/>
 					</div>

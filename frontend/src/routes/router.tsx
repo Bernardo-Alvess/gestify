@@ -5,14 +5,14 @@ import { ProtectedRoute } from '../components/protected-route';
 import { Login } from '../pages/Login';
 import { Products } from '../pages/Products';
 import { Users } from '../pages/Users/Users';
-import { ServiceOrders } from '../pages/Orders/ServiceOrders';
+import { ServiceOrders } from '../pages/OS/ServiceOrders';
 import { ViewClient } from '../pages/Clients/ViewClient';
 import { CreateClient } from '../pages/Clients/CreateClient';
 import { EditClient } from '../pages/Clients/EditClients';
 import { ViewUser } from '../pages/Users/ViewUser';
 import { EditUser } from '../pages/Users/EditUser';
-import { ViewOS } from '../pages/Orders/ViewOS';
-import { CreateOS } from '../pages/Orders/CreateOS';
+import { ViewOS } from '../pages/OS/ViewOS';
+import { CreateOS } from '../pages/OS/CreateOS';
 import { Clients } from '../pages/Clients/Clients';
 
 const router = createBrowserRouter([
