@@ -42,7 +42,7 @@ const Table: React.FC<TableProps> = ({
 	};
 
 	return (
-		<div className="bg-white p-4 rounded-lg shadow-lg w-full overflow-y-auto">
+		<div className="bg-white p-4 rounded-lg shadow-lg w-full overflow-y-auto h-full">
 			<div className="flex justify-between items-center p-2">
 				<div className="flex gap-2">
 					<img className="w-5" src={icon} alt="Ícone da Tabela" />

@@ -62,9 +62,10 @@ export const Users = () => {
 								showActions: true,
 								actionButtonText: 'Adicionar Usuário',
 								action: add,
+								deleteAction: () => {},
 							}}
-							viewPage='/view-user'
-							editPage='/edit-user'
+							viewPage="/view-user"
+							editPage="/edit-user"
 						/>
 					</div>
 				</div>
