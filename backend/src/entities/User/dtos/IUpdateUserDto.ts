@@ -6,6 +6,5 @@ export interface IUpdateUserDto {
     number?: string | null
     address?: string | null,
     document: string,
-    userType: UserType,
     password: string
 }

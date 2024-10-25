@@ -5,9 +5,11 @@ import Table from '../components/table';
 import TopNav from '../components/top-nav';
 import IconProductBlack from '../public/assets/home-page/icons/products/products_icon_b.svg';
 import { getProducts } from '../http/get-products';
+import { useCookies } from 'react-cookie';
 
 export const Products = () => {
 	const today = new Date().toLocaleDateString('pt-BR');
+	const [cookies] = useCookies(['jwt'])
 	const [products, setProducts] = useState([]);
 
 	const column_table_2 = [
@@ -23,7 +25,7 @@ export const Products = () => {
 	};
 
 	const fetchProducts = useCallback(async () => {
-		const data = await getProducts();
+		const data = await getProducts(cookies.jwt);
 		if (data !== products) setProducts(data);
 	}, []);
 
@@ -34,7 +36,7 @@ export const Products = () => {
 	return (
 		<div className="flex h-screen overflow-hidden">
 			<Sidebar />
-			<main className="flex-1 p-10 bg-blue-200 space-y-10 h-screen">
+			<main className="flex-1 p-5 bg-blue-200 space-y-10 h-screen">
 				<header className="flex justify-between">
 					<div className="pt-16 md:pt-16 lg:pt-0">
 						<h1 className="text-2xl font-bold">Dashboard</h1>
@@ -54,6 +56,7 @@ export const Products = () => {
 								showActions: true,
 								actionButtonText: 'Adicionar Produto',
 								action: add,
+								deleteAction: () => {},
 							}}
 						/>
 					</div>

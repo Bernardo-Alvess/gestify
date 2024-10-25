@@ -13,8 +13,10 @@ interface TableProps {
 		showActions: boolean;
 		actionButtonText: string;
 		action: () => void;
+		deleteAction: (id: string) => void;
 	};
 	viewPage?: string;
+	editPage?: string;
 }
 const Table: React.FC<TableProps> = ({
 	icon,
@@ -23,11 +25,12 @@ const Table: React.FC<TableProps> = ({
 	data,
 	actions,
 	viewPage,
+	editPage,
 }) => {
 	const navigate = useNavigate();
 
 	const edit = (rowData: Record<string, any>) => {
-		alert(`Edit: ${rowData}`);
+		navigate(`${editPage}/${rowData.id}`);
 	};
 
 	const view = (rowData: Record<string, any>) => {
@@ -35,7 +38,7 @@ const Table: React.FC<TableProps> = ({
 	};
 
 	const del = (rowData: Record<string, any>) => {
-		alert(`Delete: ${rowData}`);
+		actions?.deleteAction(rowData.id);
 	};
 
 	return (

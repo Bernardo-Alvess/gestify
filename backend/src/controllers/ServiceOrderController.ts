@@ -45,10 +45,33 @@ export class ServiceOrderController {
         }
     }
 
-    async getServiceOrderForClient(req: Request, res: Response, next: NextFunction) {
+    async getServiceOrderFor(req: Request, res: Response, next: NextFunction) {
         try {
-            const clientId = req.params.id
-            const serviceOrders = await this.repository.getServiceOrdersForClient(clientId)
+            const { id, type } = req.params
+            let serviceOrders = {}
+
+            switch (type) {
+                case 'CLIENT':
+                    serviceOrders = await this.repository.getServiceOrdersForClient(id)
+                    res.status(200).json({ serviceOrders })
+                    break;
+                case 'TECHNICIAN':
+                    serviceOrders = await this.repository.getServiceOrdersForTechnician(id)
+                    res.status(200).json({ serviceOrders })
+                    break;
+                default:
+                    res.status(400).json({ message: 'Invalid type' })
+                    break;
+            }
+        } catch (e) {
+            next(e)
+        }
+    }
+
+    async getServiceOrderForTechnician(req: Request, res: Response, next: NextFunction) {
+        try {
+            const technicianId = req.params.id
+            const serviceOrders = await this.repository.getServiceOrdersForTechnician(technicianId)
             res.status(200).json({ serviceOrders })
         } catch (e) {
             next(e)

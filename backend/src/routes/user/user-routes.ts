@@ -27,8 +27,7 @@ userRouter.get('/:id', (req, res, next) => {
     userController.getUserById(req, res, next)
 })
 
-userRouter.put('/', adminMiddleware, (req, res, next) => {
-    console.log('route handler')
+userRouter.put('/:id', adminMiddleware, (req, res, next) => {
     updateUserSchema.parse(req.body)
     userController.updateUser(req, res, next)
 })
