@@ -41,6 +41,10 @@ const Table: React.FC<TableProps> = ({
 		actions?.deleteAction(rowData.id);
 	};
 
+	function isDateString(dateString: string): boolean {
+		return !isNaN(Date.parse(dateString));
+	}
+
 	return (
 		<div className="bg-white p-4 rounded-lg shadow-lg w-full overflow-y-auto h-full">
 			<div className="flex justify-between items-center p-2">
@@ -67,13 +71,13 @@ const Table: React.FC<TableProps> = ({
 							{columns.map((column: string, index: number) => (
 								<th
 									key={index}
-									className="px-4 py-2 text-left text-xs underline"
+									className="px-4 py-2 text-center text-xs underline"
 								>
 									{column}
 								</th>
 							))}
 							{actions?.showActions ? (
-								<th className="px-4 py-2 text-left text-xs underline">
+								<th className="px-4 py-2 text-center text-xs underline">
 									Ações
 								</th>
 							) : null}
@@ -86,14 +90,20 @@ const Table: React.FC<TableProps> = ({
 									(cell: any, cellIndex: number) => (
 										<td
 											key={cellIndex}
-											className="px-4 py-2 text-xs font-medium border-none underline truncate text-left max-w-[80px] text-gray-700 decoration-purple-900"
+											className="px-4 py-2 text-xs font-medium border-none underline truncate text-center max-w-[80px] text-gray-700 decoration-purple-900"
 										>
-											{cell ? cell : 'N/A'}
+											{isDateString(cell)
+												? new Date(
+														cell
+												  ).toLocaleDateString('pt-br')
+												: cell
+												? cell
+												: 'N/A'}{' '}
 										</td>
 									)
 								)}
 								{actions?.showActions ? (
-									<td className="px-4 py-2 text-xs font-medium border-none flex gap-1">
+									<td className="px-4 py-2 text-xs font-medium border-none flex gap-1 items-center justify-center">
 										<button
 											className="size-7"
 											onClick={() => edit(row)}
