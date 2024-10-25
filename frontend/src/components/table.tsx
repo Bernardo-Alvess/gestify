@@ -86,7 +86,7 @@ const Table: React.FC<TableProps> = ({
 									(cell: any, cellIndex: number) => (
 										<td
 											key={cellIndex}
-											className="px-4 py-2 text-xs font-medium border-none underline truncate text-left"
+											className="px-4 py-2 text-xs font-medium border-none underline truncate text-left max-w-[80px] text-gray-700 decoration-purple-900"
 										>
 											{cell ? cell : 'N/A'}
 										</td>
