@@ -7,39 +7,37 @@ import DetailsTable from '../../components/table-details';
 import { BackPageButton } from '../../components/back-page-button';
 
 export const ViewOS = () => {
-	const today = new Date().toLocaleDateString('pt-BR');
-	const column_table_2 = ['Código', 'Nome', 'Quantidade', 'Marca'];
-	const data_table_2 = Array(12).fill(['123', 'Placa Mãe', '2', 'Asus']);
+    const today = new Date().toLocaleDateString('pt-BR');
+    const column_table_2 = ['Código', 'Nome', 'Quantidade', 'Marca'];
+    const data_table_2 = Array(12).fill(['123', 'Placa Mãe', '2', 'Asus']);
 
-	const fields = [
-		{ label: 'Cliente', value: 'Douglas S.' },
-		{ label: 'Técnico Responsável', value: 'Vitor Bernardinho H.' },
-		{ label: 'Telefone', value: '(51) 99999-9999' },
-		{ label: 'Data de abertura', value: '30/09/2024' },
-		{ label: 'Descrição', value: '', placeholder: 'Digite aqui...' },
-		{ label: 'Defeito', value: '', placeholder: 'Digite aqui...' },
-		{ label: 'Laudo técnico', value: '', placeholder: 'Digite aqui...' },
-		{ label: 'Observações', value: '', placeholder: 'Digite aqui...' },
-	];
+    const fields = [
+        { label: 'Cliente', value: 'Douglas S.' },
+        { label: 'Técnico Responsável', value: 'Vitor Bernardinho H.' },
+        { label: 'Telefone', value: '(51) 99999-9999' },
+        { label: 'Data de abertura', value: '30/09/2024' },
+        { label: 'Descrição', value: '', placeholder: 'Digite aqui...',},
+        { label: 'Defeito', value: '', placeholder: 'Digite aqui...',},
+        { label: 'Laudo técnico', value: '', placeholder: 'Digite aqui...',},
+        { label: 'Observações', value: '', placeholder: 'Digite aqui...',},
+    ];
 
-	return (
-		<div className="flex h-screen overflow-hidden">
-			<Sidebar />
-			<main className="flex-1 p-5 bg-blue-200 space-y-3 h-screen overflow-y-auto">
-				<header className="flex justify-between mb-5">
-					<div className="pt-16 md:pt-16 lg:pt-0">
-						<h1 className="text-2xl font-bold">
-							Ordens - Adicionar
-						</h1>
-						<p className="text-sm text-gray-500">{today}</p>
-					</div>
-					<SearchBox />
-					<TopNav />
-				</header>
+    return (
+        <div className="flex h-screen overflow-hidden">
+            <Sidebar />
+            <main className="flex-1 p-5 bg-blue-200 space-y-3 h-screen overflow-y-auto">
+                <header className="flex justify-between mb-5">
+                    <div className="pt-16 md:pt-16 lg:pt-0">
+                        <h1 className="text-2xl font-bold">Ordens - Adicionar</h1>
+                        <p className="text-sm text-gray-500">{today}</p>
+                    </div>
+                    <SearchBox />
+                    <TopNav />
+                </header>
 
-				<BackPageButton route="/orders" />
+                <BackPageButton route="/orders" />
 
-				<DetailsTable
+                <DetailsTable
 					fields={fields}
 					orderId="123"
 					extraComponent={
@@ -58,7 +56,7 @@ export const ViewOS = () => {
 					}
 					textButton="Finalizar Ordem"
 				/>
-			</main>
-		</div>
-	);
-};
+            </main>
+        </div>
+    );
+}
