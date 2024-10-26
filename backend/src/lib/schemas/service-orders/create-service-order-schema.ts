@@ -11,6 +11,6 @@ export const createServiceOrderSchema = z.object({
     status: z.nativeEnum(StatusEnum, {
         errorMap: () => ({ message: 'Status must be of value: EM ANDAMENTO, FECHADO, ABERTO, PENDENTE or CANCELADO' })
     }),
-    technicianId: z.string().uuid().optional(),
+    technicianId: z.string().uuid().optional().nullable(),
     clientId: z.string().uuid().optional(),
 }).strict()

@@ -18,13 +18,13 @@ interface IUser {
 }
 
 interface IFormValues {
-	client: string;
-	technician: string;
+	client: string | undefined;
+	technician: string | undefined;
 	number: string;
-	defect: string;
-	report: string;
-	description: string;
-	extras: string;
+	defect: string | undefined;
+	report: string | undefined;
+	description: string | undefined;
+	extras: string | undefined;
 	date: string;
 }
 
@@ -112,15 +112,21 @@ export const CreateOS: React.FC = () => {
 		e.preventDefault();
 
 		const created = await createOs(cookies.jwt, {
-			description: formValues.description,
-			defect: formValues.defect,
-			report: formValues.report,
-			extras: formValues.extras,
+			description:
+				formValues.description === ''
+					? undefined
+					: formValues.description,
+			defect: formValues.defect === '' ? undefined : formValues.defect,
+			report: formValues.report === '' ? undefined : formValues.report,
+			extras: formValues.extras === '' ? undefined : formValues.extras,
 			status: selectedOption.toUpperCase(),
 			//date: formValues.date,
 			userId: cookies.id,
-			clientId: formValues.client,
-			technicianId: formValues.technician,
+			clientId: formValues.client === '' ? undefined : formValues.client,
+			technicianId:
+				formValues.technician === ''
+					? undefined
+					: formValues.technician,
 		});
 
 		if (created) {
@@ -217,12 +223,11 @@ export const CreateOS: React.FC = () => {
 									{field.isTextarea ? (
 										<textarea
 											name={field.name}
-											
 											value={formValues[
 												field.name as keyof IFormValues
 											]?.toString()}
 											onChange={handleChange}
-											rows={6} 
+											rows={6}
 											className="w-full p-2 border border-gray-300 rounded-lg"
 										/>
 									) : field.options ? (
@@ -274,12 +279,11 @@ export const CreateOS: React.FC = () => {
 								actions={{
 									showActions: true,
 									actionButtonText: 'Adicionar Produto',
-									action: () => { },
-									deleteAction: () => { },
+									action: () => {},
+									deleteAction: () => {},
 								}}
 							/>
 						</div>
-
 					</div>
 					<div className="flex justify-center mt-6">
 						<button
