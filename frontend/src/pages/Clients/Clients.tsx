@@ -27,7 +27,7 @@ export const Clients = () => {
 	];
 
 	const add = () => {
-		navigate('/create-user');
+		navigate('/create-client');
 	};
 
 	const fetchClients = useCallback(async () => {

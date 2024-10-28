@@ -64,6 +64,7 @@ export const ServiceOrders = () => {
 								deleteAction: () => {},
 							}}
 							viewPage="/viewos"
+							editPage="/editos"
 						/>
 					</div>
 				</div>
