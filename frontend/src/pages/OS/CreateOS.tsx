@@ -3,7 +3,6 @@ import Sidebar from '../../components/sidebar';
 import TopNav from '../../components/top-nav';
 import IconProductsBlack from '../../public/assets/home-page/icons/products/products_icon_b.svg';
 import { BackPageButton } from '../../components/back-page-button';
-import { useNavigate } from 'react-router-dom';
 import { useCallback, useEffect, useState, ChangeEvent } from 'react';
 import { useCookies } from 'react-cookie';
 import Table from '../../components/table';
