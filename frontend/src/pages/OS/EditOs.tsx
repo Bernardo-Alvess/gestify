@@ -34,6 +34,7 @@ export interface IUpdateServiceOrder {
 	defect?: string | undefined;
 	report?: string | undefined;
 	extras?: string | undefined;
+	number?: string | undefined;
 	status: string;
 	technicianId?: string | undefined;
 	clientId?: string | undefined;
@@ -121,7 +122,7 @@ export const EditOs: React.FC = () => {
 		setFormValues({
 			client: data.clientId || '',
 			technician: data.technicianId || '',
-			number: data.clientNumber || '',
+			number: data.number || '',
 			defect: data.defect || '',
 			report: data.report || '',
 			description: data.description || '',
@@ -139,23 +140,6 @@ export const EditOs: React.FC = () => {
 			formValues.technician = inputFields[1].selected?.id;
 		}
 
-		console.log({
-			description:
-				formValues.description === ''
-					? undefined
-					: formValues.description,
-			defect: formValues.defect === '' ? undefined : formValues.defect,
-			report: formValues.report === '' ? undefined : formValues.report,
-			extras: formValues.extras === '' ? undefined : formValues.extras,
-			status: selectedOption.toUpperCase(),
-			//date: formValues.date,
-			clientId: formValues.client === '' ? undefined : formValues.client,
-			technicianId:
-				formValues.technician === ''
-					? undefined
-					: formValues.technician,
-		});
-
 		const updated = await updateServiceOrder(cookies.jwt, id, {
 			description:
 				formValues.description === ''
@@ -164,6 +148,7 @@ export const EditOs: React.FC = () => {
 			defect: formValues.defect === '' ? undefined : formValues.defect,
 			report: formValues.report === '' ? undefined : formValues.report,
 			extras: formValues.extras === '' ? undefined : formValues.extras,
+			number: formValues.number === '' ? undefined : formValues.number,
 			status: selectedOption.toUpperCase(),
 			//date: formValues.date,
 			clientId: formValues.client === '' ? undefined : formValues.client,
@@ -231,8 +216,6 @@ export const EditOs: React.FC = () => {
 			isTextarea: true,
 		},
 	];
-
-	console.log(inputFields);
 
 	return (
 		<div className="flex h-screen overflow-hidden">
@@ -323,9 +306,21 @@ export const EditOs: React.FC = () => {
 												</option>
 											))}
 										</select>
+									) : field.type === 'date' ? (
+										<input
+											type={'text'}
+											name={field.name}
+											value={formValues[
+												field.name as keyof IFormValues
+											]?.toString()}
+											required
+											readOnly
+											onChange={handleChange}
+											className="w-full p-2 border border-gray-300 rounded-lg max-h-12"
+										/>
 									) : (
 										<input
-											type={field.type || 'text'}
+											type={'text'}
 											name={field.name}
 											value={formValues[
 												field.name as keyof IFormValues

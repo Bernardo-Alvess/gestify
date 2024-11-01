@@ -44,6 +44,7 @@ model ServiceOrder {
   defect       String?
   report       String?
   extras       String?
+  number       String?
   date         DateTime @default(now())
   companyId    String   @db.Uuid
   status       String   @default("ABERTO")

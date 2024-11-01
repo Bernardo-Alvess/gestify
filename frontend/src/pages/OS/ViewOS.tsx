@@ -6,7 +6,6 @@ import { BackPageButton } from '../../components/back-page-button';
 import { useCallback, useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import Table from '../../components/table';
-import { getServiceOrders } from '../../http/get-service-orders';
 import { getServiceOrdersById } from '../../http/get-service-order-by-id';
 import { useParams } from 'react-router-dom';
 
@@ -46,7 +45,7 @@ export const ViewOS: React.FC = () => {
 		setFormValues({
 			client: data.clientId || '',
 			technician: data.technicianId || '',
-			number: data.clientNumber || '',
+			number: data.number || '',
 			defect: data.defect || '',
 			report: data.report || '',
 			description: data.description || '',

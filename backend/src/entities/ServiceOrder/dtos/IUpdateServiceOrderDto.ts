@@ -5,6 +5,7 @@ export interface IUpdateServiceOrderDto {
     extras?: string;
     status: string;
     userId: string;
+    number: string
     technicianId?: string;
     clientId?: string;
 }

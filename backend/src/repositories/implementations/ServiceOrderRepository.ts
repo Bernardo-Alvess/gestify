@@ -39,7 +39,8 @@ export class ServiceOrderRepository implements IServiceOrderRepository {
                 date: true,
                 status: true,
                 technicianId: true,
-                clientId: true
+                clientId: true,
+                number: true
             }
         })
     }

@@ -4,6 +4,7 @@ interface IServiceOrder {
     report?: string
     extras?: string
     status: string
+    number?: string
     userId: string
     clientId?: string | undefined
     technicianId?: string | undefined

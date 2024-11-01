@@ -4,6 +4,7 @@ interface IServiceOrderProps {
     defect?: string | null;
     report?: string | null;
     extras?: string | null;
+    number?: string | null
     companyId: string;
     status: string
     userId: string;

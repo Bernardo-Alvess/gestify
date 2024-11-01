@@ -119,6 +119,7 @@ export const CreateOS: React.FC = () => {
 			report: formValues.report === '' ? undefined : formValues.report,
 			extras: formValues.extras === '' ? undefined : formValues.extras,
 			status: selectedOption.toUpperCase(),
+			number: formValues.number === '' ? undefined : formValues.number,
 			//date: formValues.date,
 			userId: cookies.id,
 			clientId: formValues.client === '' ? undefined : formValues.client,
