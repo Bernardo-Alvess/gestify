@@ -60,7 +60,7 @@ export const EditOs: React.FC = () => {
 	});
 
 	const column_table_2 = ['Código', 'Nome', 'Quantidade', 'Marca'];
-	const data_table_2 = Array(20).fill(['123', 'Placa Mãe', '2', 'Asus']);
+	const data_table_2 = Array(20).fill(['1', 'Placa Mãe', '2', 'Asus']);
 
 	const handleChange = (
 		e: ChangeEvent<
