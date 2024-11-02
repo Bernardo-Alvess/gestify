@@ -8,6 +8,7 @@ import { useCookies } from 'react-cookie';
 import Table from '../../components/table';
 import { getServiceOrdersById } from '../../http/get-service-order-by-id';
 import { useParams } from 'react-router-dom';
+import { getProductsForOs } from '../../http/get-products-for-os';
 
 interface IFormValues {
 	client: string;
@@ -20,10 +21,22 @@ interface IFormValues {
 	date: string;
 }
 
+interface Products {
+	id: string;
+	name: string;
+	price: number;
+	cost: number;
+	unityType: string;
+	minQtd: number;
+	qtd: number;
+	companyId: string;
+}
+
 export const ViewOS: React.FC = () => {
 	const { id } = useParams();
 	const today = new Date().toLocaleDateString('pt-BR');
 	const [selectedOption, setSelectedOption] = useState<string>('');
+	const [products, setProducts] = useState([{}]);
 	const [cookies] = useCookies(['jwt', 'id']);
 
 	const [formValues, setFormValues] = useState<IFormValues>({
@@ -53,12 +66,18 @@ export const ViewOS: React.FC = () => {
 			date: new Date(data.date).toLocaleDateString('pt-BR'),
 		});
 		setSelectedOption(data.status);
-		console.log(data);
+	}, []);
+
+	const fetchProductsForOs = useCallback(async () => {
+		const productsServiceOrder = await getProductsForOs(cookies.jwt, id);
+		console.log(productsServiceOrder);
+		setProducts(productsServiceOrder);
 	}, []);
 
 	useEffect(() => {
 		fetchServiceOrder();
-	}, [fetchServiceOrder]);
+		fetchProductsForOs();
+	}, [fetchServiceOrder, fetchProductsForOs]);
 
 	const getSelectClass = (): string => {
 		switch (selectedOption) {

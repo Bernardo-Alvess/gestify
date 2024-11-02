@@ -5,15 +5,14 @@ import { IUpdateProductServiceOrderDto } from '../../entities/ProductServiceOrde
 
 export class ProductServiceOrderRepository implements IProductServiceOrderRepository {
     //pegando as relação entre produto e OS por ID;
-    async getProductServiceOrder(id: string): Promise<ProductServiceOrder | undefined> {
-      const data = await prisma.productServiceOrder.findUnique({
-        where: { id },
-      });
-  
-      if (data) {
-        return new ProductServiceOrder({...data});
-      }
-      return undefined;
+  async getProductServiceOrder(serviceOrderId: string): Promise<ProductServiceOrder[]> {
+    const data = await prisma.productServiceOrder.findMany({
+      where: {
+        serviceOrderId
+      },
+    });
+
+    return data
     }
 
     //pegando todas as relações?? validar depois...
@@ -23,7 +22,7 @@ export class ProductServiceOrderRepository implements IProductServiceOrderReposi
     }
 
     //atualizando as relações no caso os ids?
-    async updateProductServiceOrder(id: string, data: IUpdateProductServiceOrderDto): Promise<ProductServiceOrder | undefined> {
+  async updateProductServiceOrder(id: string, data: IUpdateProductServiceOrderDto): Promise<void> {
         await prisma.productServiceOrder.update({
           where: { id },
           data: {
@@ -31,14 +30,15 @@ export class ProductServiceOrderRepository implements IProductServiceOrderReposi
           },
         });
     
-        const productServiceOrder = await this.getProductServiceOrder(id);
-        return productServiceOrder;
+    //const productServiceOrder = await this.getProductServiceOrder(id);
+    //return productServiceOrder;
+    return
     }
 
       //criando uma relaçao
-    async createProductServiceOrder(productServiceOrder: ProductServiceOrder){
+  async createProductServiceOrder(data: ProductServiceOrder) {
         await prisma.productServiceOrder.create({
-          data: productServiceOrder ,
+          data: data
         });
     }
 

@@ -21,7 +21,5 @@ export const getServiceOrdersById = async (token: string, id: string | undefined
         serviceOrder.clientId = client.name
     }
 
-    console.log(serviceOrder)
-
     return serviceOrder
 }
