@@ -26,7 +26,7 @@ export class User {
     public userType: UserType;
     public companyId: string
     public password: string
-    public date: Date = new Date()
+    public date: Date = new Date() 
 
     constructor(data: IUserProps, id?: string) {
         if (!id) {
