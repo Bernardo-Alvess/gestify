@@ -50,7 +50,7 @@ export const ViewOS: React.FC = () => {
 		date: today,
 	});
 
-	const column_table_2 = ['Código', 'Nome', 'Quantidade', 'Marca'];
+	const columns = ['Código', 'Nome', 'Preço', 'Custo', 'Tipo UN'];
 	const data_table_2 = Array(20).fill(['123', 'Placa Mãe', '2', 'Asus']);
 
 	const fetchServiceOrder = useCallback(async () => {
@@ -69,9 +69,9 @@ export const ViewOS: React.FC = () => {
 	}, []);
 
 	const fetchProductsForOs = useCallback(async () => {
-		const productsServiceOrder = await getProductsForOs(cookies.jwt, id);
-		console.log(productsServiceOrder);
-		setProducts(productsServiceOrder);
+		const { productsForOs } = await getProductsForOs(cookies.jwt, id);
+		console.log(productsForOs);
+		if (productsForOs != undefined) setProducts(productsForOs);
 	}, []);
 
 	useEffect(() => {
@@ -189,12 +189,14 @@ export const ViewOS: React.FC = () => {
 								title={
 									'Produtos Relacionados a Ordem de Serviço'
 								}
-								columns={column_table_2}
-								data={data_table_2}
+								columns={columns}
+								data={products}
 								actions={{
 									showActions: false,
 									actionButtonText: '',
-									action: () => {},
+									action: () => {
+										alert('teste');
+									},
 									deleteAction: () => {},
 								}}
 							/>

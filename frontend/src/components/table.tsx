@@ -42,6 +42,7 @@ const Table: React.FC<TableProps> = ({
 	};
 
 	function isDateString(dateString: string): boolean {
+		if (typeof dateString == 'number') return false;
 		return !isNaN(Date.parse(dateString));
 	}
 
@@ -54,6 +55,7 @@ const Table: React.FC<TableProps> = ({
 				</div>
 				{actions?.showActions ? (
 					<button
+						type="button"
 						onClick={actions.action}
 						className="font-bold rounded-lg bg-blue-200 p-1 flex justify-center items-center hover:bg-blue-400 transition-colors"
 					>

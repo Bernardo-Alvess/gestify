@@ -9,6 +9,7 @@ import Table from '../../components/table';
 import { getUsers } from '../../http/get-users';
 import { createOs } from '../../http/create-os';
 import { toast } from 'sonner';
+import AddProductModal from '../../components/add-product-modal';
 
 interface IUser {
 	name: string;
@@ -33,6 +34,7 @@ export const CreateOS: React.FC = () => {
 	const [clients, setClients] = useState<IUser[]>([]);
 	const [technicians, setTechnicians] = useState<IUser[]>([]);
 	const [cookies] = useCookies(['jwt', 'id']);
+	const [toggleModal, setToggleModal] = useState(false);
 
 	const [formValues, setFormValues] = useState<IFormValues>({
 		client: '',
@@ -45,7 +47,7 @@ export const CreateOS: React.FC = () => {
 		date: today,
 	});
 
-	const column_table_2 = ['Código', 'Nome', 'Quantidade', 'Marca'];
+	const columns = ['Código', 'Nome', 'Preço', 'Custo', 'Tipo UN'];
 	const data_table_2 = Array(20).fill(['123', 'Placa Mãe', '2', 'Asus']);
 
 	const handleChange = (
@@ -63,7 +65,7 @@ export const CreateOS: React.FC = () => {
 				setFormValues((prevValues) => ({
 					...prevValues,
 					client: selectedClient.id,
-					number: selectedClient.number, // Atualiza o número do cliente automaticamente
+					number: selectedClient.number,
 				}));
 			}
 			return;
@@ -139,6 +141,10 @@ export const CreateOS: React.FC = () => {
 
 	return (
 		<div className="flex h-screen overflow-hidden">
+			<AddProductModal
+				toggle={toggleModal}
+				onClose={() => setToggleModal(false)}
+			/>
 			<Sidebar />
 			<main className="flex-1 p-5 bg-blue-200 space-y-3 h-screen overflow-y-auto">
 				<header className="flex justify-between mb-5">
@@ -274,12 +280,14 @@ export const CreateOS: React.FC = () => {
 							<Table
 								icon={IconProductsBlack}
 								title={'Adicionar Produtos a Ordem de Serviço'}
-								columns={column_table_2}
-								data={data_table_2}
+								columns={columns}
+								data={[{}]}
 								actions={{
 									showActions: true,
 									actionButtonText: 'Adicionar Produto',
-									action: () => {},
+									action: () => {
+										setToggleModal(true);
+									},
 									deleteAction: () => {},
 								}}
 							/>

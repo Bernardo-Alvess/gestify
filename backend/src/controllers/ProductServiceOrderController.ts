@@ -70,11 +70,11 @@ class ProductServiceOrderController {
 
           const products = await Promise.all(
             productServiceOrder.map(async (item) => {
-              console.log(item.productId)
-              const teste = await this.productsRepository.getProduct(item.productId)
-              return teste
+              const data = await this.productsRepository.getProduct(item.productId)
+              return data
             })
           )
+
           res.json(products)
         } catch (e) {
           next(e);

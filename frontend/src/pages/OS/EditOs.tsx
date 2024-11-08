@@ -59,7 +59,7 @@ export const EditOs: React.FC = () => {
 		date: today,
 	});
 
-	const column_table_2 = ['Código', 'Nome', 'Quantidade', 'Marca'];
+	const columns = ['Código', 'Nome', 'Preço', 'Custo', 'Tipo UN'];
 	const data_table_2 = Array(20).fill(['1', 'Placa Mãe', '2', 'Asus']);
 
 	const handleChange = (
@@ -337,7 +337,7 @@ export const EditOs: React.FC = () => {
 							<Table
 								icon={IconProductsBlack}
 								title={'Adicionar Produtos a Ordem de Serviço'}
-								columns={column_table_2}
+								columns={columns}
 								data={data_table_2}
 								actions={{
 									showActions: true,
