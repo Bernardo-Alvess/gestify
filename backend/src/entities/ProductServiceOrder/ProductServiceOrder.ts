@@ -1,13 +1,13 @@
 export interface IProductServiceOrderProps {
     id?: string;
-    productId?: string | null;
-    serviceOrderId?: string | null;
+  productId: string;
+  serviceOrderId: string;
   }
   
   export class ProductServiceOrder {
     public readonly id?: string;
-    public productId?: string | null;
-    public serviceOrderId?: string | null;
+    public productId: string;
+    public serviceOrderId: string;
   
     constructor(props: IProductServiceOrderProps) {
       this.id = props.id;

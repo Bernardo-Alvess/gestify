@@ -8,6 +8,7 @@ import { useCookies } from 'react-cookie';
 import Table from '../../components/table';
 import { getServiceOrdersById } from '../../http/get-service-order-by-id';
 import { useParams } from 'react-router-dom';
+import { getProductsForOs } from '../../http/get-products-for-os';
 
 interface IFormValues {
 	client: string;
@@ -20,10 +21,22 @@ interface IFormValues {
 	date: string;
 }
 
+interface Products {
+	id: string;
+	name: string;
+	price: number;
+	cost: number;
+	unityType: string;
+	minQtd: number;
+	qtd: number;
+	companyId: string;
+}
+
 export const ViewOS: React.FC = () => {
 	const { id } = useParams();
 	const today = new Date().toLocaleDateString('pt-BR');
 	const [selectedOption, setSelectedOption] = useState<string>('');
+	const [products, setProducts] = useState([{}]);
 	const [cookies] = useCookies(['jwt', 'id']);
 
 	const [formValues, setFormValues] = useState<IFormValues>({
@@ -37,7 +50,7 @@ export const ViewOS: React.FC = () => {
 		date: today,
 	});
 
-	const column_table_2 = ['Código', 'Nome', 'Quantidade', 'Marca'];
+	const columns = ['Código', 'Nome', 'Preço', 'Custo', 'Tipo UN'];
 	const data_table_2 = Array(20).fill(['123', 'Placa Mãe', '2', 'Asus']);
 
 	const fetchServiceOrder = useCallback(async () => {
@@ -53,12 +66,18 @@ export const ViewOS: React.FC = () => {
 			date: new Date(data.date).toLocaleDateString('pt-BR'),
 		});
 		setSelectedOption(data.status);
-		console.log(data);
+	}, []);
+
+	const fetchProductsForOs = useCallback(async () => {
+		const { productsForOs } = await getProductsForOs(cookies.jwt, id);
+		console.log(productsForOs);
+		if (productsForOs != undefined) setProducts(productsForOs);
 	}, []);
 
 	useEffect(() => {
 		fetchServiceOrder();
-	}, [fetchServiceOrder]);
+		fetchProductsForOs();
+	}, [fetchServiceOrder, fetchProductsForOs]);
 
 	const getSelectClass = (): string => {
 		switch (selectedOption) {
@@ -170,12 +189,14 @@ export const ViewOS: React.FC = () => {
 								title={
 									'Produtos Relacionados a Ordem de Serviço'
 								}
-								columns={column_table_2}
-								data={data_table_2}
+								columns={columns}
+								data={products}
 								actions={{
 									showActions: false,
 									actionButtonText: '',
-									action: () => {},
+									action: () => {
+										alert('teste');
+									},
 									deleteAction: () => {},
 								}}
 							/>

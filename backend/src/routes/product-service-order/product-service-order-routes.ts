@@ -10,7 +10,7 @@ productServiceOrderRouter.delete('/:id', auth, (req, res, next) => {
     const idSchema = z.string().uuid()
     idSchema.parse(req.params.id)
     productServiceOrderController.deleteProductServiceOrder(req, res, next);
-  });
+});
 
 productServiceOrderRouter.post('/', auth, (req, res, next) => {
     createProductServiceOrderSchema.parse(req.body)
@@ -19,6 +19,10 @@ productServiceOrderRouter.post('/', auth, (req, res, next) => {
 
 productServiceOrderRouter.get('/', auth, (req, res, next) => {
     productServiceOrderController.getProductServiceOrders(req, res, next)
+})
+
+productServiceOrderRouter.get('/:id', auth, (req, res, next) => {
+    productServiceOrderController.getProductServiceOrder(req, res, next)
 })
 
 productServiceOrderRouter.put('/:id', auth, (req, res, next) => {

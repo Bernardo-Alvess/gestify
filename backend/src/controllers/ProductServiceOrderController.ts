@@ -2,9 +2,13 @@ import { Request, Response, NextFunction } from 'express';
 import { ProductServiceOrderRepository } from '../repositories/implementations/ProductServiceOrderRepository';
 import { ProductServiceOrder } from '../entities/ProductServiceOrder/ProductServiceOrder';
 import { IUpdateProductServiceOrderDto } from '../entities/ProductServiceOrder/dtos/IUpdateProductServiceOrderDto';
+import { ProductRepository } from '../repositories/implementations/ProductRepository';
 
 class ProductServiceOrderController {
-    constructor(private repository: ProductServiceOrderRepository) {}
+  constructor(
+    private repository: ProductServiceOrderRepository,
+    private productsRepository: ProductRepository
+  ) { }
 
     async createProductServiceOrder(req: Request, res: Response, next: NextFunction) {
         try {
@@ -18,7 +22,6 @@ class ProductServiceOrderController {
           await this.repository.createProductServiceOrder(productServiceOrder);
     
           res.status(201).json({
-            message: "ProductServiceOrder created successfully",
             productServiceOrder,
           });
         } catch (e) {
@@ -62,21 +65,27 @@ class ProductServiceOrderController {
           const productServiceOrder = await this.repository.getProductServiceOrder(id);
 
           if (!productServiceOrder) {
-            res.status(404).json({ message: 'Not found' });
-          } else {
-            res.json(productServiceOrder);
+            return res.status(404).json({ message: 'Not found' });
           }
+
+          const products = await Promise.all(
+            productServiceOrder.map(async (item) => {
+              const data = await this.productsRepository.getProduct(item.productId)
+              return data
+            })
+          )
+
+          res.json(products)
         } catch (e) {
           next(e);
         }
-        
       }
-
-
 }
 
-
-const productServiceOrderRepository = new ProductServiceOrderRepository();
-const productServiceOrderController = new ProductServiceOrderController(productServiceOrderRepository);
+const productServiceOrderController =
+  new ProductServiceOrderController(
+    new ProductServiceOrderRepository,
+    new ProductRepository
+  );
 
 export { productServiceOrderController };
