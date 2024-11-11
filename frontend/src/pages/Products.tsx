@@ -6,8 +6,10 @@ import TopNav from '../components/top-nav';
 import IconProductBlack from '../public/assets/home-page/icons/products/products_icon_b.svg';
 import { getProducts } from '../http/get-products';
 import { useCookies } from 'react-cookie';
+import { useNavigate } from 'react-router-dom';
 
 export const Products = () => {
+	const navigate = useNavigate();
 	const today = new Date().toLocaleDateString('pt-BR');
 	const [cookies] = useCookies(['jwt'])
 	const [products, setProducts] = useState([]);
@@ -24,7 +26,7 @@ export const Products = () => {
 	];
 
 	const add = () => {
-		alert('ADDDD');
+		navigate('/create-product');
 	};
 
 	const fetchProducts = useCallback(async () => {

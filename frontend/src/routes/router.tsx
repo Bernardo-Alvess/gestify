@@ -16,6 +16,7 @@ import { CreateOS } from '../pages/OS/CreateOS';
 import { Clients } from '../pages/Clients/Clients';
 import { EditOs } from '../pages/OS/EditOs';
 import { CreateUser } from '../pages/Users/CreateUser';
+import { CreateProduct } from '../pages/Products/CreateProduct';
 
 const router = createBrowserRouter([
 	{
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
 	{
 		path: '/products',
 		element: <ProtectedRoute children={<Products />} />,
+	},
+	{
+		path: 'create-product',
+		element: <ProtectedRoute children={<CreateProduct />} />,
 	},
 	{
 		path: '/users',

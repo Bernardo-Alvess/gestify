@@ -52,7 +52,7 @@ const CreateProduct = () => {
                     </div>
                     <form
                         id="create-product-form"
-                        className="grid grid-cols-2 gap-6"
+                        className="grid grid-cols-2 py-14 px-32 gap-6"
                         onSubmit={handleSubmit}
                     >
                         <div>
