@@ -11,6 +11,7 @@ import { toast } from 'sonner';
 import { getServiceOrdersById } from '../../http/get-service-order-by-id';
 import { useParams } from 'react-router-dom';
 import { updateServiceOrder } from '../../http/update-service-order';
+import AddProductModal from '../../components/add-product-modal';
 
 interface IUser {
 	name: string;
@@ -47,6 +48,7 @@ export const EditOs: React.FC = () => {
 	const [clients, setClients] = useState<IUser[]>([]);
 	const [technicians, setTechnicians] = useState<IUser[]>([]);
 	const [cookies] = useCookies(['jwt', 'id']);
+	const [toggleModal, setToggleModal] = useState(false);
 
 	const [formValues, setFormValues] = useState<IFormValues>({
 		client: '',
@@ -130,7 +132,6 @@ export const EditOs: React.FC = () => {
 			date: new Date(data.date).toLocaleDateString('pt-BR'),
 		});
 		setSelectedOption(data.status);
-		console.log(data);
 	}, []);
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -219,6 +220,12 @@ export const EditOs: React.FC = () => {
 
 	return (
 		<div className="flex h-screen overflow-hidden">
+			<AddProductModal
+				toggle={toggleModal}
+				onClose={() => {
+					setToggleModal(!toggleModal);
+				}}
+			/>
 			<Sidebar />
 			<main className="flex-1 p-5 bg-blue-200 space-y-3 h-screen overflow-y-auto">
 				<header className="flex justify-between mb-5">
@@ -342,7 +349,9 @@ export const EditOs: React.FC = () => {
 								actions={{
 									showActions: true,
 									actionButtonText: 'Adicionar Produto',
-									action: () => {},
+									action: () => {
+										setToggleModal(!toggleModal);
+									},
 									deleteAction: () => {},
 								}}
 							/>

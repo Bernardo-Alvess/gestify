@@ -7,9 +7,11 @@ import { useCallback, useEffect, useState, ChangeEvent } from 'react';
 import { useCookies } from 'react-cookie';
 import Table from '../../components/table';
 import { getUsers } from '../../http/get-users';
-import { createOs } from '../../http/create-os';
+import { createSo } from '../../http/create-so';
 import { toast } from 'sonner';
 import AddProductModal from '../../components/add-product-modal';
+import { cleanProductSo, productSo } from '../../data/products-so';
+import { createProductSo } from '../../http/create-product-service-order';
 
 interface IUser {
 	name: string;
@@ -48,7 +50,7 @@ export const CreateOS: React.FC = () => {
 	});
 
 	const columns = ['Código', 'Nome', 'Preço', 'Custo', 'Tipo UN'];
-	const data_table_2 = Array(20).fill(['123', 'Placa Mãe', '2', 'Asus']);
+	//const data_table_2 = Array(20).fill(['123', 'Placa Mãe', '2', 'Asus']);
 
 	const handleChange = (
 		e: ChangeEvent<
@@ -112,7 +114,7 @@ export const CreateOS: React.FC = () => {
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
-		const created = await createOs(cookies.jwt, {
+		const id = await createSo(cookies.jwt, {
 			description:
 				formValues.description === ''
 					? undefined
@@ -131,8 +133,17 @@ export const CreateOS: React.FC = () => {
 					: formValues.technician,
 		});
 
-		if (created) {
+		if (id) {
 			toast.success('Ordem de Serviço criada');
+			productSo.forEach((product) => {
+				createProductSo(cookies.jwt, {
+					productId: product.productId,
+					serviceOrderId: id,
+					qtd: product.qtd,
+				});
+			});
+			cleanProductSo();
+			toast.success('Produtos adicionados a ordem');
 			return;
 		}
 
@@ -281,7 +292,7 @@ export const CreateOS: React.FC = () => {
 								icon={IconProductsBlack}
 								title={'Adicionar Produtos a Ordem de Serviço'}
 								columns={columns}
-								data={[{}]}
+								data={productSo}
 								actions={{
 									showActions: true,
 									actionButtonText: 'Adicionar Produto',

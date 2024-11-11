@@ -13,6 +13,8 @@ productServiceOrderRouter.delete('/:id', auth, (req, res, next) => {
 });
 
 productServiceOrderRouter.post('/', auth, (req, res, next) => {
+    console.log('route product service order')
+    console.log(req.body)
     createProductServiceOrderSchema.parse(req.body)
     productServiceOrderController.createProductServiceOrder(req, res, next)
 })

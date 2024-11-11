@@ -33,8 +33,6 @@ const CreateUser = () => {
 		}
 
 		toast.success('Usuário adicionado');
-
-		console.log(client);
 	};
 
 	return (

@@ -5,7 +5,7 @@ import { authController } from "../../controllers/AuthController";
 const authRouter = Router()
 
 authRouter.post('/login', (req, res, next) => {
-    console.log(req.body)
+
     loginUserSchema.parse(req.body)
     authController.login(req, res, next)
 })

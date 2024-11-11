@@ -11,12 +11,14 @@ class ProductServiceOrderController {
   ) { }
 
     async createProductServiceOrder(req: Request, res: Response, next: NextFunction) {
+
         try {
-          const { productId, serviceOrderId } = req.body;
+          const { productId, serviceOrderId, qtd } = req.body;
     
           const productServiceOrder = new ProductServiceOrder({
             productId,
             serviceOrderId,
+            qtd
           });
     
           await this.repository.createProductServiceOrder(productServiceOrder);
@@ -51,8 +53,8 @@ class ProductServiceOrderController {
       async updateProductServiceOrders(req: Request, res: Response, next: NextFunction) {
         try {
           const { id } = req.params;
-          const { productId, serviceOrderId } = req.body;
-          const updated = await this.repository.updateProductServiceOrder(id, { productId, serviceOrderId } as IUpdateProductServiceOrderDto);
+          const { productId, serviceOrderId, qtd } = req.body;
+          const updated = await this.repository.updateProductServiceOrder(id, { productId, serviceOrderId, qtd } as IUpdateProductServiceOrderDto);
           res.json({ message: "Product updated successfully", updated });
         } catch (e) {
           next(e);

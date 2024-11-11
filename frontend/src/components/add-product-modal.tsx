@@ -1,6 +1,8 @@
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { getProducts } from '../http/get-products';
 import { useCookies } from 'react-cookie';
+import { toast } from 'sonner';
+import { addProductToSo } from '../data/products-so';
 
 interface AddProductModalProps {
 	toggle: boolean;
@@ -17,6 +19,7 @@ interface Product {
 }
 
 interface IFormValues {
+	id: string | undefined;
 	product: string | undefined;
 	quantity: number | undefined;
 	price: number | undefined;
@@ -24,14 +27,18 @@ interface IFormValues {
 	qtd: number | undefined;
 }
 
-const AddProductModal = ({ toggle, onClose }: AddProductModalProps) => {
+const AddProductModal = ({
+	toggle,
+	onClose,
+}: AddProductModalProps) => {
 	if (!toggle) return null;
 
 	const [cookies] = useCookies(['jwt']);
 	const [data, setData] = useState<Product[] | undefined>(undefined);
 
 	const [formValues, setFormValues] = useState<IFormValues>({
-		product: '',
+		id: undefined,
+		product: undefined,
 		quantity: undefined,
 		price: undefined,
 		cost: undefined,
@@ -43,11 +50,24 @@ const AddProductModal = ({ toggle, onClose }: AddProductModalProps) => {
 			HTMLSelectElement | HTMLTextAreaElement | HTMLInputElement
 		>
 	) => {
-		let { value } = e.target;
+		let { name, value } = e.target;
 
 		const selectedProduct = data?.find((product) => product.id === value);
 
+		if (name == 'quantity') {
+			// setFormValues((prev) => ({
+			//     ...prev,
+			//     quantity: value
+			// }))
+			setFormValues((prevValues) => ({
+				...prevValues,
+				quantity: parseInt(value),
+			}));
+			return;
+		}
+
 		setFormValues((prevValues) => ({
+			id: selectedProduct?.id,
 			product: selectedProduct?.name,
 			price: selectedProduct?.price,
 			cost: selectedProduct?.cost,
@@ -65,7 +85,18 @@ const AddProductModal = ({ toggle, onClose }: AddProductModalProps) => {
 		fetchProducts();
 	}, [fetchProducts]);
 
-	//TODO - Enviar relaçao para o banco de dados, adicionar campo na tabela para a quantidade de produtos naquela relaçao, quando retornar os produtos, retornar um objeto do produto com um campo a mais de quantidade
+	//#TODO: enviar productId que esta faltando e serviceOrderId que também esta faltando no schema
+	const handleSubmit = async () => {
+		addProductToSo({
+			productId: formValues.id,
+			name: formValues.product,
+			price: formValues.price,
+			qtd: formValues.quantity,
+			cost: formValues.cost,
+			totalCost: formValues.price! * formValues.quantity!,
+		});
+		toast.success('Produto adicionado a ordem de Serviço');
+	};
 
 	return (
 		<div
@@ -95,7 +126,6 @@ const AddProductModal = ({ toggle, onClose }: AddProductModalProps) => {
 							</option>
 						))}
 					</select>
-
 					<div>
 						<label
 							htmlFor="quantidade"
@@ -104,6 +134,7 @@ const AddProductModal = ({ toggle, onClose }: AddProductModalProps) => {
 							Quantidade
 						</label>
 						<input
+							onChange={handleChange}
 							value={formValues.quantity}
 							type="number"
 							id="quantidade"
@@ -111,7 +142,6 @@ const AddProductModal = ({ toggle, onClose }: AddProductModalProps) => {
 							className="w-full border rounded p-2"
 						/>
 					</div>
-
 					<div>
 						<label
 							htmlFor="price"
@@ -128,7 +158,6 @@ const AddProductModal = ({ toggle, onClose }: AddProductModalProps) => {
 							className="w-full border rounded p-2"
 						/>
 					</div>
-
 					<div>
 						<label
 							htmlFor="cost"
@@ -145,7 +174,6 @@ const AddProductModal = ({ toggle, onClose }: AddProductModalProps) => {
 							className="w-full border rounded p-2"
 						/>
 					</div>
-
 					<div>
 						<label
 							htmlFor="qtd"
@@ -162,9 +190,9 @@ const AddProductModal = ({ toggle, onClose }: AddProductModalProps) => {
 							className="w-full border rounded p-2"
 						/>
 					</div>
-
 					<button
-						type="submit"
+						onClick={handleSubmit}
+						type="button"
 						className="col-span-2 bg-blue-600 text-white py-2 rounded font-bold hover:bg-blue-700 transition"
 					>
 						Adicionar Produto

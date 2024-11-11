@@ -10,7 +10,8 @@ interface IServiceOrder {
     technicianId?: string | undefined
 }
 
-export const createOs = async (token: string, data: IServiceOrder) => {
+export const createSo = async (token: string, data: IServiceOrder): Promise<string | undefined> => {
+
     const response = await fetch(`${import.meta.env.VITE_API_URL}/service-order`, {
         method: 'POST',
         headers: {
@@ -20,7 +21,11 @@ export const createOs = async (token: string, data: IServiceOrder) => {
         body: JSON.stringify(data),
     })
 
-    if (response.ok) return true
 
-    return false
+    if (response.ok) {
+        const { id } = await response.json();
+        return id
+    }
+
+    return undefined
 }

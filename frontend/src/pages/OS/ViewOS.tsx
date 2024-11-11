@@ -8,7 +8,7 @@ import { useCookies } from 'react-cookie';
 import Table from '../../components/table';
 import { getServiceOrdersById } from '../../http/get-service-order-by-id';
 import { useParams } from 'react-router-dom';
-import { getProductsForOs } from '../../http/get-products-for-os';
+import { getProductsForSo } from '../../http/get-products-for-so';
 
 interface IFormValues {
 	client: string;
@@ -21,16 +21,16 @@ interface IFormValues {
 	date: string;
 }
 
-interface Products {
-	id: string;
-	name: string;
-	price: number;
-	cost: number;
-	unityType: string;
-	minQtd: number;
-	qtd: number;
-	companyId: string;
-}
+// interface Products {
+// 	id: string;
+// 	name: string;
+// 	price: number;
+// 	cost: number;
+// 	unityType: string;
+// 	minQtd: number;
+// 	qtd: number;
+// 	companyId: string;
+// }
 
 export const ViewOS: React.FC = () => {
 	const { id } = useParams();
@@ -51,7 +51,7 @@ export const ViewOS: React.FC = () => {
 	});
 
 	const columns = ['Código', 'Nome', 'Preço', 'Custo', 'Tipo UN'];
-	const data_table_2 = Array(20).fill(['123', 'Placa Mãe', '2', 'Asus']);
+	// const data_table_2 = Array(20).fill(['123', 'Placa Mãe', '2', 'Asus']);
 
 	const fetchServiceOrder = useCallback(async () => {
 		const data = await getServiceOrdersById(cookies.jwt, id);
@@ -69,8 +69,8 @@ export const ViewOS: React.FC = () => {
 	}, []);
 
 	const fetchProductsForOs = useCallback(async () => {
-		const { productsForOs } = await getProductsForOs(cookies.jwt, id);
-		console.log(productsForOs);
+		const { productsForOs } = await getProductsForSo(cookies.jwt, id);
+
 		if (productsForOs != undefined) setProducts(productsForOs);
 	}, []);
 
