@@ -54,7 +54,7 @@ export class ProductRepository implements IProductRepository {
         companyId
       }
     })
-
+    console.log(count)
     return count
   }
 
@@ -71,7 +71,7 @@ export class ProductRepository implements IProductRepository {
         }
       }
     })
-
+    console.log(products)
     return products
   }
 

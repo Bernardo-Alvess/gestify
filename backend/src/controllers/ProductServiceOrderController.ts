@@ -73,7 +73,8 @@ class ProductServiceOrderController {
           const products = await Promise.all(
             productServiceOrder.map(async (item) => {
               const data = await this.productsRepository.getProduct(item.productId)
-              return data
+              data!.qtd = item.qtd
+              return data 
             })
           )
 

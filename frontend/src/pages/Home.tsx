@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import IconOrders from '../public/assets/home-page/icons/orders/orders_icon.svg';
 import IconOrdersBlack from '../public/assets/home-page/icons/orders/orders_icon_b.svg';
@@ -12,18 +12,27 @@ import TopNav from '../components/top-nav';
 import Table from '../components/table';
 import Reminder from '../components/reminder';
 import SearchBox from '../components/search-box';
+import { getStats } from '../http/get-stats';
+import { useCookies } from 'react-cookie';
 
 export const Home = () => {
-	// dados que vão sair
+	const today = new Date().toLocaleDateString('pt-BR');
+	const [cookies] = useCookies(['jwt']);
 	const [statistics, setStatistics] = useState({
-		openOrders: 0,
-		clients: 0,
-		products: 0,
-		users: 0,
+		totalProducts: 0,
+		lowStockProductCount: 0,
+		lowStockProducts: [],
+		totalClients: 0,
+		totalUsers: 0,
+		totalSo: 0,
+	});
+
+	const [reminders, setReminders] = useState<Reminder[]>(() => {
+		const savedReminders = localStorage.getItem('reminders');
+		return savedReminders ? JSON.parse(savedReminders) : [];
 	});
 
 	const column_table_1 = ['Código', 'Nome', 'Quantidade', 'Marca'];
-
 	const column_table_2 = ['Código', 'Data de entrega', 'Cliente', 'Produto'];
 
 	const data_table_1 = [
@@ -37,13 +46,6 @@ export const Home = () => {
 		['123', '23/09/2024', 'Lorenzo Cardoso', 'SSD'],
 		['123', '23/09/2024', 'Lorenzo Cardoso', 'SSD'],
 	];
-
-	const [reminders, setReminders] = useState<Reminder[]>(() => {
-		const savedReminders = localStorage.getItem('reminders');
-		return savedReminders ? JSON.parse(savedReminders) : [];
-	});
-
-	const today = new Date().toLocaleDateString('pt-BR');
 
 	const addReminder = (reminder: Reminder) => {
 		setReminders((prev) => {
@@ -61,20 +63,18 @@ export const Home = () => {
 		});
 	};
 
-	useEffect(() => {
-		const fetchData = async () => {
-			const response = await fetch('');
-			const data = await response.json();
-			setStatistics(data);
-		};
-
-		fetchData();
+	const fetchStats = useCallback(async () => {
+		const data = await getStats(cookies.jwt);
+		setStatistics(data);
 	}, []);
+
+	useEffect(() => {
+		fetchStats();
+	}, [fetchStats]);
 
 	return (
 		<div className="flex min-h-screen">
 			<Sidebar />
-
 			<main className="flex-1 p-5 bg-blue-200 space-y-10">
 				<header className="flex justify-between">
 					<div className="pt-16 md:pt-16 lg:pt-0">
@@ -89,28 +89,28 @@ export const Home = () => {
 						<InfoCard
 							icon={IconOrders}
 							title="Ordens de Serviço"
-							value={statistics.openOrders}
+							value={statistics.totalSo}
 						/>
 					</Link>
 					<Link to="/clients">
 						<InfoCard
 							icon={IconClients}
 							title="Clientes"
-							value={statistics.clients}
+							value={statistics.totalClients}
 						/>
 					</Link>
 					<Link to="/products">
 						<InfoCard
 							icon={IconProducts}
 							title="Produtos"
-							value={statistics.products}
+							value={statistics.totalProducts}
 						/>
 					</Link>
 					<Link to="/users">
 						<InfoCard
 							icon={IconUsers}
 							title="Usuários"
-							value={statistics.users}
+							value={statistics.totalUsers}
 						/>
 					</Link>
 				</div>
@@ -121,7 +121,7 @@ export const Home = () => {
 							icon={IconProductsBlack}
 							title="Produtos acabando no estoque"
 							columns={column_table_1}
-							data={data_table_1}
+							data={statistics.lowStockProducts}
 						/>
 					</div>
 					<div className="col-span-5">

@@ -4,8 +4,8 @@ interface Product {
     price: number;
     cost: number;
     unityType: string;
-    minQtd: number;
     qtd: number;
+    minQtd: number;
     companyId: string
     // Excluímos minQtd, qtd e companyId
 }
@@ -20,7 +20,11 @@ export const getProductsForSo = async (token: string, id: string | undefined) =>
 
     const data = await response.json()
 
-    const productsForOs = data.map(({ minQtd, qtd, companyId, ...resto }: Product) => resto);
+    const productsForOs = data.map(({ minQtd, companyId, ...resto }: Product) => ({
+        ...resto,
+        totalValue: (resto.price ?? 0) * (resto.qtd ?? 0)
+    }));
+    console.log(productsForOs)
 
     return { productsForOs }
 }
