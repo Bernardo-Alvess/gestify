@@ -9,9 +9,10 @@ import Table from '../../components/table';
 import { getUsers } from '../../http/get-users';
 import { createSo } from '../../http/create-so';
 import { toast } from 'sonner';
-import AddProductModal from '../../components/add-product-modal';
 import { cleanProductSo, productSo } from '../../data/products-so';
 import { createProductSo } from '../../http/create-product-service-order';
+import SuccessModal from '../../components/sucess-modal';
+import AddProductModal from '../../components/add-product-modal';
 
 interface IUser {
 	name: string;
@@ -36,7 +37,8 @@ export const CreateOS: React.FC = () => {
 	const [clients, setClients] = useState<IUser[]>([]);
 	const [technicians, setTechnicians] = useState<IUser[]>([]);
 	const [cookies] = useCookies(['jwt', 'id']);
-	const [toggleModal, setToggleModal] = useState(false);
+	const [addProductModal, setAddProductModal] = useState(false);
+	const [successModal, setSuccessModal] = useState(false);
 
 	const [formValues, setFormValues] = useState<IFormValues>({
 		client: '',
@@ -49,7 +51,14 @@ export const CreateOS: React.FC = () => {
 		date: today,
 	});
 
-	const columns = ['Código', 'Nome', 'Preço', 'Custo', 'Tipo UN'];
+	const columns = [
+		'Código',
+		'Nome',
+		'Preço',
+		'Quantidade',
+		'Custo',
+		'Valor Total',
+	];
 	//const data_table_2 = Array(20).fill(['123', 'Placa Mãe', '2', 'Asus']);
 
 	const handleChange = (
@@ -134,7 +143,6 @@ export const CreateOS: React.FC = () => {
 		});
 
 		if (id) {
-			toast.success('Ordem de Serviço criada');
 			productSo.forEach((product) => {
 				createProductSo(cookies.jwt, {
 					productId: product.productId,
@@ -144,6 +152,7 @@ export const CreateOS: React.FC = () => {
 			});
 			cleanProductSo();
 			toast.success('Produtos adicionados a ordem');
+			setSuccessModal(true);
 			return;
 		}
 
@@ -152,9 +161,16 @@ export const CreateOS: React.FC = () => {
 
 	return (
 		<div className="flex h-screen overflow-hidden">
+			<SuccessModal
+				toggle={successModal}
+				onClose={() => {
+					setSuccessModal(false);
+				}}
+				message={'Ordem de serviço criada com sucesso'}
+			/>
 			<AddProductModal
-				toggle={toggleModal}
-				onClose={() => setToggleModal(false)}
+				toggle={addProductModal}
+				onClose={() => setAddProductModal(false)}
 			/>
 			<Sidebar />
 			<main className="flex-1 p-5 bg-blue-200 space-y-3 h-screen overflow-y-auto">
@@ -297,7 +313,7 @@ export const CreateOS: React.FC = () => {
 									showActions: true,
 									actionButtonText: 'Adicionar Produto',
 									action: () => {
-										setToggleModal(true);
+										setAddProductModal(true);
 									},
 									deleteAction: () => {},
 								}}
