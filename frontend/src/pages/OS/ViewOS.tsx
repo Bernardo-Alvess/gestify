@@ -20,18 +20,6 @@ interface IFormValues {
 	extras: string;
 	date: string;
 }
-
-// interface Products {
-// 	id: string;
-// 	name: string;
-// 	price: number;
-// 	cost: number;
-// 	unityType: string;
-// 	minQtd: number;
-// 	qtd: number;
-// 	companyId: string;
-// }
-
 export const ViewOS: React.FC = () => {
 	const { id } = useParams();
 	const today = new Date().toLocaleDateString('pt-BR');
@@ -50,7 +38,15 @@ export const ViewOS: React.FC = () => {
 		date: today,
 	});
 
-	const columns = ['Código', 'Nome', 'Preço', 'Custo', 'Tipo UN'];
+	const columns = [
+		'Código',
+		'Nome',
+		'Preço',
+		'Quantidade',
+		'Custo',
+		'Tipo UN',
+		'Valor Total',
+	];
 	// const data_table_2 = Array(20).fill(['123', 'Placa Mãe', '2', 'Asus']);
 
 	const fetchServiceOrder = useCallback(async () => {

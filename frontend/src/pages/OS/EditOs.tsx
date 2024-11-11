@@ -12,6 +12,7 @@ import { getServiceOrdersById } from '../../http/get-service-order-by-id';
 import { useParams } from 'react-router-dom';
 import { updateServiceOrder } from '../../http/update-service-order';
 import AddProductModal from '../../components/add-product-modal';
+import SuccessModal from '../../components/sucess-modal';
 
 interface IUser {
 	name: string;
@@ -49,6 +50,7 @@ export const EditOs: React.FC = () => {
 	const [technicians, setTechnicians] = useState<IUser[]>([]);
 	const [cookies] = useCookies(['jwt', 'id']);
 	const [toggleModal, setToggleModal] = useState(false);
+	const [successModal, setSuccessModal] = useState(false);
 
 	const [formValues, setFormValues] = useState<IFormValues>({
 		client: '',
@@ -161,6 +163,7 @@ export const EditOs: React.FC = () => {
 
 		if (updated) {
 			toast.success('Ordem de Serviço editada');
+			setSuccessModal(true);
 			return;
 		}
 
@@ -220,6 +223,13 @@ export const EditOs: React.FC = () => {
 
 	return (
 		<div className="flex h-screen overflow-hidden">
+			<SuccessModal
+				toggle={successModal}
+				onClose={() => {
+					setSuccessModal(!successModal);
+				}}
+				message={'Ordem editada com sucesso!'}
+			></SuccessModal>
 			<AddProductModal
 				toggle={toggleModal}
 				onClose={() => {
