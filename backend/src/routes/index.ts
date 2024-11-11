@@ -5,6 +5,7 @@ import { authRouter } from "./auth/auth-routes";
 import { serviceOrderRouter } from "./service-order/servicer-orders-routes";
 import { productRouter } from "./products/product-routes";
 import { productServiceOrderRouter } from "./product-service-order/product-service-order-routes";
+import { homeRouter } from "./home/home-routes";
 
 const router = Router()
 
@@ -14,5 +15,6 @@ router.use('/api/auth', authRouter)
 router.use('/api/service-order', serviceOrderRouter)
 router.use('/api/product', productRouter)
 router.use('/api/product-service-order', productServiceOrderRouter)
+router.use('/api/home', homeRouter);
 
 export { router }
