@@ -15,9 +15,12 @@ export const Products = () => {
 	const column_table_2 = [
 		'Código',
 		'Nome',
+		'Preço',
+		'Custo',
+		'Tipo',
+		'Quantidade Mínima',
 		'Quantidade',
-		'Marca',
-		'Preço venda',
+		'Código da Empresa',
 	];
 
 	const add = () => {
