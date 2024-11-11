@@ -31,8 +31,6 @@ const CreateClient = () => {
 		}
 
 		toast.success('Cliente adicionado');
-
-		console.log(client);
 	};
 
 	return (

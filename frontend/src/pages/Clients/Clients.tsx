@@ -39,8 +39,6 @@ export const Clients = () => {
 		fetchClients();
 	}, [fetchClients]);
 
-	console.log(clients);
-
 	return (
 		<div className="flex h-screen overflow-hidden">
 			<Sidebar />

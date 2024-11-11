@@ -13,12 +13,12 @@ export class ServiceOrderController {
         try {
             const companyId = (req as CustomRequest).token.ownerId
             const { id, description, defect, extras, clientId, technicianId, status, userId, report, number } = req.body
-            console.log(report)
+
             const serviceOrder = new ServiceOrder({ id, description, defect, extras, companyId, clientId, technicianId, status, userId, report, number })
 
             await this.repository.createServiceOrder(serviceOrder)
 
-            res.status(201).send()
+            res.status(201).json({ id: serviceOrder.id })
         } catch (e) {
             next(e)
         }

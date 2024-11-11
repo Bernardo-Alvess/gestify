@@ -7,7 +7,7 @@ import { IServiceOrderRepository } from "../IServiceOrderRepository";
 export class ServiceOrderRepository implements IServiceOrderRepository {
 
     async createServiceOrder(serviceOrder: ServiceOrder): Promise<void> {
-        console.log(`Service: ${serviceOrder.report}`)
+
         await prisma.serviceOrder.create({
             data: serviceOrder
         });

@@ -17,7 +17,7 @@ export const fetchOrdersForTechnician = async (token: string, id: string | undef
         serviceOrder.technicianId = name
     }
 
-    console.log(serviceOrders)
+
 
     return serviceOrders
 }
