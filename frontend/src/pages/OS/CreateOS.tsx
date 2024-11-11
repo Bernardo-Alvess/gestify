@@ -10,7 +10,7 @@ import { getUsers } from '../../http/get-users';
 import { createSo } from '../../http/create-so';
 import { toast } from 'sonner';
 import AddProductModal from '../../components/add-product-modal';
-import { productSo } from '../../data/products-so';
+import { cleanProductSo, productSo } from '../../data/products-so';
 import { createProductSo } from '../../http/create-product-service-order';
 
 interface IUser {
@@ -142,6 +142,7 @@ export const CreateOS: React.FC = () => {
 					qtd: product.qtd,
 				});
 			});
+			cleanProductSo();
 			toast.success('Produtos adicionados a ordem');
 			return;
 		}

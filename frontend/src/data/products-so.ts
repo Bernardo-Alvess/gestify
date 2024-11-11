@@ -13,7 +13,10 @@ let counter = 0
 const addProductToSo = (product: IProductSo) => {
     productSo.push(product)
     counter++;
-
 }
 
-export { addProductToSo, productSo }
+const cleanProductSo = () => {
+    productSo.length = 0
+}
+
+export { addProductToSo, cleanProductSo, productSo }
