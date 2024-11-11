@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { z } from "zod";
 import { productServiceOrderController } from "../../controllers/ProductServiceOrderController"
-import { createProductServiceOrderSchema } from "../../lib/schemas/";
+import { createProductServiceOrderSchema } from "../../lib/schemas/product-service-order/create-product-service-order-schema";
 import { auth } from "../../middleware/auth";
 
 const productServiceOrderRouter = Router();
