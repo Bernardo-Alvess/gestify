@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
-import SearchBox from '../components/search-box';
-import Sidebar from '../components/sidebar';
-import Table from '../components/table';
-import TopNav from '../components/top-nav';
-import IconProductBlack from '../public/assets/home-page/icons/products/products_icon_b.svg';
-import { getProducts } from '../http/get-products';
+import SearchBox from '../../components/search-box';
+import Sidebar from '../../components/sidebar';
+import Table from '../../components/table';
+import TopNav from '../../components/top-nav';
+import IconProductBlack from '../../public/assets/home-page/icons/products/products_icon_b.svg';
+import { getProducts } from '../../http/get-products';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 

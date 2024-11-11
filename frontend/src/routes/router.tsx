@@ -3,7 +3,7 @@ import { Home } from '../pages/Home';
 import { SignUp } from '../pages/SignUp';
 import { ProtectedRoute } from '../components/protected-route';
 import { Login } from '../pages/Login';
-import { Products } from '../pages/Products';
+import { Products } from '../pages/Products/Products';
 import { Users } from '../pages/Users/Users';
 import { ServiceOrders } from '../pages/OS/ServiceOrders';
 import { ViewClient } from '../pages/Clients/ViewClient';
@@ -42,10 +42,6 @@ const router = createBrowserRouter([
 	{
 		path: '/products',
 		element: <ProtectedRoute children={<Products />} />,
-	},
-	{
-		path: 'create-product',
-		element: <ProtectedRoute children={<CreateProduct />} />,
 	},
 	{
 		path: '/users',
@@ -94,7 +90,11 @@ const router = createBrowserRouter([
 	{
 		path: '/editos/:id',
 		element: <ProtectedRoute children={<EditOs/>}/>
-	}
+	},
+	{
+		path: 'create-product',
+		element: <ProtectedRoute children={<CreateProduct />} />,
+	},
 ]);
 
 export { router };
