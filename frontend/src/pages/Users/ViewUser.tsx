@@ -56,7 +56,6 @@ const ViewUser = () => {
 			'TECHNICIAN'
 		);
 		if (data != orders) setOrders(data);
-		console.log(orders);
 	}, [user, cookies.jwt]);
 
 	useEffect(() => {

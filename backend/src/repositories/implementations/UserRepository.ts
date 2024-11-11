@@ -143,7 +143,7 @@ export class UserRepository implements IUserRepository {
             }
         })
 
-        console.log(data)
+
 
         if (data) {
             await prisma.user.create({

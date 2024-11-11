@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import SearchBox from '../../components/search-box';
 import Sidebar from '../../components/sidebar';
+
 import Table from '../../components/table';
 import TopNav from '../../components/top-nav';
 import { getServiceOrders } from '../../http/get-service-orders';
@@ -23,6 +24,7 @@ export const ServiceOrders = () => {
 		'Status',
 		'Técnico',
 		'Cliente',
+		'Telefone do Cliente',
 	];
 
 	const add = () => {
@@ -64,6 +66,7 @@ export const ServiceOrders = () => {
 								deleteAction: () => {},
 							}}
 							viewPage="/viewos"
+							editPage="/editos"
 						/>
 					</div>
 				</div>

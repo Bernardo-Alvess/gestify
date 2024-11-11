@@ -7,11 +7,11 @@ import { useCallback, useEffect, useState, ChangeEvent } from 'react';
 import { useCookies } from 'react-cookie';
 import Table from '../../components/table';
 import { getUsers } from '../../http/get-users';
-import { createSo } from '../../http/create-so';
 import { toast } from 'sonner';
+import { getServiceOrdersById } from '../../http/get-service-order-by-id';
+import { useParams } from 'react-router-dom';
+import { updateServiceOrder } from '../../http/update-service-order';
 import AddProductModal from '../../components/add-product-modal';
-import { cleanProductSo, productSo } from '../../data/products-so';
-import { createProductSo } from '../../http/create-product-service-order';
 
 interface IUser {
 	name: string;
@@ -30,8 +30,20 @@ interface IFormValues {
 	date: string;
 }
 
-export const CreateOS: React.FC = () => {
+export interface IUpdateServiceOrder {
+	description?: string | undefined;
+	defect?: string | undefined;
+	report?: string | undefined;
+	extras?: string | undefined;
+	number?: string | undefined;
+	status: string;
+	technicianId?: string | undefined;
+	clientId?: string | undefined;
+}
+
+export const EditOs: React.FC = () => {
 	const today = new Date().toLocaleDateString('pt-BR');
+	const { id } = useParams();
 	const [selectedOption, setSelectedOption] = useState<string>('');
 	const [clients, setClients] = useState<IUser[]>([]);
 	const [technicians, setTechnicians] = useState<IUser[]>([]);
@@ -50,7 +62,7 @@ export const CreateOS: React.FC = () => {
 	});
 
 	const columns = ['Código', 'Nome', 'Preço', 'Custo', 'Tipo UN'];
-	//const data_table_2 = Array(20).fill(['123', 'Placa Mãe', '2', 'Asus']);
+	const data_table_2 = Array(20).fill(['1', 'Placa Mãe', '2', 'Asus']);
 
 	const handleChange = (
 		e: ChangeEvent<
@@ -63,6 +75,7 @@ export const CreateOS: React.FC = () => {
 			const selectedClient = clients.find(
 				(client) => client.id === value
 			);
+			inputFields[0].selected = selectedClient;
 			if (selectedClient) {
 				setFormValues((prevValues) => ({
 					...prevValues,
@@ -89,11 +102,6 @@ export const CreateOS: React.FC = () => {
 		if (data !== technicians) setTechnicians(data);
 	}, []);
 
-	useEffect(() => {
-		fetchClients();
-		fetchTechs();
-	}, [fetchClients, fetchTechs]);
-
 	const getSelectClass = (): string => {
 		switch (selectedOption) {
 			case 'EM ANDAMENTO':
@@ -111,10 +119,29 @@ export const CreateOS: React.FC = () => {
 		}
 	};
 
+	const fetchServiceOrder = useCallback(async () => {
+		const data = await getServiceOrdersById(cookies.jwt, id);
+		setFormValues({
+			client: data.clientId || '',
+			technician: data.technicianId || '',
+			number: data.number || '',
+			defect: data.defect || '',
+			report: data.report || '',
+			description: data.description || '',
+			extras: data.extras || '',
+			date: new Date(data.date).toLocaleDateString('pt-BR'),
+		});
+		setSelectedOption(data.status);
+	}, []);
+
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
-		const id = await createSo(cookies.jwt, {
+		if (formValues.technician == inputFields[1].selected?.name) {
+			formValues.technician = inputFields[1].selected?.id;
+		}
+
+		const updated = await updateServiceOrder(cookies.jwt, id, {
 			description:
 				formValues.description === ''
 					? undefined
@@ -122,10 +149,9 @@ export const CreateOS: React.FC = () => {
 			defect: formValues.defect === '' ? undefined : formValues.defect,
 			report: formValues.report === '' ? undefined : formValues.report,
 			extras: formValues.extras === '' ? undefined : formValues.extras,
-			status: selectedOption.toUpperCase(),
 			number: formValues.number === '' ? undefined : formValues.number,
+			status: selectedOption.toUpperCase(),
 			//date: formValues.date,
-			userId: cookies.id,
 			clientId: formValues.client === '' ? undefined : formValues.client,
 			technicianId:
 				formValues.technician === ''
@@ -133,36 +159,78 @@ export const CreateOS: React.FC = () => {
 					: formValues.technician,
 		});
 
-		if (id) {
-			toast.success('Ordem de Serviço criada');
-			productSo.forEach((product) => {
-				createProductSo(cookies.jwt, {
-					productId: product.productId,
-					serviceOrderId: id,
-					qtd: product.qtd,
-				});
-			});
-			cleanProductSo();
-			toast.success('Produtos adicionados a ordem');
+		if (updated) {
+			toast.success('Ordem de Serviço editada');
 			return;
 		}
 
-		toast.error('Erro ao criar Ordem de Serviço');
+		toast.error('Erro ao editar Ordem de Serviço');
 	};
+
+	useEffect(() => {
+		fetchClients();
+		fetchTechs();
+		fetchServiceOrder();
+	}, [fetchClients, fetchTechs, fetchServiceOrder]);
+
+	const inputFields = [
+		{
+			label: 'Cliente',
+			name: 'client',
+			options: [...clients],
+			selected: clients.find(
+				(client) => client.name == formValues.client
+			),
+		},
+		{
+			label: 'Técnico Responsável',
+			name: 'technician',
+			options: [...technicians],
+			selected: technicians.find(
+				(tech) => tech.name == formValues.technician
+			),
+		},
+		{ label: 'Telefone', name: 'number' },
+		{
+			label: 'Data de abertura',
+			name: 'date',
+			type: 'date',
+		},
+		{
+			label: 'Descrição',
+			name: 'description',
+			isTextarea: true,
+		},
+		{
+			label: 'Defeito',
+			name: 'defect',
+			isTextarea: true,
+		},
+		{
+			label: 'Laudo técnico',
+			name: 'report',
+			isTextarea: true,
+		},
+		{
+			label: 'Observações',
+			name: 'extras',
+			isTextarea: true,
+		},
+	];
 
 	return (
 		<div className="flex h-screen overflow-hidden">
 			<AddProductModal
 				toggle={toggleModal}
-				onClose={() => setToggleModal(false)}
+				onClose={() => {
+					setToggleModal(!toggleModal);
+				}}
 			/>
 			<Sidebar />
 			<main className="flex-1 p-5 bg-blue-200 space-y-3 h-screen overflow-y-auto">
 				<header className="flex justify-between mb-5">
 					<div className="pt-16 md:pt-16 lg:pt-0">
-						<h1 className="text-2xl font-bold">
-							Ordens - Adicionar
-						</h1>
+						<h1 className="text-2xl font-bold">Ordens - Editar</h1>
 						<p className="text-sm text-gray-500">{today}</p>
 					</div>
 					<SearchBox />
@@ -195,44 +263,7 @@ export const CreateOS: React.FC = () => {
 					</div>
 					<div className="grid grid-cols-12 gap-2">
 						<div className="col-span-8 grid grid-cols-2 gap-2">
-							{[
-								{
-									label: 'Cliente',
-									name: 'client',
-									options: [...clients],
-								},
-								{
-									label: 'Técnico Responsável',
-									name: 'technician',
-									options: [...technicians],
-								},
-								{ label: 'Telefone', name: 'number' },
-								{
-									label: 'Data de abertura',
-									name: 'date',
-									type: 'date',
-								},
-								{
-									label: 'Descrição',
-									name: 'description',
-									isTextarea: true,
-								},
-								{
-									label: 'Defeito',
-									name: 'defect',
-									isTextarea: true,
-								},
-								{
-									label: 'Laudo técnico',
-									name: 'report',
-									isTextarea: true,
-								},
-								{
-									label: 'Observações',
-									name: 'extras',
-									isTextarea: true,
-								},
-							].map((field, index) => (
+							{inputFields.map((field, index) => (
 								<div key={index}>
 									<label className="block text-sm font-bold">
 										{field.label}
@@ -256,13 +287,23 @@ export const CreateOS: React.FC = () => {
 											onChange={handleChange}
 											className="font-medium px-4 py-2 rounded-lg w-full border border-gray-300"
 										>
-											<option
-												value=""
-												className="text-gray-400"
-											>
-												Escolha um{' '}
-												{field.label.toLowerCase()}
-											</option>
+											{field.selected ? (
+												<option
+													value={field.selected.id}
+													className="text-gray-400"
+												>
+													{field.selected.name}
+												</option>
+											) : (
+												<option
+													value=""
+													className="text-gray-400"
+												>
+													Escolha um{' '}
+													{field.label.toLowerCase()}
+												</option>
+											)}
+
 											{field.options.map((option) => (
 												<option
 													key={option.id}
@@ -272,9 +313,21 @@ export const CreateOS: React.FC = () => {
 												</option>
 											))}
 										</select>
+									) : field.type === 'date' ? (
+										<input
+											type={'text'}
+											name={field.name}
+											value={formValues[
+												field.name as keyof IFormValues
+											]?.toString()}
+											required
+											readOnly
+											onChange={handleChange}
+											className="w-full p-2 border border-gray-300 rounded-lg max-h-12"
+										/>
 									) : (
 										<input
-											type={field.type || 'text'}
+											type={'text'}
 											name={field.name}
 											value={formValues[
 												field.name as keyof IFormValues
@@ -292,12 +345,12 @@ export const CreateOS: React.FC = () => {
 								icon={IconProductsBlack}
 								title={'Adicionar Produtos a Ordem de Serviço'}
 								columns={columns}
-								data={productSo}
+								data={data_table_2}
 								actions={{
 									showActions: true,
 									actionButtonText: 'Adicionar Produto',
 									action: () => {
-										setToggleModal(true);
+										setToggleModal(!toggleModal);
 									},
 									deleteAction: () => {},
 								}}
@@ -309,7 +362,7 @@ export const CreateOS: React.FC = () => {
 							type="submit"
 							className="bg-blue-500 text-white px-4 py-2 rounded-lg"
 						>
-							Criar Ordem de Serviço
+							Editar Ordem de Serviço
 						</button>
 					</div>
 				</form>

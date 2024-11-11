@@ -14,6 +14,8 @@ import { EditUser } from '../pages/Users/EditUser';
 import { ViewOS } from '../pages/OS/ViewOS';
 import { CreateOS } from '../pages/OS/CreateOS';
 import { Clients } from '../pages/Clients/Clients';
+import { EditOs } from '../pages/OS/EditOs';
+import { CreateUser } from '../pages/Users/CreateUser';
 
 const router = createBrowserRouter([
 	{
@@ -57,7 +59,7 @@ const router = createBrowserRouter([
 		element: <ProtectedRoute children={<ViewClient />} />,
 	},
 	{
-		path: 'create-user',
+		path: '/create-client',
 		element: <ProtectedRoute children={<CreateClient />} />,
 	},
 	{
@@ -73,6 +75,10 @@ const router = createBrowserRouter([
 		element: <ProtectedRoute children={<EditUser />} />,
 	},
 	{
+		path: 'create-user',
+		element: <ProtectedRoute children={<CreateUser />} />,
+	},
+	{
 		path: '/viewos/:id',
 		element: <ProtectedRoute children={<ViewOS />} />,
 	},
@@ -80,6 +86,10 @@ const router = createBrowserRouter([
 		path: '/createos',
 		element: <ProtectedRoute children={<CreateOS />} />,
 	},
+	{
+		path: '/editos/:id',
+		element: <ProtectedRoute children={<EditOs/>}/>
+	}
 ]);
 
 export { router };

@@ -6,8 +6,10 @@ import TopNav from '../../components/top-nav';
 import IconProductBlack from '../../public/assets/home-page/icons/products/products_icon_b.svg';
 import { getUsers } from '../../http/get-users';
 import { useCookies } from 'react-cookie';
+import { useNavigate } from 'react-router-dom';
 
 export const Users = () => {
+	const navigate = useNavigate();
 	const [users, setUsers] = useState([{}]);
 	const [cookies] = useCookies();
 	const today = new Date().toLocaleDateString('pt-BR');
@@ -25,7 +27,7 @@ export const Users = () => {
 	];
 
 	const add = () => {
-		alert('ADDDD');
+		navigate('/create-user');
 	};
 
 	const fetchUsers = useCallback(async () => {
@@ -62,9 +64,10 @@ export const Users = () => {
 								showActions: true,
 								actionButtonText: 'Adicionar Usuário',
 								action: add,
+								deleteAction: () => {},
 							}}
-							viewPage='/view-user'
-							editPage='/edit-user'
+							viewPage="/view-user"
+							editPage="/edit-user"
 						/>
 					</div>
 				</div>

@@ -8,6 +8,7 @@ interface IServiceOrderProps {
     defect?: string;
     report?: string;
     extras?: string;
+    number?: string;
     companyId: string;
     status: StatusEnum
     userId: string;
@@ -21,6 +22,7 @@ export class ServiceOrder {
     public defect?: string | null
     public report?: string | null
     public extras?: string | null
+    public number?: string | null
     public date: Date = new Date();
     public companyId: string;
     public status: StatusEnum
@@ -38,6 +40,8 @@ export class ServiceOrder {
         this.description = data.description
         this.defect = data.defect
         this.extras = data.extras
+        this.report = data.report
+        this.number = data.number
         this.date = new Date()
         this.companyId = data.companyId
         this.clientId = data.clientId

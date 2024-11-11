@@ -44,6 +44,7 @@ model ServiceOrder {
   defect       String?
   report       String?
   extras       String?
+  number       String?
   date         DateTime @default(now())
   companyId    String   @db.Uuid
   status       String   @default("ABERTO")
@@ -72,12 +73,13 @@ model Product {
 }
 
 model ProductServiceOrder {
-  id             String  @id @default(uuid()) @db.Uuid
-  productId      String? @db.Uuid // Pode ser nulo
-  serviceOrderId String? @db.Uuid // Pode ser nulo
+  id             String @id @default(uuid()) @db.Uuid
+  productId      String @db.Uuid
+  serviceOrderId String @db.Uuid
+  qtd            Int    @default(1)
 
-  product      Product?      @relation(fields: [productId], references: [id])
-  serviceOrder ServiceOrder? @relation(fields: [serviceOrderId], references: [id])
+  product      Product      @relation(fields: [productId], references: [id])
+  serviceOrder ServiceOrder @relation(fields: [serviceOrderId], references: [id])
 
   @@unique([productId, serviceOrderId])
 }

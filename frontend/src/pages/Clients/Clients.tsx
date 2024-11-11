@@ -27,7 +27,7 @@ export const Clients = () => {
 	];
 
 	const add = () => {
-		navigate('/create-user');
+		navigate('/create-client');
 	};
 
 	const fetchClients = useCallback(async () => {
@@ -38,8 +38,6 @@ export const Clients = () => {
 	useEffect(() => {
 		fetchClients();
 	}, [fetchClients]);
-
-	console.log(clients);
 
 	return (
 		<div className="flex h-screen overflow-hidden">

@@ -3,17 +3,17 @@ import { useCookies } from 'react-cookie';
 import UserBlue from '../../public/assets/view-user-page/user-blue.svg';
 import TopNav from '../../components/top-nav';
 import Sidebar from '../../components/sidebar';
-import { createClient, ICreateClient } from '../../http/create-client';
 import { toast } from 'sonner';
+import { ICreateUser, createUser } from '../../http/create-user';
 
-const CreateClient = () => {
+const CreateUser = () => {
 	const [cookies] = useCookies();
 	const today = new Date().toLocaleDateString('pt-BR');
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		const formData = new FormData(e.currentTarget);
-		const client: ICreateClient = {
+		const client: ICreateUser = {
 			name: formData.get('name')?.toString(),
 			email: formData.get('email')?.toString(),
 			document: formData.get('document')?.toString(),
@@ -21,16 +21,18 @@ const CreateClient = () => {
 			neighborhood: formData.get('neighborhood')?.toString(),
 			city: formData.get('city')?.toString(),
 			number: formData.get('number')?.toString(),
+			userType: formData.get('userType')?.toString(),
+			password: formData.get('password')?.toString(),
 		};
 
-		const { id } = await createClient(cookies.jwt, client);
+		const { id } = await createUser(cookies.jwt, client);
 
 		if (!id) {
-			toast.error('Erro ao criar cliente');
+			toast.error('Erro ao criar usuário');
 			return;
 		}
 
-		toast.success('Cliente adicionado');
+		toast.success('Usuário adicionado');
 	};
 
 	return (
@@ -39,7 +41,7 @@ const CreateClient = () => {
 			<main className="flex flex-col flex-1 p-10 bg-blue-200 space-y-10 h-screen">
 				<header className="flex justify-between">
 					<div className="pt-16 md:pt-16 lg:pt-0">
-						<h1 className="text-2xl font-bold">Clientes</h1>
+						<h1 className="text-2xl font-bold">Usuários</h1>
 						<p className="text-sm text-gray-500">{today}</p>
 					</div>
 					<TopNav />
@@ -48,7 +50,7 @@ const CreateClient = () => {
 					<div className="flex p-2 w-full h-16 items-center gap-2 border-b border-black border-opacity-10 ">
 						<img src={UserBlue} alt="" />
 						<p className="text-bold text-xl">
-							Adicionar novo cliente ao sistema
+							Adicionar novo usuário ao sistema
 						</p>
 					</div>
 					<div className="flex flex-col gap-10">
@@ -131,6 +133,20 @@ const CreateClient = () => {
 								<div className="flex flex-col gap-1 w-fit">
 									<label
 										className="font-bold text-md"
+										htmlFor="password"
+									>
+										Senha
+									</label>
+									<input
+										required
+										className="p-1 border rounded-lg"
+										type="password"
+										name="password"
+									/>
+								</div>
+								<div className="flex flex-col gap-1 w-fit">
+									<label
+										className="font-bold text-md"
 										htmlFor="address"
 									>
 										Endereço
@@ -154,6 +170,23 @@ const CreateClient = () => {
 										name="neighborhood"
 									/>
 								</div>
+								<div className="flex flex-col gap-1 w-fit">
+									<label
+										className="font-bold text-md"
+										htmlFor="userType"
+									>
+										Tipo de usuário
+									</label>
+									<select
+										className="p-1 border rounded-lg"
+										name="userType"
+									>
+										<option value="ADMIN">Admin</option>
+										<option value="TECHNICIAN">
+											Técnico
+										</option>
+									</select>
+								</div>
 							</div>
 						</form>
 						<button
@@ -170,4 +203,4 @@ const CreateClient = () => {
 	);
 };
 
-export { CreateClient };
+export { CreateUser };

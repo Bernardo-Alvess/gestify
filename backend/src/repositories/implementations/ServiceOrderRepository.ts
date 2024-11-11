@@ -7,6 +7,7 @@ import { IServiceOrderRepository } from "../IServiceOrderRepository";
 export class ServiceOrderRepository implements IServiceOrderRepository {
 
     async createServiceOrder(serviceOrder: ServiceOrder): Promise<void> {
+
         await prisma.serviceOrder.create({
             data: serviceOrder
         });
@@ -38,7 +39,8 @@ export class ServiceOrderRepository implements IServiceOrderRepository {
                 date: true,
                 status: true,
                 technicianId: true,
-                clientId: true
+                clientId: true,
+                number: true
             }
         })
     }

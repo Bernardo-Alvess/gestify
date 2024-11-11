@@ -9,7 +9,7 @@
 
 //     const { userType } = (req as CustomRequest).token;
 
-//     console.log(userType)
+//     
 //     if (userType == 'OWNER' || userType == 'ADMIN') {
 //         return next()
 //     }
