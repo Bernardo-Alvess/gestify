@@ -14,6 +14,18 @@ export class ProductServiceOrderRepository implements IProductServiceOrderReposi
     return data
   }
 
+  async getUniqueById(id: string): Promise<ProductServiceOrder | undefined> {
+    const data = await prisma.productServiceOrder.findUnique({
+      where: {
+        id
+      }
+    })
+
+    if (data) return data
+
+    return undefined
+  }
+
   async getProductServiceOrders(): Promise<ProductServiceOrder[]> {
     const all = await prisma.productServiceOrder.findMany();
     return all.map((data) => new ProductServiceOrder(data));

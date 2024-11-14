@@ -13,6 +13,8 @@ import { useParams } from 'react-router-dom';
 import { updateServiceOrder } from '../../http/update-service-order';
 import AddProductModal from '../../components/add-product-modal';
 import SuccessModal from '../../components/sucess-modal';
+import { getProductsForSo } from '../../http/get-products-for-so';
+// import { productSo } from '../../data/products-so';
 
 interface IUser {
 	name: string;
@@ -51,6 +53,7 @@ export const EditOs: React.FC = () => {
 	const [cookies] = useCookies(['jwt', 'id']);
 	const [toggleModal, setToggleModal] = useState(false);
 	const [successModal, setSuccessModal] = useState(false);
+	const [products, setProducts] = useState([{}]);
 
 	const [formValues, setFormValues] = useState<IFormValues>({
 		client: '',
@@ -64,7 +67,7 @@ export const EditOs: React.FC = () => {
 	});
 
 	const columns = ['Código', 'Nome', 'Preço', 'Custo', 'Tipo UN'];
-	const data_table_2 = Array(20).fill(['1', 'Placa Mãe', '2', 'Asus']);
+	// const data_table_2 = Array(20).fill(['1', 'Placa Mãe', '2', 'Asus']);
 
 	const handleChange = (
 		e: ChangeEvent<
@@ -104,22 +107,11 @@ export const EditOs: React.FC = () => {
 		if (data !== technicians) setTechnicians(data);
 	}, []);
 
-	const getSelectClass = (): string => {
-		switch (selectedOption) {
-			case 'EM ANDAMENTO':
-				return 'bg-green-100 text-green-400 border border-green-400';
-			case 'PENDENTE':
-				return 'bg-yellow-100 text-yellow-600 border border-yellow-600';
-			case 'FECHADO':
-				return 'bg-blue-100 text-blue-600 border border-blue-400';
-			case 'CANCELADO':
-				return 'bg-red-200 text-red-600 border border-red-600';
-			case 'ABERTO':
-				return 'bg-purple-200 text-purple-600 border-purple-600';
-			default:
-				return '';
-		}
-	};
+	const fetchProductsForOs = useCallback(async () => {
+		const { productsForOs } = await getProductsForSo(cookies.jwt, id);
+
+		if (productsForOs != undefined) setProducts(productsForOs);
+	}, []);
 
 	const fetchServiceOrder = useCallback(async () => {
 		const data = await getServiceOrdersById(cookies.jwt, id);
@@ -136,45 +128,12 @@ export const EditOs: React.FC = () => {
 		setSelectedOption(data.status);
 	}, []);
 
-	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
-
-		if (formValues.technician == inputFields[1].selected?.name) {
-			formValues.technician = inputFields[1].selected?.id;
-		}
-
-		const updated = await updateServiceOrder(cookies.jwt, id, {
-			description:
-				formValues.description === ''
-					? undefined
-					: formValues.description,
-			defect: formValues.defect === '' ? undefined : formValues.defect,
-			report: formValues.report === '' ? undefined : formValues.report,
-			extras: formValues.extras === '' ? undefined : formValues.extras,
-			number: formValues.number === '' ? undefined : formValues.number,
-			status: selectedOption.toUpperCase(),
-			//date: formValues.date,
-			clientId: formValues.client === '' ? undefined : formValues.client,
-			technicianId:
-				formValues.technician === ''
-					? undefined
-					: formValues.technician,
-		});
-
-		if (updated) {
-			toast.success('Ordem de Serviço editada');
-			setSuccessModal(true);
-			return;
-		}
-
-		toast.error('Erro ao editar Ordem de Serviço');
-	};
-
 	useEffect(() => {
 		fetchClients();
 		fetchTechs();
 		fetchServiceOrder();
-	}, [fetchClients, fetchTechs, fetchServiceOrder]);
+		fetchProductsForOs();
+	}, [fetchClients, fetchTechs, fetchServiceOrder, fetchProductsForOs]);
 
 	const inputFields = [
 		{
@@ -220,6 +179,57 @@ export const EditOs: React.FC = () => {
 			isTextarea: true,
 		},
 	];
+
+	const getSelectClass = (): string => {
+		switch (selectedOption) {
+			case 'EM ANDAMENTO':
+				return 'bg-green-100 text-green-400 border border-green-400';
+			case 'PENDENTE':
+				return 'bg-yellow-100 text-yellow-600 border border-yellow-600';
+			case 'FECHADO':
+				return 'bg-blue-100 text-blue-600 border border-blue-400';
+			case 'CANCELADO':
+				return 'bg-red-200 text-red-600 border border-red-600';
+			case 'ABERTO':
+				return 'bg-purple-200 text-purple-600 border-purple-600';
+			default:
+				return '';
+		}
+	};
+
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+
+		if (formValues.technician == inputFields[1].selected?.name) {
+			formValues.technician = inputFields[1].selected?.id;
+		}
+
+		const updated = await updateServiceOrder(cookies.jwt, id, {
+			description:
+				formValues.description === ''
+					? undefined
+					: formValues.description,
+			defect: formValues.defect === '' ? undefined : formValues.defect,
+			report: formValues.report === '' ? undefined : formValues.report,
+			extras: formValues.extras === '' ? undefined : formValues.extras,
+			number: formValues.number === '' ? undefined : formValues.number,
+			status: selectedOption.toUpperCase(),
+			//date: formValues.date,
+			clientId: formValues.client === '' ? undefined : formValues.client,
+			technicianId:
+				formValues.technician === ''
+					? undefined
+					: formValues.technician,
+		});
+
+		if (updated) {
+			toast.success('Ordem de Serviço editada');
+			setSuccessModal(true);
+			return;
+		}
+
+		toast.error('Erro ao editar Ordem de Serviço');
+	};
 
 	return (
 		<div className="flex h-screen overflow-hidden">
@@ -355,7 +365,7 @@ export const EditOs: React.FC = () => {
 								icon={IconProductsBlack}
 								title={'Adicionar Produtos a Ordem de Serviço'}
 								columns={columns}
-								data={data_table_2}
+								data={products}
 								actions={{
 									showActions: true,
 									actionButtonText: 'Adicionar Produto',
