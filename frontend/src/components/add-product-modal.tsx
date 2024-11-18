@@ -35,7 +35,7 @@ const AddProductModal = ({ toggle, onClose }: AddProductModalProps) => {
 	const [cookies] = useCookies(['jwt']);
 	const { serviceOrderId } = useParams();
 	const [data, setData] = useState<Product[] | undefined>(undefined);
-	const [productsForOs, setProductsForOs] = useState([]);
+	const [, setProductsForOs] = useState([]);
 	const [formValues, setFormValues] = useState<IFormValues>({
 		id: undefined,
 		product: undefined,
