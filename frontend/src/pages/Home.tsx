@@ -35,16 +35,44 @@ export const Home = () => {
 	const column_table_1 = ['Código', 'Nome', 'Quantidade', 'Marca'];
 	const column_table_2 = ['Código', 'Data de entrega', 'Cliente', 'Produto'];
 
-	const data_table_1 = [
-		['123', 'Placa Mãe', '2', 'Asus'],
-		['123', 'Placa Mãe', '2', 'Asus'],
-		['123', 'Placa Mãe', '2', 'Asus'],
-		['123', 'Placa Mãe', '2', 'Asus'],
-	];
+	// const data_table_1 = [
+	// 	['123', 'Placa Mãe', '2', 'Asus'],
+	// 	['123', 'Placa Mãe', '2', 'Asus'],
+	// 	['123', 'Placa Mãe', '2', 'Asus'],
+	// 	['123', 'Placa Mãe', '2', 'Asus'],
+	// ];
 	const data_table_2 = [
 		['123', '23/09/2024', 'Lorenzo Cardoso', 'SSD'],
 		['123', '23/09/2024', 'Lorenzo Cardoso', 'SSD'],
 		['123', '23/09/2024', 'Lorenzo Cardoso', 'SSD'],
+	];
+
+	const produtosEstoque = [
+		{
+			codigo: 'P001',
+			nome: 'Caneta Esferográfica',
+			quantidade: 5,
+			marca: 'Bic',
+		},
+		{
+			codigo: 'P002',
+			nome: 'Caderno 100 folhas',
+			quantidade: 3,
+			marca: 'Tilibra',
+		},
+		{
+			codigo: 'P003',
+			nome: 'Borracha Escolar',
+			quantidade: 2,
+			marca: 'Faber-Castell',
+		},
+		{ codigo: 'P004', nome: 'Lápis HB', quantidade: 4, marca: 'Staedtler' },
+		{
+			codigo: 'P005',
+			nome: 'Marcador de Texto',
+			quantidade: 1,
+			marca: 'Stabilo',
+		},
 	];
 
 	const addReminder = (reminder: Reminder) => {
@@ -121,7 +149,7 @@ export const Home = () => {
 							icon={IconProductsBlack}
 							title="Produtos acabando no estoque"
 							columns={column_table_1}
-							data={statistics.lowStockProducts}
+							data={produtosEstoque}
 						/>
 					</div>
 					<div className="col-span-5">
