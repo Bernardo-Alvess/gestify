@@ -1,13 +1,15 @@
 import { useCallback, useEffect, useState } from 'react';
-import SearchBox from '../components/search-box';
-import Sidebar from '../components/sidebar';
-import Table from '../components/table';
-import TopNav from '../components/top-nav';
-import IconProductBlack from '../public/assets/home-page/icons/products/products_icon_b.svg';
-import { getProducts } from '../http/get-products';
+import SearchBox from '../../components/search-box';
+import Sidebar from '../../components/sidebar';
+import Table from '../../components/table';
+import TopNav from '../../components/top-nav';
+import IconProductBlack from '../../public/assets/home-page/icons/products/products_icon_b.svg';
+import { getProducts } from '../../http/get-products';
 import { useCookies } from 'react-cookie';
+import { useNavigate } from 'react-router-dom';
 
 export const Products = () => {
+	const navigate = useNavigate();
 	const today = new Date().toLocaleDateString('pt-BR');
 	const [cookies] = useCookies(['jwt'])
 	const [products, setProducts] = useState([]);
@@ -15,13 +17,16 @@ export const Products = () => {
 	const column_table_2 = [
 		'Código',
 		'Nome',
+		'Preço',
+		'Custo',
+		'Tipo',
+		'Quantidade Mínima',
 		'Quantidade',
-		'Marca',
-		'Preço venda',
+		'Código da Empresa',
 	];
 
 	const add = () => {
-		alert('ADDDD');
+		navigate('/create-product');
 	};
 
 	const fetchProducts = useCallback(async () => {
@@ -58,6 +63,7 @@ export const Products = () => {
 								action: add,
 								deleteAction: () => {},
 							}}
+							viewPage="/view-product"
 						/>
 					</div>
 				</div>

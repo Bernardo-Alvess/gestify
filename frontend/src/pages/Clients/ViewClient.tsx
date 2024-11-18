@@ -1,11 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
-
-import OrdersIcon from '../../public/assets/home-page/icons/orders/orders_icon.svg';
+import IconClients from '../../public/assets/home-page/icons/clients/clients_icon.svg';
 import TopNav from '../../components/top-nav';
 import { getUserById } from '../../http/get-user-by-id';
-import Table from '../../components/table';
 import Sidebar from '../../components/sidebar';
 import { fetchOrdersForClient } from '../../http/fetch-orders-for-client';
 import { BackPageButton } from '../../components/back-page-button';
@@ -29,18 +27,6 @@ const ViewClient = () => {
 	const [orders, setOrders] = useState([{}]);
 	const [cookies] = useCookies();
 	const today = new Date().toLocaleDateString('pt-BR');
-
-	const columns = [
-		'Id',
-		'Descrição',
-		'Defeito',
-		'Report',
-		'Observações',
-		'Data',
-		'Status',
-		'Técnico',
-		'Cliente',
-	];
 
 	const fetchClient = useCallback(async () => {
 		const data = await getUserById(cookies.jwt, id);
@@ -70,10 +56,10 @@ const ViewClient = () => {
 	return (
 		<div className="flex h-screen overflow-hidden">
 			<Sidebar />
-			<main className="flex-1 p-10 bg-blue-200 space-y-10 h-screen">
-				<header className="flex justify-between">
-					<div className="pt-16 md:pt-16 lg:pt-0">
-						<h1 className="text-2xl font-bold">Cliente</h1>
+			<main className="flex-1 p-6 bg-blue-200 space-y-6 h-screen">
+				<header className="flex justify-between items-center">
+					<div>
+						<h1 className="text-xl font-bold">Cliente - Visualizar</h1>
 						<p className="text-sm text-gray-500">{today}</p>
 					</div>
 					<TopNav />
@@ -81,149 +67,95 @@ const ViewClient = () => {
 
 				<BackPageButton route="/clients" />
 
-				<div className="bg-white p-4 rounded-lg shadow-lg w-full">
-					<div className="flex justify-between mb-4">
-						<h2 className="font-bold text-lg mb-4">
-							Cliente: {client?.name}
+				<div className="bg-white p-6 rounded-lg shadow-md space-y-4">
+					<div className='flex gap-2 border-b pb-3 border-gray-300'>
+						<img src={IconClients} className='w-6' alt="" />
+						<h2 className="font-semibold text-lg">
+							{client?.name}
 						</h2>
 					</div>
 
-					<div className="grid grid-cols-12 gap-3">
-						<div className="col-span-8 grid grid-cols-2 gap-5">
-							<div className="flex flex-col gap-1 w-fit">
-								<div>
-									<label className="block text-sm font-bold">
-										{client?.name}
-									</label>
-									<input
-										type={'text'}
-										className={`w-full p-2 border border-gray-300 rounded-lg max-h-12`}
-										placeholder={'Nome'}
-										defaultValue={client?.name}
-									/>
-								</div>
-							</div>
-							<div className="flex flex-col gap-1 w-fit">
-								<label
-									className="font-bold text-md"
-									htmlFor="document"
-								>
-									Documento
-								</label>
+					<div className="gap-4 py-14 px-32">
+						<div className="col-span-1 grid grid-cols-2 gap-4">
+							<div className="flex flex-col gap-1">
+								<label className="font-semibold text-black">Cliente</label>
 								<input
-									readOnly
-									className="w-full p-2 border border-gray-300 rounded-lg max-h-12"
 									type="text"
-									name="document"
-									value={client?.document || 'N/A'}
+									readOnly
+									value={client?.name || 'N/A'}
+									className="w-full p-2 border border-gray-300 rounded-lg"
 								/>
 							</div>
-							<div className="flex flex-col gap-1 w-fit">
-								<label
-									className="font-bold text-md"
-									htmlFor="phone"
-								>
-									Telefone
-								</label>
+							<div className="flex flex-col gap-1">
+								<label className="font-semibold text-black">Email</label>
 								<input
-									readOnly
-									className="w-full p-2 border border-gray-300 rounded-lg max-h-12"
 									type="text"
-									name="phone"
-									value={client?.number || 'N/A'}
-								/>
-							</div>
-							<div className="flex flex-col gap-1 w-fit">
-								<label
-									className="font-bold text-md"
-									htmlFor="city"
-								>
-									Cidade
-								</label>
-								<input
 									readOnly
-									className="w-full p-2 border border-gray-300 rounded-lg max-h-12"
-									type="text"
-									name="city"
-									value={client?.city || 'N/A'}
-								/>
-							</div>
-							<div className="flex flex-col gap-1 w-fit">
-								<label
-									className="font-bold text-md"
-									htmlFor="neighborhood"
-								>
-									Bairro
-								</label>
-								<input
-									readOnly
-									className="w-full p-2 border border-gray-300 rounded-lg max-h-12"
-									type="text"
-									name="neighborhood"
-									value={client?.neighborhood || 'N/A'}
-								/>
-							</div>
-							<div className="flex flex-col gap-1 w-fit">
-								<label
-									className="font-bold text-md"
-									htmlFor="email"
-								>
-									Email
-								</label>
-								<input
-									readOnly
-									className="w-full p-2 border border-gray-300 rounded-lg max-h-12"
-									type="text"
-									name="email"
 									value={client?.email || 'N/A'}
+									className="w-full p-2 border border-gray-300 rounded-lg"
 								/>
 							</div>
-							<div className="flex flex-col gap-1 w-fit">
-								<label
-									className="font-bold text-md"
-									htmlFor="date"
-								>
-									Data do cadastro
-								</label>
+							<div className="flex flex-col gap-1">
+								<label className="font-semibold text-gray-700">Documento</label>
 								<input
-									readOnly
-									className="w-full p-2 border border-gray-300 rounded-lg max-h-12"
 									type="text"
-									name="date"
-									value={
-										client?.date
-											? new Date(
-													client.date
-											  ).toLocaleDateString('pt-BR')
-											: 'N/A'
-									}
+									readOnly
+									value={client?.document || 'N/A'}
+									className="w-full p-2 border border-gray-300 rounded-lg"
 								/>
 							</div>
-							<div className="flex flex-col gap-1 w-fit">
-								<label
-									className="font-bold text-md"
-									htmlFor="address"
-								>
-									Endereço
-								</label>
+							<div className="flex flex-col gap-1">
+								<label className="font-semibold text-gray-700">Data de Cadastro</label>
 								<input
-									readOnly
-									className="w-full p-2 border border-gray-300 rounded-lg max-h-12"
 									type="text"
-									name="address"
+									readOnly
+									value={client?.date ? new Date(client.date).toLocaleDateString('pt-BR') : 'N/A'}
+									className="w-full p-2 border border-gray-300 rounded-lg"
+								/>
+							</div>
+							<div className="flex flex-col gap-1">
+								<label className="font-semibold text-gray-700">Telefone</label>
+								<input
+									type="text"
+									readOnly
+									value={client?.number || 'N/A'}
+									className="w-full p-2 border border-gray-300 rounded-lg"
+								/>
+							</div>
+							<div className="flex flex-col gap-1">
+								<label className="font-semibold text-gray-700">Celular</label>
+								<input
+									type="text"
+									readOnly
+									value={client?.number || 'N/A'}
+									className="w-full p-2 border border-gray-300 rounded-lg"
+								/>
+							</div>
+							<div className="flex flex-col gap-1">
+								<label className="font-semibold text-gray-700">Cidade</label>
+								<input
+									type="text"
+									readOnly
+									value={client?.city || 'N/A'}
+									className="w-full p-2 border border-gray-300 rounded-lg"
+								/>
+							</div>
+							<div className="flex flex-col gap-1">
+								<label className="font-semibold text-gray-700">Endereço</label>
+								<input
+									type="text"
+									readOnly
 									value={client?.address || 'N/A'}
+									className="w-full p-2 border border-gray-300 rounded-lg"
 								/>
 							</div>
 						</div>
+					</div>
 
-						<div className="col-span-4 overflow-y-auto border rounded-xl shadow-lg h-fit">
-							<Table
-								icon={OrdersIcon}
-								title="Ordens associadas ao cliente"
-								columns={columns}
-								data={orders}
-							/>
-						</div>
+					<div className="flex justify-center mt-6">
+						<button className="w-full max-w-sm bg-blue-500 text-white py-2 rounded-lg font-semibold hover:bg-blue-600 transition">
+							Visualizar cliente
+						</button>
 					</div>
 				</div>
 			</main>

@@ -7,7 +7,7 @@ interface IProductSo {
     totalCost: number | undefined
 }
 
-const productSo: IProductSo[] = [];
+let productSo: IProductSo[] = [];
 let counter = 0
 
 const addProductToSo = (product: IProductSo) => {
@@ -19,4 +19,8 @@ const cleanProductSo = () => {
     productSo.length = 0
 }
 
-export { addProductToSo, cleanProductSo, productSo }
+const assign = (newProducts: IProductSo[]) => {
+    productSo = newProducts
+}
+
+export { addProductToSo, cleanProductSo, assign, productSo }
