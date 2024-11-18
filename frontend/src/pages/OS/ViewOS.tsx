@@ -9,6 +9,7 @@ import Table from '../../components/table';
 import { getServiceOrdersById } from '../../http/get-service-order-by-id';
 import { useParams } from 'react-router-dom';
 import { getProductsForSo } from '../../http/get-products-for-so';
+import { productSo } from '../../data/products-so';
 
 interface IFormValues {
 	client: string;
@@ -26,6 +27,7 @@ export const ViewOS: React.FC = () => {
 	const [selectedOption, setSelectedOption] = useState<string>('');
 	const [products, setProducts] = useState([{}]);
 	const [cookies] = useCookies(['jwt', 'id']);
+	const [totalValue, setTotalValue] = useState(0);
 
 	const [formValues, setFormValues] = useState<IFormValues>({
 		client: '',
@@ -68,7 +70,15 @@ export const ViewOS: React.FC = () => {
 	const fetchProductsForOs = useCallback(async () => {
 		const { productsForOs } = await getProductsForSo(cookies.jwt, id);
 
-		if (productsForOs != undefined) setProducts(productsForOs);
+		if (productsForOs !== undefined) {
+			setProducts(productsForOs);
+			// Calcula o valor total dos produtos
+			const total = productsForOs.reduce(
+				(sum: any, product: any) => sum + (product.totalValue || 0),
+				0
+			);
+			setTotalValue(total); // Atualiza o estado com o valor calculado
+		}
 	}, []);
 
 	useEffect(() => {
@@ -179,6 +189,7 @@ export const ViewOS: React.FC = () => {
 									)}
 								</div>
 							))}
+							<div>Valor Total: R${totalValue}</div>
 						</div>
 						<div className="col-span-4 border rounded-xl shadow-lg max-h-[500px] overflow-y-auto">
 							<Table
