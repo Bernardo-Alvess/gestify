@@ -9,7 +9,6 @@ import Table from '../../components/table';
 import { getServiceOrdersById } from '../../http/get-service-order-by-id';
 import { useParams } from 'react-router-dom';
 import { getProductsForSo } from '../../http/get-products-for-so';
-import { productSo } from '../../data/products-so';
 
 interface IFormValues {
 	client: string;
