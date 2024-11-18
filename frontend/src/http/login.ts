@@ -13,8 +13,6 @@ export const loginUser = async (data: ILoginData) => {
         body: JSON.stringify(data)
     })
 
-    // const { id, token } = await response.json()
-    // return { id, token }
     const { logged } = await response.json()
     return { logged }
 }

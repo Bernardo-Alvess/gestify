@@ -40,10 +40,7 @@ export const Login = () => {
 			return;
 		}
 
-		// setCookie('id', cookies.id, { path: '/', maxAge: 3 * 24 * 60 * 60 });
-		// setCookie('jwt', cookies.jwt, { path: '/', maxAge: 3 * 24 * 60 * 60 });
-
-		console.log(cookies);
+		// toast.success('Entrando...');
 		login();
 		navigate(`/home/${cookies.id}`);
 	};

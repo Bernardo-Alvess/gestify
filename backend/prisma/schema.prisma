@@ -15,7 +15,6 @@ model Company {
   corporateReason String
   cnpj            String         @unique
   users           User[]
-  status          Status[]
   serviceOrders   ServiceOrder[]
   products        Product[]
 }
@@ -27,21 +26,16 @@ model User {
   password                String
   document                String         @unique
   address                 String?
+  date                    DateTime       @default(now())
+  neighborhood            String?
+  city                    String?
   number                  String?
   userType                String
   companyId               String         @db.Uuid
-  company                 Company        @relation(fields: [companyId], references: [id])
+  company                 Company        @relation(fields: [companyId], references: [id], onDelete: Cascade)
   serviceOrders           ServiceOrder[]
   technicianServiceOrders ServiceOrder[] @relation("Technician")
   clientServiceOrders     ServiceOrder[] @relation("Client")
-}
-
-model Status {
-  id            String         @id @default(uuid()) @db.Uuid
-  name          String
-  companyId     String         @db.Uuid
-  company       Company        @relation(fields: [companyId], references: [id])
-  serviceOrders ServiceOrder[]
 }
 
 model ServiceOrder {
@@ -50,18 +44,18 @@ model ServiceOrder {
   defect       String?
   report       String?
   extras       String?
+  number       String?
   date         DateTime @default(now())
   companyId    String   @db.Uuid
-  statusId     String   @db.Uuid
+  status       String   @default("ABERTO")
   userId       String   @db.Uuid
-  technicianId String   @db.Uuid
-  clientId     String   @db.Uuid
+  technicianId String?  @db.Uuid
+  clientId     String?  @db.Uuid
 
-  company    Company               @relation(fields: [companyId], references: [id])
-  status     Status                @relation(fields: [statusId], references: [id])
+  company    Company               @relation(fields: [companyId], references: [id], onDelete: Cascade)
   user       User                  @relation(fields: [userId], references: [id])
-  technician User                  @relation("Technician", fields: [technicianId], references: [id])
-  client     User                  @relation("Client", fields: [clientId], references: [id])
+  technician User?                 @relation("Technician", fields: [technicianId], references: [id])
+  client     User?                 @relation("Client", fields: [clientId], references: [id])
   products   ProductServiceOrder[]
 }
 
@@ -74,17 +68,18 @@ model Product {
   minQtd        Int?
   qtd           Int?
   companyId     String                @db.Uuid
-  company       Company               @relation(fields: [companyId], references: [id])
+  company       Company               @relation(fields: [companyId], references: [id], onDelete: Cascade)
   serviceOrders ProductServiceOrder[]
 }
 
 model ProductServiceOrder {
-  id             String  @id @default(uuid()) @db.Uuid
-  productId      String? @db.Uuid // Pode ser nulo
-  serviceOrderId String? @db.Uuid // Pode ser nulo
+  id             String @id @default(uuid()) @db.Uuid
+  productId      String @db.Uuid
+  serviceOrderId String @db.Uuid
+  qtd            Int    @default(1)
 
-  product      Product?      @relation(fields: [productId], references: [id])
-  serviceOrder ServiceOrder? @relation(fields: [serviceOrderId], references: [id])
+  product      Product      @relation(fields: [productId], references: [id])
+  serviceOrder ServiceOrder @relation(fields: [serviceOrderId], references: [id])
 
   @@unique([productId, serviceOrderId])
 }

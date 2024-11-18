@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt'
 import { AuthRepository } from "../repositories/implementations/AuthRepository"
 import { generateToken } from "../util/generate-token"
 
-const isProduction = process.env.NODE_ENV === 'production'
+const isProduction = process.env.IS_PRODUCTION === 'production'
 const cookieDomain = isProduction ? process.env.PRODUCTION_DOMAIN : undefined
 
 export class AuthController {
@@ -21,24 +21,27 @@ export class AuthController {
             const result = await bcrypt.compare(password, user.password)
 
             if (result) {
-                const token = generateToken({ id: user.id, ownerId: user.companyId })
+                const token = generateToken({ id: user.id, ownerId: user.companyId, userType: user.userType })
+
                 res.cookie(
                     'jwt', token, {
                         path: '/',
                         maxAge: 3 * 24 * 60 * 60 * 1000,
-                        secure: isProduction,
+                        //secure: isProduction,
+                        secure: true,
                         httpOnly: false,
                         sameSite: 'none',
-                        domain: cookieDomain
+                        //domain: cookieDomain
                 })
                 res.cookie(
                     'id', user.id, {
                         path: '/',
                         maxAge: 3 * 24 * 60 * 60 * 1000,
-                        secure: isProduction,
+                        //secure: isProduction,
+                        secure: true,
                         httpOnly: false,
                         sameSite: 'none',
-                        domain: cookieDomain
+                        //domain: cookieDomain
                 })
                 return res.json({ logged: true })
             }
@@ -57,3 +60,5 @@ const repository = new AuthRepository()
 const authController = new AuthController(repository)
 
 export { authController }
+
+
