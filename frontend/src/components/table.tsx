@@ -3,6 +3,7 @@ import eyeIcon from '../public/assets/table/eye.svg';
 import deleteIcon from '../public/assets/table/trash-2.svg';
 import addIcon from '../public/assets/table/simbolo_mais.svg';
 import { useNavigate } from 'react-router-dom';
+import { assignRelationId } from '../data/relation-id';
 
 interface TableProps {
 	icon: string;
@@ -14,6 +15,7 @@ interface TableProps {
 		actionButtonText: string;
 		action: () => void;
 		deleteAction: (id: string) => void;
+		editAction?: () => void;
 	};
 	viewPage?: string;
 	editPage?: string;
@@ -39,6 +41,13 @@ const Table: React.FC<TableProps> = ({
 
 	const del = (rowData: Record<string, any>) => {
 		actions?.deleteAction(rowData.id);
+	};
+
+	const editAction = (rowData: Record<string, any>) => {
+		if (actions?.editAction) {
+			assignRelationId(rowData.companyId)
+			actions.editAction();
+		}
 	};
 
 	function isDateString(dateString: string): boolean {
@@ -106,12 +115,28 @@ const Table: React.FC<TableProps> = ({
 								)}
 								{actions?.showActions ? (
 									<td className="px-4 py-2 text-xs font-medium border-none flex gap-1 items-center justify-center">
-										<button
-											className="size-7"
-											onClick={() => edit(row)}
-										>
-											<img src={editIcon} alt="Edit" />
-										</button>
+										{actions.editAction ? (
+											<button
+												className="size-7"
+												onClick={() => editAction(row)}
+											>
+												<img
+													src={editIcon}
+													alt="Edit"
+												/>
+											</button>
+										) : (
+											<button
+												className="size-7"
+												onClick={() => edit(row)}
+											>
+												<img
+													src={editIcon}
+													alt="Edit"
+												/>
+											</button>
+										)}
+
 										<button
 											className="size-7"
 											onClick={() => view(row)}
