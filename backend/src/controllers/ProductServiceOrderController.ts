@@ -55,7 +55,8 @@ class ProductServiceOrderController {
         try {
           const { id } = req.params;
           const { productId, serviceOrderId, qtd } = req.body;
-          const updated = await this.repository.updateProductServiceOrder(id, { productId, serviceOrderId, qtd } as IUpdateProductServiceOrderDto);
+          const _qtd = parseInt(qtd)
+          const updated = await this.repository.updateProductServiceOrder(id, { productId, serviceOrderId, qtd: _qtd } as IUpdateProductServiceOrderDto);
           res.json({ message: "Product updated successfully", updated });
         } catch (e) {
           next(e);
