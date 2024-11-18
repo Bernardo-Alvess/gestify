@@ -1,6 +1,5 @@
 import { useCookies } from 'react-cookie';
-
-import UserBlue from '../../public/assets/view-user-page/user-blue.svg';
+import IconClients from '../../public/assets/home-page/icons/clients/clients_icon.svg';
 import TopNav from '../../components/top-nav';
 import Sidebar from '../../components/sidebar';
 import { toast } from 'sonner';
@@ -8,6 +7,7 @@ import { useParams } from 'react-router-dom';
 import { useCallback, useEffect, useState } from 'react';
 import { getUserById } from '../../http/get-user-by-id';
 import { updateUser } from '../../http/update-user';
+import { BackPageButton } from '../../components/back-page-button';
 
 export interface IUpdateClient {
 	name?: string | null | undefined;
@@ -82,162 +82,125 @@ const EditClient = () => {
 	return (
 		<div className="flex h-screen overflow-hidden">
 			<Sidebar />
-			<main className="flex flex-col flex-1 p-10 bg-blue-200 space-y-10 h-screen">
-				<header className="flex justify-between">
-					<div className="pt-16 md:pt-16 lg:pt-0">
-						<h1 className="text-2xl font-bold">Clientes</h1>
+			<main className="flex-1 p-6 bg-blue-200 space-y-6 h-screen">
+				<header className="flex justify-between items-center">
+					<div>
+						<h1 className="text-xl font-bold">Clientes - Editar</h1>
 						<p className="text-sm text-gray-500">{today}</p>
 					</div>
 					<TopNav />
 				</header>
-				<div className="flex flex-col gap-10 self-center h-5/6 w-fit bg-white overflow-y-auto rounded-lg shadow-xl p-2 overflow-x-hidden">
-					<div className="flex p-2 w-full h-16 items-center gap-2 border-b border-black border-opacity-10 ">
-						<img src={UserBlue} alt="" />
-						<p className="text-bold text-xl">
-							Alterar Cliente:{' '}
+
+				<BackPageButton route="/clients" />
+
+				<div className="bg-white p-6 rounded-lg shadow-md space-y-4">
+					<div className="flex gap-2 border-b pb-3 border-gray-300">
+						<img src={IconClients} className="w-6" alt="" />
+						<h2 className="font-semibold text-lg">
 							{client?.name ? client.name : 'N/A'}
-						</p>
+						</h2>
 					</div>
-					<div className="flex flex-col gap-10">
+
+					<div className="gap-4 py-14 px-32">
 						<form
 							id="create-client-form"
-							className="col-span-4 flex"
+							className="grid grid-cols-2 gap-4"
 							onSubmit={handleSubmit}
 						>
-							<div className="p-3 flex flex-col gap-12">
-								<div className="flex flex-col gap-1 w-fit">
-									<label
-										className="font-bold text-md"
-										htmlFor="name"
-									>
-										Nome
-									</label>
-									<input
-										required
-										className="p-1 border rounded-lg"
-										type="text"
-										name="name"
-										onChange={handleInputChange}
-										value={client?.name ? client.name : ''}
-									/>
-								</div>
-								<div className="flex flex-col gap-1 w-fit">
-									<label
-										className="font-bold text-md"
-										htmlFor="document"
-									>
-										Documento
-									</label>
-									<input
-										required
-										inputMode="numeric"
-										className="p-1 border rounded-lg"
-										type="text"
-										name="document"
-										onChange={handleInputChange}
-										value={
-											client?.document
-												? client.document
-												: ''
-										}
-									/>
-								</div>
-								<div className="flex flex-col gap-1 w-fit">
-									<label
-										className="font-bold text-md"
-										htmlFor="number"
-									>
-										Telefone
-									</label>
-									<input
-										inputMode="numeric"
-										className="p-1 border rounded-lg"
-										type="text"
-										name="number"
-										onChange={handleInputChange}
-										value={
-											client?.number ? client.number : ''
-										}
-									/>
-								</div>
-								<div className="flex flex-col gap-1 w-fit">
-									<label
-										className="font-bold text-md"
-										htmlFor="city"
-									>
-										Cidade
-									</label>
-									<input
-										className="p-1 border rounded-lg"
-										type="text"
-										name="city"
-										onChange={handleInputChange}
-										value={client?.city ? client.city : ''}
-									/>
-								</div>
+							<div className="flex flex-col gap-1">
+								<label className="font-semibold text-black" htmlFor="name">
+									Nome
+								</label>
+								<input
+									required
+									className="p-2 border border-gray-300 rounded-lg"
+									type="text"
+									name="name"
+									onChange={handleInputChange}
+									value={client?.name || ''}
+								/>
 							</div>
-							<div className="p-3 flex flex-col gap-12">
-								<div className="flex flex-col gap-1 w-fit">
-									<label
-										className="font-bold text-md"
-										htmlFor="email"
-									>
-										Email
-									</label>
-									<input
-										required
-										className="p-1 border rounded-lg"
-										type="email"
-										name="email"
-										onChange={handleInputChange}
-										value={
-											client?.email ? client.email : ''
-										}
-									/>
-								</div>
-								<div className="flex flex-col gap-1 w-fit">
-									<label
-										className="font-bold text-md"
-										htmlFor="address"
-									>
-										Endereço
-									</label>
-									<input
-										className="p-1 border rounded-lg"
-										type="text"
-										name="address"
-										onChange={handleInputChange}
-										value={
-											client?.address
-												? client.address
-												: ''
-										}
-									/>
-								</div>
-								<div className="flex flex-col gap-1 w-fit">
-									<label
-										className="font-bold text-md"
-										htmlFor="neighborhood"
-									>
-										Bairro
-									</label>
-									<input
-										className="p-1 border rounded-lg"
-										type="text"
-										name="neighborhood"
-										onChange={handleInputChange}
-										value={
-											client?.neighborhood
-												? client.neighborhood
-												: ''
-										}
-									/>
-								</div>
+							<div className="flex flex-col gap-1">
+								<label className="font-semibold text-black" htmlFor="email">
+									Email
+								</label>
+								<input
+									required
+									className="p-2 border border-gray-300 rounded-lg"
+									type="email"
+									name="email"
+									onChange={handleInputChange}
+									value={client?.email || ''}
+								/>
+							</div>
+							<div className="flex flex-col gap-1">
+								<label className="font-semibold" htmlFor="document">
+									Documento
+								</label>
+								<input
+									required
+									className="p-2 border border-gray-300 rounded-lg"
+									type="text"
+									name="document"
+									onChange={handleInputChange}
+									value={client?.document || ''}
+								/>
+							</div>
+							<div className="flex flex-col gap-1">
+								<label className="font-semibold" htmlFor="address">
+									Endereço
+								</label>
+								<input
+									className="p-2 border border-gray-300 rounded-lg"
+									type="text"
+									name="address"
+									onChange={handleInputChange}
+									value={client?.address || ''}
+								/>
+							</div>
+							<div className="flex flex-col gap-1">
+								<label className="font-semibold" htmlFor="neighborhood">
+									Bairro
+								</label>
+								<input
+									className="p-2 border border-gray-300 rounded-lg"
+									type="text"
+									name="neighborhood"
+									onChange={handleInputChange}
+									value={client?.neighborhood || ''}
+								/>
+							</div>
+							<div className="flex flex-col gap-1">
+								<label className="font-semibold" htmlFor="city">
+									Cidade
+								</label>
+								<input
+									className="p-2 border border-gray-300 rounded-lg"
+									type="text"
+									name="city"
+									onChange={handleInputChange}
+									value={client?.city || ''}
+								/>
+							</div>
+							<div className="flex flex-col gap-1">
+								<label className="font-semibold" htmlFor="number">
+									Telefone
+								</label>
+								<input
+									className="p-2 border border-gray-300 rounded-lg"
+									type="text"
+									name="number"
+									onChange={handleInputChange}
+									value={client?.number || ''}
+								/>
 							</div>
 						</form>
+					</div>
+
+					<div className="flex justify-center mt-6">
 						<button
 							form="create-client-form"
-							className="self-center bg-primary p-2 w-60 h-11 rounded-lg text-white font-bold"
+							className="w-full max-w-sm bg-blue-500 text-white py-2 rounded-lg font-semibold hover:bg-blue-600 transition"
 							type="submit"
 						>
 							Enviar

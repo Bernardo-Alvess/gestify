@@ -3,7 +3,7 @@ import SearchBox from '../../components/search-box';
 import Sidebar from '../../components/sidebar';
 import Table from '../../components/table';
 import TopNav from '../../components/top-nav';
-import IconProductBlack from '../../public/assets/home-page/icons/products/products_icon_b.svg';
+import IconUserBlack from '../../public/assets/home-page/icons/users/user_icon_b.svg';
 import { getUsers } from '../../http/get-users';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
@@ -56,8 +56,8 @@ export const Users = () => {
 				<div className="grid grid-cols-12 max-h-[80%] overflow-y-scroll">
 					<div className="col-span-12">
 						<Table
-							icon={IconProductBlack}
-							title="Produtos em estoque"
+							icon={IconUserBlack}
+							title="Usuários"
 							columns={columns}
 							data={users}
 							actions={{

@@ -3,7 +3,7 @@ import { Home } from '../pages/Home';
 import { SignUp } from '../pages/SignUp';
 import { ProtectedRoute } from '../components/protected-route';
 import { Login } from '../pages/Login';
-import { Products } from '../pages/Products';
+import { Products } from '../pages/Products/Products';
 import { Users } from '../pages/Users/Users';
 import { ServiceOrders } from '../pages/OS/ServiceOrders';
 import { ViewClient } from '../pages/Clients/ViewClient';
@@ -16,6 +16,8 @@ import { CreateOS } from '../pages/OS/CreateOS';
 import { Clients } from '../pages/Clients/Clients';
 import { EditOs } from '../pages/OS/EditOs';
 import { CreateUser } from '../pages/Users/CreateUser';
+import { CreateProduct } from '../pages/Products/CreateProduct';
+import { ViewProduct } from '../pages/Products/ViewProduct';
 
 const router = createBrowserRouter([
 	{
@@ -89,7 +91,15 @@ const router = createBrowserRouter([
 	{
 		path: '/editos/:id',
 		element: <ProtectedRoute children={<EditOs/>}/>
-	}
+	},
+	{
+		path: 'create-product',
+		element: <ProtectedRoute children={<CreateProduct />} />,
+	},
+	{
+		path: 'view-product/:id',
+		element: <ProtectedRoute children={<ViewProduct />} />,
+	},
 ]);
 
 export { router };
