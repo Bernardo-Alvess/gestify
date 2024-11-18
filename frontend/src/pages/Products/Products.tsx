@@ -63,6 +63,7 @@ export const Products = () => {
 								action: add,
 								deleteAction: () => {},
 							}}
+							viewPage="/view-product"
 						/>
 					</div>
 				</div>

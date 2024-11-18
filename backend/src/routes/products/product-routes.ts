@@ -22,6 +22,13 @@ productRouter.get('/', auth, (req, res, next) => {
     productController.getProducts(req, res, next)
 })
 
+productRouter.get('/:id', auth, (req, res, next) => {
+    const idSchema = z.string().uuid();
+    idSchema.parse(req.params.id);
+    productController.getProduct(req, res, next);
+});
+
+
 productRouter.put('/', adminMiddleware, (req, res, next) => {
     productController.updateProduct(req, res, next)
 })
