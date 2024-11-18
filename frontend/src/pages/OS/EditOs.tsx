@@ -14,6 +14,9 @@ import { updateServiceOrder } from '../../http/update-service-order';
 import AddProductModal from '../../components/add-product-modal';
 import SuccessModal from '../../components/sucess-modal';
 import { getProductsForSo } from '../../http/get-products-for-so';
+import { assign } from '../../data/products-so';
+import EditProductModal from '../../components/edit-product-modal';
+import { relationId } from '../../data/relation-id';
 // import { productSo } from '../../data/products-so';
 
 interface IUser {
@@ -52,6 +55,7 @@ export const EditOs: React.FC = () => {
 	const [technicians, setTechnicians] = useState<IUser[]>([]);
 	const [cookies] = useCookies(['jwt', 'id']);
 	const [toggleModal, setToggleModal] = useState(false);
+	const [toggleEditModal, setToggleEditModal] = useState(false);
 	const [successModal, setSuccessModal] = useState(false);
 	const [products, setProducts] = useState([{}]);
 
@@ -66,7 +70,16 @@ export const EditOs: React.FC = () => {
 		date: today,
 	});
 
-	const columns = ['Código', 'Nome', 'Preço', 'Custo', 'Tipo UN'];
+	const columns = [
+		'Código',
+		'Nome',
+		'Preço',
+		'Custo',
+		'Tipo UN',
+		'QTD',
+		'Id Relação',
+		'Valor Total',
+	];
 	// const data_table_2 = Array(20).fill(['1', 'Placa Mãe', '2', 'Asus']);
 
 	const handleChange = (
@@ -110,7 +123,10 @@ export const EditOs: React.FC = () => {
 	const fetchProductsForOs = useCallback(async () => {
 		const { productsForOs } = await getProductsForSo(cookies.jwt, id);
 
-		if (productsForOs != undefined) setProducts(productsForOs);
+		if (productsForOs != undefined) {
+			setProducts(productsForOs);
+			assign(productsForOs);
+		}
 	}, []);
 
 	const fetchServiceOrder = useCallback(async () => {
@@ -231,8 +247,17 @@ export const EditOs: React.FC = () => {
 		toast.error('Erro ao editar Ordem de Serviço');
 	};
 
+	console.log(products);
 	return (
 		<div className="flex h-screen overflow-hidden">
+			<EditProductModal
+				serviceOrderId={id}
+				relationId={relationId}
+				toggle={toggleEditModal}
+				onClose={() => {
+					setToggleEditModal(!toggleEditModal);
+				}}
+			></EditProductModal>
 			<SuccessModal
 				toggle={successModal}
 				onClose={() => {
@@ -371,6 +396,9 @@ export const EditOs: React.FC = () => {
 									actionButtonText: 'Adicionar Produto',
 									action: () => {
 										setToggleModal(!toggleModal);
+									},
+									editAction: () => {
+										setToggleEditModal(!toggleEditModal);
 									},
 									deleteAction: () => {},
 								}}

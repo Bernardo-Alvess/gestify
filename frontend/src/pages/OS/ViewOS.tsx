@@ -42,9 +42,10 @@ export const ViewOS: React.FC = () => {
 		'Código',
 		'Nome',
 		'Preço',
-		'Quantidade',
 		'Custo',
 		'Tipo UN',
+		'QTD',
+		'Id Relação',
 		'Valor Total',
 	];
 	// const data_table_2 = Array(20).fill(['123', 'Placa Mãe', '2', 'Asus']);
