@@ -49,7 +49,7 @@ export const ServiceOrders = () => {
 						<h1 className="text-2xl font-bold">Ordens</h1>
 						<p className="text-sm text-gray-500">{today}</p>
 					</div>
-					<SearchBox />
+					<SearchBox  onSearch={() => {}} placeholder="Pesquisar..." />
 					<TopNav />
 				</header>
 				<div className="grid grid-cols-12 overflow-y-scroll max-h-[500px] lg:max-h-[550px] xl:max-h-[700px]">

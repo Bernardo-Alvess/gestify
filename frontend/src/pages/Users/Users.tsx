@@ -9,69 +9,83 @@ import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 
 export const Users = () => {
-	const navigate = useNavigate();
-	const [users, setUsers] = useState([{}]);
-	const [cookies] = useCookies();
-	const today = new Date().toLocaleDateString('pt-BR');
-	const columns = [
-		'Id',
-		'Email',
-		'Nome',
-		'CPF/CNPJ',
-		'Endereço',
-		'Cidade',
-		'Bairro',
-		'Número',
-		'Tipo',
-		'Data de registro',
-	];
+  const navigate = useNavigate();
+  const [users, setUsers] = useState([]); // Lista completa de usuários
+  const [filteredUsers, setFilteredUsers] = useState([]); // Lista filtrada
+  const [searchQuery, setSearchQuery] = useState(''); // Termo de pesquisa
+  const [cookies] = useCookies();
+  const today = new Date().toLocaleDateString('pt-BR');
 
-	const add = () => {
-		navigate('/create-user');
-	};
+  const columns = [
+    'Id',
+    'Email',
+    'Nome',
+    'CPF/CNPJ',
+    'Endereço',
+    'Cidade',
+    'Bairro',
+    'Número',
+    'Tipo',
+    'Data de registro',
+  ];
 
-	const fetchUsers = useCallback(async () => {
-		const data = await getUsers(cookies.jwt, undefined, 'CLIENT');
-		if (data !== users) {
-			setUsers(data);
-		}
-	}, []);
+  const add = () => {
+    navigate('/create-user');
+  };
 
-	useEffect(() => {
-		fetchUsers();
-	}, [fetchUsers]);
+  const fetchUsers = useCallback(async () => {
+    const data = await getUsers(cookies.jwt, undefined, 'CLIENT');
+    setUsers(data);
+    setFilteredUsers(data); // Inicializa a lista filtrada com todos os usuários
+  }, [cookies.jwt]);
 
-	return (
-		<div className="flex h-screen overflow-hidden">
-			<Sidebar />
-			<main className="flex-1 p-10 bg-blue-200 space-y-10 h-screen">
-				<header className="flex justify-between">
-					<div className="pt-16 md:pt-16 lg:pt-0">
-						<h1 className="text-2xl font-bold">Dashboard</h1>
-						<p className="text-sm text-gray-500">{today}</p>
-					</div>
-					<SearchBox></SearchBox>
-					<TopNav />
-				</header>
-				<div className="grid grid-cols-12 max-h-[80%] overflow-y-scroll">
-					<div className="col-span-12">
-						<Table
-							icon={IconUserBlack}
-							title="Usuários"
-							columns={columns}
-							data={users}
-							actions={{
-								showActions: true,
-								actionButtonText: 'Adicionar Usuário',
-								action: add,
-								deleteAction: () => {},
-							}}
-							viewPage="/view-user"
-							editPage="/edit-user"
-						/>
-					</div>
-				</div>
-			</main>
-		</div>
-	);
+  useEffect(() => {
+    fetchUsers();
+  }, [fetchUsers]);
+
+  // Atualiza a lista filtrada ao alterar o termo de pesquisa
+  useEffect(() => {
+    const lowerCaseQuery = searchQuery.toLowerCase();
+    const filtered = users.filter((user: any) =>
+      user.name?.toLowerCase().includes(lowerCaseQuery) // Filtra apenas pelo nome
+    );
+    setFilteredUsers(filtered);
+  }, [searchQuery, users]);
+
+  return (
+    <div className="flex h-screen overflow-hidden">
+      <Sidebar />
+      <main className="flex-1 p-10 bg-blue-200 space-y-10 h-screen">
+        <header className="flex justify-between">
+          <div className="pt-16 md:pt-16 lg:pt-0">
+            <h1 className="text-2xl font-bold">Usuários</h1>
+            <p className="text-sm text-gray-500">{today}</p>
+          </div>
+          <SearchBox
+            onSearch={(query) => setSearchQuery(query)} // Atualiza o termo de pesquisa
+            placeholder="Pesquisar usuário"
+          />
+          <TopNav />
+        </header>
+        <div className="grid grid-cols-12 max-h-[80%] overflow-y-scroll">
+          <div className="col-span-12">
+            <Table
+              icon={IconUserBlack}
+              title="Usuários"
+              columns={columns}
+              data={filteredUsers} // Passa a lista filtrada
+              actions={{
+                showActions: true,
+                actionButtonText: 'Adicionar Usuário',
+                action: add,
+                deleteAction: () => {},
+              }}
+              viewPage="/view-user"
+              editPage="/edit-user"
+            />
+          </div>
+        </div>
+      </main>
+    </div>
+  );
 };
