@@ -5,8 +5,10 @@ import TopNav from '../../components/top-nav';
 import Sidebar from '../../components/sidebar';
 import { createProduct, ICreateProduct } from '../../http/create-product';
 import { toast } from 'sonner';
+import {useNavigate } from 'react-router-dom';
 
 const CreateProduct = () => {
+    const navigate = useNavigate();
     const [cookies] = useCookies();
     const today = new Date().toLocaleDateString('pt-BR');
 
@@ -31,6 +33,7 @@ const CreateProduct = () => {
         }
     
         toast.success('Produto adicionado');
+        navigate('/products');
     };
     
 
