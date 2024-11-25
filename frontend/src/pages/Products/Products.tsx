@@ -59,7 +59,7 @@ export const Products = () => {
             <main className="flex-1 p-5 bg-blue-200 space-y-10 h-screen">
                 <header className="flex justify-between">
                     <div className="pt-16 md:pt-16 lg:pt-0">
-                        <h1 className="text-2xl font-bold">Dashboard</h1>
+                        <h1 className="text-2xl font-bold">Produtos</h1>
                         <p className="text-sm text-gray-500">{today}</p>
                     </div>
                     <SearchBox placeholder="Pesquisar nome do produto" onSearch={handleSearch} />
