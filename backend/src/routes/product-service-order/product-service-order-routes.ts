@@ -6,6 +6,18 @@ import { auth } from "../../middleware/auth";
 
 const productServiceOrderRouter = Router();
 
+productServiceOrderRouter.get('/unique/:id', auth, (req, res, next) => {
+    productServiceOrderController.getUniqueById(req, res, next)
+})
+
+productServiceOrderRouter.get('/:id', auth, (req, res, next) => {
+    productServiceOrderController.getProductServiceOrder(req, res, next)
+})
+
+productServiceOrderRouter.get('/', auth, (req, res, next) => {
+    productServiceOrderController.getProductServiceOrders(req, res, next)
+})
+
 productServiceOrderRouter.delete('/:id', auth, (req, res, next) => {
     const idSchema = z.string().uuid()
     idSchema.parse(req.params.id)
@@ -17,14 +29,6 @@ productServiceOrderRouter.post('/', auth, (req, res, next) => {
     console.log(req.body)
     createProductServiceOrderSchema.parse(req.body)
     productServiceOrderController.createProductServiceOrder(req, res, next)
-})
-
-productServiceOrderRouter.get('/', auth, (req, res, next) => {
-    productServiceOrderController.getProductServiceOrders(req, res, next)
-})
-
-productServiceOrderRouter.get('/:id', auth, (req, res, next) => {
-    productServiceOrderController.getProductServiceOrder(req, res, next)
 })
 
 productServiceOrderRouter.put('/:id', auth, (req, res, next) => {

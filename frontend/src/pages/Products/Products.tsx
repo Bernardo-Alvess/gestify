@@ -75,6 +75,7 @@ export const Products = () => {
 								action: add,
 								deleteAction: deleteProductAction,
 							}}
+							viewPage="/view-product"
 						/>
 					</div>
 				</div>
