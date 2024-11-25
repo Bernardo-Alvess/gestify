@@ -11,7 +11,6 @@ import Sidebar from '../components/sidebar';
 import TopNav from '../components/top-nav';
 import Table from '../components/table';
 import Reminder from '../components/reminder';
-import SearchBox from '../components/search-box';
 import { getStats } from '../http/get-stats';
 import { useCookies } from 'react-cookie';
 
@@ -35,16 +34,39 @@ export const Home = () => {
 	const column_table_1 = ['Código', 'Nome', 'Quantidade', 'Marca'];
 	const column_table_2 = ['Código', 'Data de entrega', 'Cliente', 'Produto'];
 
-	const data_table_1 = [
-		['123', 'Placa Mãe', '2', 'Asus'],
-		['123', 'Placa Mãe', '2', 'Asus'],
-		['123', 'Placa Mãe', '2', 'Asus'],
-		['123', 'Placa Mãe', '2', 'Asus'],
-	];
+
 	const data_table_2 = [
 		['123', '23/09/2024', 'Lorenzo Cardoso', 'SSD'],
 		['123', '23/09/2024', 'Lorenzo Cardoso', 'SSD'],
 		['123', '23/09/2024', 'Lorenzo Cardoso', 'SSD'],
+	];
+
+	const produtosEstoque = [
+		{
+			codigo: 'P001',
+			nome: 'Caneta Esferográfica',
+			quantidade: 5,
+			marca: 'Bic',
+		},
+		{
+			codigo: 'P002',
+			nome: 'Caderno 100 folhas',
+			quantidade: 3,
+			marca: 'Tilibra',
+		},
+		{
+			codigo: 'P003',
+			nome: 'Borracha Escolar',
+			quantidade: 2,
+			marca: 'Faber-Castell',
+		},
+		{ codigo: 'P004', nome: 'Lápis HB', quantidade: 4, marca: 'Staedtler' },
+		{
+			codigo: 'P005',
+			nome: 'Marcador de Texto',
+			quantidade: 1,
+			marca: 'Stabilo',
+		},
 	];
 
 	const addReminder = (reminder: Reminder) => {
@@ -81,7 +103,6 @@ export const Home = () => {
 						<h1 className="text-2xl font-bold">Dashboard</h1>
 						<p className="text-sm text-gray-500">{today}</p>
 					</div>
-					<SearchBox />
 					<TopNav />
 				</header>
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -121,7 +142,7 @@ export const Home = () => {
 							icon={IconProductsBlack}
 							title="Produtos acabando no estoque"
 							columns={column_table_1}
-							data={statistics.lowStockProducts}
+							data={produtosEstoque}
 						/>
 					</div>
 					<div className="col-span-5">

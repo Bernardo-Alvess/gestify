@@ -19,12 +19,14 @@ interface IFormValues {
 	extras: string;
 	date: string;
 }
+
 export const ViewOS: React.FC = () => {
 	const { id } = useParams();
 	const today = new Date().toLocaleDateString('pt-BR');
 	const [selectedOption, setSelectedOption] = useState<string>('');
 	const [products, setProducts] = useState([{}]);
 	const [cookies] = useCookies(['jwt', 'id']);
+	const [totalValue, setTotalValue] = useState(0);
 
 	const [formValues, setFormValues] = useState<IFormValues>({
 		client: '',
@@ -41,9 +43,10 @@ export const ViewOS: React.FC = () => {
 		'Código',
 		'Nome',
 		'Preço',
-		'Quantidade',
 		'Custo',
 		'Tipo UN',
+		'QTD',
+		'Id Relação',
 		'Valor Total',
 	];
 
@@ -65,7 +68,14 @@ export const ViewOS: React.FC = () => {
 	const fetchProductsForOs = useCallback(async () => {
 		const { productsForOs } = await getProductsForSo(cookies.jwt, id);
 
-		if (productsForOs != undefined) setProducts(productsForOs);
+		if (productsForOs !== undefined) {
+			setProducts(productsForOs);
+			const total = productsForOs.reduce(
+				(sum: any, product: any) => sum + (product.totalValue || 0),
+				0
+			);
+			setTotalValue(total); 
+		}
 	}, []);
 
 	useEffect(() => {
@@ -175,6 +185,10 @@ export const ViewOS: React.FC = () => {
 									)}
 								</div>
 							))}
+							<div className='pt-5'>
+								<span className='font-semibold'>Valor Total:</span>
+								<span> R${totalValue}</span>
+							</div>
 						</div>
 						<div className="col-span-4 border rounded-xl shadow-lg max-h-[500px] overflow-y-auto">
 							<Table
