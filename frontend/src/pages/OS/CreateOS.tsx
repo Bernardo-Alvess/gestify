@@ -1,4 +1,3 @@
-import SearchBox from '../../components/search-box';
 import Sidebar from '../../components/sidebar';
 import TopNav from '../../components/top-nav';
 import IconProductsBlack from '../../public/assets/home-page/icons/products/products_icon_b.svg';
@@ -59,7 +58,6 @@ export const CreateOS: React.FC = () => {
 		'Custo',
 		'Valor Total',
 	];
-	//const data_table_2 = Array(20).fill(['123', 'Placa Mãe', '2', 'Asus']);
 
 	const handleChange = (
 		e: ChangeEvent<
@@ -181,7 +179,6 @@ export const CreateOS: React.FC = () => {
 						</h1>
 						<p className="text-sm text-gray-500">{today}</p>
 					</div>
-					<SearchBox />
 					<TopNav />
 				</header>
 
@@ -315,7 +312,7 @@ export const CreateOS: React.FC = () => {
 									action: () => {
 										setAddProductModal(true);
 									},
-									deleteAction: () => {},
+									deleteAction: () => { },
 								}}
 							/>
 						</div>

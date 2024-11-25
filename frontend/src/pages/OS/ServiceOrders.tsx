@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import SearchBox from '../../components/search-box';
 import Sidebar from '../../components/sidebar';
-
 import Table from '../../components/table';
 import TopNav from '../../components/top-nav';
 import { getServiceOrders } from '../../http/get-service-orders';
@@ -10,10 +9,13 @@ import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 
 export const ServiceOrders = () => {
-	const [orders, setOrders] = useState([{}]);
+	const [orders, setOrders] = useState([]);
+	const [filteredOrders, setFilteredOrders] = useState([]); 
+	const [searchQuery, setSearchQuery] = useState('');
 	const navigate = useNavigate();
 	const [cookies] = useCookies();
 	const today = new Date().toLocaleDateString('pt-BR');
+
 	const columns = [
 		'Id',
 		'Descrição',
@@ -33,8 +35,22 @@ export const ServiceOrders = () => {
 
 	const fetchServiceOrders = useCallback(async () => {
 		const data = await getServiceOrders(cookies.jwt);
-		if (data !== orders) setOrders(data);
-	}, []);
+		setOrders(data);
+		setFilteredOrders(data);
+	}, [cookies.jwt]);
+
+	useEffect(() => {
+		const lowerCaseQuery = searchQuery.toLowerCase();
+		const filtered = orders.filter((order: any) => {
+			const technician = order.technicianId;
+			const client = order.clientId;
+			return (
+				technician.toLowerCase().includes(lowerCaseQuery) ||
+				client.toLowerCase().includes(lowerCaseQuery)
+			);
+		});
+		setFilteredOrders(filtered);
+	}, [searchQuery, orders]);
 
 	useEffect(() => {
 		fetchServiceOrders();
@@ -49,7 +65,10 @@ export const ServiceOrders = () => {
 						<h1 className="text-2xl font-bold">Ordens</h1>
 						<p className="text-sm text-gray-500">{today}</p>
 					</div>
-					<SearchBox  onSearch={() => {}} placeholder="Pesquisar..." />
+					<SearchBox
+						onSearch={(query) => setSearchQuery(query)}
+						placeholder="Pesquisar por técnico ou cliente"
+					/>
 					<TopNav />
 				</header>
 				<div className="grid grid-cols-12 overflow-y-scroll max-h-[500px] lg:max-h-[550px] xl:max-h-[700px]">
@@ -58,12 +77,12 @@ export const ServiceOrders = () => {
 							icon={IconOrdersBlack}
 							title="Ordens de Serviço"
 							columns={columns}
-							data={orders}
+							data={filteredOrders}
 							actions={{
 								showActions: true,
 								actionButtonText: 'Adicionar Ordem',
 								action: add,
-								deleteAction: () => {},
+								deleteAction: () => { },
 							}}
 							viewPage="/viewos"
 							editPage="/editos"

@@ -1,4 +1,3 @@
-import SearchBox from '../../components/search-box';
 import Sidebar from '../../components/sidebar';
 import TopNav from '../../components/top-nav';
 import IconProductsBlack from '../../public/assets/home-page/icons/products/products_icon_b.svg';
@@ -47,7 +46,6 @@ export const ViewOS: React.FC = () => {
 		'Tipo UN',
 		'Valor Total',
 	];
-	// const data_table_2 = Array(20).fill(['123', 'Placa Mãe', '2', 'Asus']);
 
 	const fetchServiceOrder = useCallback(async () => {
 		const data = await getServiceOrdersById(cookies.jwt, id);
@@ -103,7 +101,6 @@ export const ViewOS: React.FC = () => {
 						</h1>
 						<p className="text-sm text-gray-500">{today}</p>
 					</div>
-					<SearchBox />
 					<TopNav />
 				</header>
 
@@ -193,7 +190,7 @@ export const ViewOS: React.FC = () => {
 									action: () => {
 										alert('teste');
 									},
-									deleteAction: () => {},
+									deleteAction: () => { },
 								}}
 							/>
 						</div>
