@@ -40,9 +40,13 @@ export class UserController {
         try {
             const { id } = req.params
 
-            const user = await this.repository.deleteUser(id)
+            const result = await this.repository.deleteUser(id)
 
-            res.status(200).json({ user })
+            if(result){
+                res.json({message:"Usuário deletado com sucesso!"})
+            }else{
+                res.json({message:"Não foi possivel deletar o usuario!"})
+            }
         } catch (e) {
             next(e)
         }

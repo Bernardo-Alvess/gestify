@@ -7,6 +7,6 @@ export interface IServiceOrderRepository {
     getServiceOrder(id: string): Promise<IGetServiceOrderDto | undefined>;
     getServiceOrders(companyId: string): Promise<IGetServiceOrderDto[]>;
     updateServiceOrder(id: string, data: IUpdateServiceOrderDto): Promise<void>;
-    deleteServiceOrder(id: string): Promise<void>;
+    deleteServiceOrder(id: string): Promise<boolean>;
     getSoCount(companyId: string): Promise<Number>
 }

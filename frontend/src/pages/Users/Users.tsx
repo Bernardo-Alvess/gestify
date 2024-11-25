@@ -7,6 +7,8 @@ import IconUserBlack from '../../public/assets/home-page/icons/users/user_icon_b
 import { getUsers } from '../../http/get-users';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
+import { deleteClient } from '../../http/delete-client';
 
 export const Users = () => {
 	const navigate = useNavigate();
@@ -41,6 +43,16 @@ export const Users = () => {
 		fetchUsers();
 	}, [fetchUsers]);
 
+	const deleteUserAction = async (id: string) => {
+		const result = await deleteClient(cookies.jwt, id);
+		if(result.error){
+			toast.error(`Erro: ${result.error ? result.error.message || result.error : "Erro desconhecido"}`);
+		}else{
+			toast.success(`Sucesso: ${result.message}`);
+			fetchUsers();
+		}
+	}
+
 	return (
 		<div className="flex h-screen overflow-hidden">
 			<Sidebar />
@@ -64,7 +76,7 @@ export const Users = () => {
 								showActions: true,
 								actionButtonText: 'Adicionar Usuário',
 								action: add,
-								deleteAction: () => {},
+								deleteAction: deleteUserAction,
 							}}
 							viewPage="/view-user"
 							editPage="/edit-user"

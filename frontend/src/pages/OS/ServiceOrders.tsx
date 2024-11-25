@@ -8,6 +8,8 @@ import { getServiceOrders } from '../../http/get-service-orders';
 import IconOrdersBlack from '../../public/assets/home-page/icons/orders/orders_icon_b.svg';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
+import { deleteSo } from '../../http/delete-so';
+import { toast } from 'sonner';
 
 export const ServiceOrders = () => {
 	const [orders, setOrders] = useState([{}]);
@@ -40,6 +42,16 @@ export const ServiceOrders = () => {
 		fetchServiceOrders();
 	}, [fetchServiceOrders]);
 
+	const deleteOsAction = async(id: string) => {
+		const result = await deleteSo(cookies.jwt, id);
+		if(result.error){
+			toast.error(`Erro: ${result.error ? result.error.message || result.error : "Erro desconhecido"}`);
+		}else{
+			toast.success(`Sucesso: ${result.message}`);
+			fetchServiceOrders();
+		}
+		
+	}
 	return (
 		<div className="flex h-screen overflow-hidden">
 			<Sidebar />
@@ -63,7 +75,7 @@ export const ServiceOrders = () => {
 								showActions: true,
 								actionButtonText: 'Adicionar Ordem',
 								action: add,
-								deleteAction: () => {},
+								deleteAction: deleteOsAction,
 							}}
 							viewPage="/viewos"
 							editPage="/editos"
