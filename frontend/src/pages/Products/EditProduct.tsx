@@ -69,8 +69,8 @@ const EditProduct = () => {
     
         const result = await updateProduct(cookies.jwt, id, product);
     
-        if (result.error) {
-            toast.error(`Erro ao atualizar o produto: ${result.error}`);
+        if (result == false) {
+            toast.error(`Erro ao atualizar o produto`);
         } else {
             toast.success('Produto atualizado com sucesso!');
             navigate('/products');
