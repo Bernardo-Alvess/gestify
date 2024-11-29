@@ -18,7 +18,7 @@ productServiceOrderRouter.get('/', auth, (req, res, next) => {
     productServiceOrderController.getProductServiceOrders(req, res, next)
 })
 
-productServiceOrderRouter.delete('/:id', auth, (req, res, next) => {
+productServiceOrderRouter.delete('/:id/:serviceOrderId', auth, (req, res, next) => {
     const idSchema = z.string().uuid()
     idSchema.parse(req.params.id)
     productServiceOrderController.deleteProductServiceOrder(req, res, next);

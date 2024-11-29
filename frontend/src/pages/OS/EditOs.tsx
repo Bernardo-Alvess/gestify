@@ -248,10 +248,10 @@ export const EditOs: React.FC = () => {
 		toast.error('Erro ao editar Ordem de Serviço');
 	};
 
-	const handleDeleteAction = async (id: string) => {
+	const handleDeleteAction = async (productId: string) => {
 		console.log('allloowwww');
 		try {
-			const deleted = await deleteProductSo(cookies.jwt, id);
+			const deleted = await deleteProductSo(cookies.jwt, productId, id);
 			if (deleted) {
 				toast.success('Item deletado da ordem de serviço');
 				return;

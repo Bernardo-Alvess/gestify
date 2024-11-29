@@ -34,8 +34,8 @@ class ProductServiceOrderController {
 
       async deleteProductServiceOrder(req: Request, res: Response, next: NextFunction) {
         try {
-          const { id } = req.params;
-          await this.repository.deleteProductServiceOrder(id);
+          const { id, serviceOrderId } = req.params;
+          await this.repository.deleteProductServiceOrder(id, serviceOrderId);
           res.json({ message: 'Deleted successfully' });
         } catch (e) {
           next(e);

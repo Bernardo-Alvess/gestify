@@ -75,10 +75,20 @@ export class ProductServiceOrderRepository implements IProductServiceOrderReposi
     });
   }
 
-  async deleteProductServiceOrder(id: string): Promise<void> {
-    await prisma.productServiceOrder.delete({
-      where: { id },
+  async deleteProductServiceOrder(productId: string, serviceOrderId: string): Promise<void> {
+    try {
+      await prisma.productServiceOrder.delete({
+        where: {
+          productId_serviceOrderId: {
+            productId,
+            serviceOrderId
+          }
+        }
     });
+    } catch (error) {
+      console.log(error)
+    }
+
   }
 
 }
