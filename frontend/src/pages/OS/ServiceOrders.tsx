@@ -10,10 +10,11 @@ import { useNavigate } from 'react-router-dom';
 import { deleteSo } from '../../http/delete-so';
 import { toast } from 'sonner';
 
+
 export const ServiceOrders = () => {
 	const [orders, setOrders] = useState([]);
 	const [filteredOrders, setFilteredOrders] = useState([]); 
-	const [searchQuery, setSearchQuery] = useState('');
+	const [searchQuery, setSearchQuery] = useState("");
 	const navigate = useNavigate();
 	const [cookies] = useCookies();
 	const today = new Date().toLocaleDateString('pt-BR');
@@ -44,8 +45,8 @@ export const ServiceOrders = () => {
 	useEffect(() => {
 		const lowerCaseQuery = searchQuery.toLowerCase();
 		const filtered = orders.filter((order: any) => {
-			const technician = order.technicianId;
-			const client = order.clientId;
+			const technician = order.technicianId || "";
+			const client = order.clientId || "";
 			return (
 				technician.toLowerCase().includes(lowerCaseQuery) ||
 				client.toLowerCase().includes(lowerCaseQuery)
