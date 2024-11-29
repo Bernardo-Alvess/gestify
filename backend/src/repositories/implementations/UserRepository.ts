@@ -154,6 +154,9 @@ export class UserRepository implements IUserRepository {
                     password: user.password,
                     document: user.document,
                     number: user.number,
+                    neighborhood: user.neighborhood, 
+                    city: user.city, 
+                    address: user.address,
                     userType: user.userType,
                     companyId: user.companyId
                 }

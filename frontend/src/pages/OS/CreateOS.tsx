@@ -151,13 +151,15 @@ export const CreateOS: React.FC = () => {
 				});
 			});
 			cleanProductSo();
-			toast.success('Produtos adicionados a ordem');
+			toast.success('Ordem de serviço criada!');
 			setSuccessModal(true);
 			return;
+		}else if(selectedOption == ""){
+			toast.error('Selecione um status');
+		}else{
+			toast.error('Erro ao criar Ordem de Serviço');
 		}
-
-		toast.error('Erro ao criar Ordem de Serviço');
-	};
+		}
 
 	return (
 		<div className="flex h-screen overflow-hidden">
