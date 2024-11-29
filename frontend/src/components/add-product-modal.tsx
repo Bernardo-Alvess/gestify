@@ -5,6 +5,7 @@ import { toast } from 'sonner';
 import { addProductToSo, productSo } from '../data/products-so';
 import { useParams } from 'react-router-dom';
 import { getProductsForSo } from '../http/get-products-for-so';
+import { createProductSo } from '../http/create-product-service-order';
 
 interface AddProductModalProps {
 	toggle: boolean;
@@ -33,7 +34,7 @@ const AddProductModal = ({ toggle, onClose }: AddProductModalProps) => {
 	if (!toggle) return null;
 
 	const [cookies] = useCookies(['jwt']);
-	const { serviceOrderId } = useParams();
+	const { id } = useParams();
 	const [data, setData] = useState<Product[] | undefined>(undefined);
 	const [productsForOs, setProductsForOs] = useState([]);
 	const [formValues, setFormValues] = useState<IFormValues>({
@@ -82,10 +83,7 @@ const AddProductModal = ({ toggle, onClose }: AddProductModalProps) => {
 	}, []);
 
 	const fetchProductsForOs = useCallback(async () => {
-		const { productsForOs } = await getProductsForSo(
-			cookies.jwt,
-			serviceOrderId
-		);
+		const { productsForOs } = await getProductsForSo(cookies.jwt, id);
 
 		if (productsForOs != undefined) {
 			setProductsForOs(productsForOs);
@@ -108,8 +106,17 @@ const AddProductModal = ({ toggle, onClose }: AddProductModalProps) => {
 			totalCost: formValues.price! * formValues.quantity!,
 		});
 
-		console.log(productSo);
+		console.log({
+			id,
+			productId: formValues.id,
+			qtd: formValues.quantity,
+		});
 
+		createProductSo(cookies.jwt, {
+			serviceOrderId: id,
+			productId: formValues.id,
+			qtd: formValues.quantity,
+		});
 		toast.success('Produto adicionado a ordem de Serviço');
 	};
 
