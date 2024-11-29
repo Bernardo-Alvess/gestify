@@ -6,10 +6,9 @@ import { BackPageButton } from '../../components/back-page-button';
 import { useCallback, useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import Table from '../../components/table';
-import { getServiceOrdersById } from '../../http/get-service-order-by-id';
 import { useParams } from 'react-router-dom';
 import { getProductsForSo } from '../../http/get-products-for-so';
-import { productSo } from '../../data/products-so';
+import { getServiceOrdersById } from '../../http/get-service-order-by-id';
 
 interface IFormValues {
 	client: string;
@@ -74,7 +73,8 @@ export const ViewOS: React.FC = () => {
 			setProducts(productsForOs);
 			// Calcula o valor total dos produtos
 			const total = productsForOs.reduce(
-				(sum: any, product: any) => sum + (product.totalValue || 0),
+				(sum: any, product: any) =>
+					sum + (product.totalValue * product.qtd || 0),
 				0
 			);
 			setTotalValue(total); // Atualiza o estado com o valor calculado
