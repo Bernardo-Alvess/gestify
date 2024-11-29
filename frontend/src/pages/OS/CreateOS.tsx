@@ -1,4 +1,3 @@
-import SearchBox from '../../components/search-box';
 import Sidebar from '../../components/sidebar';
 import TopNav from '../../components/top-nav';
 import IconProductsBlack from '../../public/assets/home-page/icons/products/products_icon_b.svg';
@@ -59,7 +58,6 @@ export const CreateOS: React.FC = () => {
 		'Custo',
 		'Valor Total',
 	];
-	//const data_table_2 = Array(20).fill(['123', 'Placa Mãe', '2', 'Asus']);
 
 	const handleChange = (
 		e: ChangeEvent<
@@ -151,12 +149,15 @@ export const CreateOS: React.FC = () => {
 				});
 			});
 			cleanProductSo();
-			toast.success('Produtos adicionados a ordem');
+			toast.success('Ordem de serviço criada!');
 			setSuccessModal(true);
 			return;
+		}else if(selectedOption == ""){
+			toast.error('Selecione um status');
+		}else{
+			toast.error('Erro ao criar Ordem de Serviço');
 		}
-
-		toast.error('Erro ao criar Ordem de Serviço');
+		
 	};
 
 	return (
@@ -181,7 +182,6 @@ export const CreateOS: React.FC = () => {
 						</h1>
 						<p className="text-sm text-gray-500">{today}</p>
 					</div>
-					<SearchBox />
 					<TopNav />
 				</header>
 
@@ -315,7 +315,7 @@ export const CreateOS: React.FC = () => {
 									action: () => {
 										setAddProductModal(true);
 									},
-									deleteAction: () => {},
+									deleteAction: () => { },
 								}}
 							/>
 						</div>

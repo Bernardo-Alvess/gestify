@@ -30,8 +30,13 @@ class ProductController {
     async deleteProduct(req: Request, res: Response, next: NextFunction) {
         try {
             const productId = req.params.id;
-            await this.repository.deleteProduct(productId);
-            res.json({ message: "Product deleted successfully" });
+            const result = await this.repository.deleteProduct(productId);
+            if(result){
+                res.json({ message: "produto deletado com sucesso" });
+            }else{
+                res.json({ error: "Produto adicionado a uma Ordem de serviço" });
+            }
+            
         } catch (e) {
             next(e);
         }
@@ -49,7 +54,8 @@ class ProductController {
 
     async updateProduct(req: Request, res: Response, next: NextFunction) {
         try {
-            const { id, name, price, cost, unityType, minQtd, qtd } = req.body;
+            const id = req.params.id
+            const { name, price, cost, unityType, minQtd, qtd } = req.body;
             const updatedProduct = await this.repository.updateProduct(id, { name, price, cost, unityType, minQtd, qtd } as IUpdateProductDto);
             res.json({ message: "Product updated successfully", updatedProduct });
         } catch (e) {
