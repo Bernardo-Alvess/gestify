@@ -7,8 +7,8 @@ import TopNav from '../../components/top-nav';
 import { getUserById } from '../../http/get-user-by-id';
 import Table from '../../components/table';
 import Sidebar from '../../components/sidebar';
-import { fetchOrdersForTechnician } from '../../http/fetch-orders-for-technician';
 import { BackPageButton } from '../../components/back-page-button';
+import { fetchOrdersForTechnician } from '../../http/fetch-orders-for-technician';
 
 interface User {
 	id: string;
@@ -95,46 +95,52 @@ const ViewUser = () => {
 								{
 									label: 'Nome',
 									name: 'name',
-									value: user?.name
+									value: user?.name,
 								},
 								{
 									label: 'Documento',
 									name: 'document',
-									value: user?.document || 'N/A'
+									value: user?.document || 'N/A',
 								},
 								{
 									label: 'Telefone',
 									name: 'number',
-									value: user?.number || 'N/A'
+									value: user?.number || 'N/A',
 								},
 								{
 									label: 'Cidade',
 									name: 'city',
-									value: user?.city || 'N/A'
+									value: user?.city || 'N/A',
 								},
 								{
 									label: 'Bairro',
 									name: 'neighborhood',
-									value: user?.neighborhood || 'N/A'
+									value: user?.neighborhood || 'N/A',
 								},
 								{
 									label: 'Email',
 									name: 'email',
-									value: user?.email || 'N/A'
+									value: user?.email || 'N/A',
 								},
 								{
 									label: 'Data do Cadastro',
 									name: 'date',
-									value: user?.date ? new Date(user.date).toLocaleDateString('pt-BR') : 'N/A'
+									value: user?.date
+										? new Date(
+												user.date
+										  ).toLocaleDateString('pt-BR')
+										: 'N/A',
 								},
 								{
 									label: 'Endereço',
 									name: 'address',
-									value: user?.address || 'N/A'
+									value: user?.address || 'N/A',
 								},
 							].map((field, index) => (
 								<div key={index}>
-									<label className="block text-sm font-bold">{field.label}</label>
+									<label className="block text-sm font-bold">
+										{field.label}
+									</label>
 									<input
 										readOnly
 										className="w-full p-2 border border-gray-300 rounded-lg max-h-12"

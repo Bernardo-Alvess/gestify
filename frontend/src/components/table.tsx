@@ -45,7 +45,7 @@ const Table: React.FC<TableProps> = ({
 
 	const editAction = (rowData: Record<string, any>) => {
 		if (actions?.editAction) {
-			assignRelationId(rowData.companyId)
+			assignRelationId(rowData.companyId);
 			actions.editAction();
 		}
 	};
@@ -117,6 +117,7 @@ const Table: React.FC<TableProps> = ({
 									<td className="px-4 py-2 text-xs font-medium border-none flex gap-1 items-center justify-center">
 										{actions.editAction ? (
 											<button
+												type="button"
 												className="size-7"
 												onClick={() => editAction(row)}
 											>
@@ -127,6 +128,7 @@ const Table: React.FC<TableProps> = ({
 											</button>
 										) : (
 											<button
+												type="button"
 												className="size-7"
 												onClick={() => edit(row)}
 											>
@@ -138,12 +140,14 @@ const Table: React.FC<TableProps> = ({
 										)}
 
 										<button
+											type="button"
 											className="size-7"
 											onClick={() => view(row)}
 										>
 											<img src={eyeIcon} alt="View" />
 										</button>
 										<button
+											type="button"
 											className="size-7"
 											onClick={() => del(row)}
 										>

@@ -3,6 +3,7 @@
     "@types/cors": "^2.8.17"
   },
   "dependencies": {
-    "@types/jsonwebtoken": "^9.0.7"
+    "@types/jsonwebtoken": "^9.0.7",
+    "jspdf": "^2.5.2"
   }
 }
