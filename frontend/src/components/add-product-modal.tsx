@@ -2,9 +2,8 @@ import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { getProducts } from '../http/get-products';
 import { useCookies } from 'react-cookie';
 import { toast } from 'sonner';
-import { addProductToSo, productSo } from '../data/products-so';
+import { addProductToSo } from '../data/products-so';
 import { useParams } from 'react-router-dom';
-import { getProductsForSo } from '../http/get-products-for-so';
 import { createProductSo } from '../http/create-product-service-order';
 
 interface AddProductModalProps {
@@ -36,7 +35,7 @@ const AddProductModal = ({ toggle, onClose }: AddProductModalProps) => {
 	const [cookies] = useCookies(['jwt']);
 	const { id } = useParams();
 	const [data, setData] = useState<Product[] | undefined>(undefined);
-	const [productsForOs, setProductsForOs] = useState([]);
+	// const [productsForOs, setProductsForOs] = useState([]);
 	const [formValues, setFormValues] = useState<IFormValues>({
 		id: undefined,
 		product: undefined,
@@ -82,16 +81,16 @@ const AddProductModal = ({ toggle, onClose }: AddProductModalProps) => {
 		if (products != data) setData(products);
 	}, []);
 
-	const fetchProductsForOs = useCallback(async () => {
-		const { productsForOs } = await getProductsForSo(cookies.jwt, id);
+	// const fetchProductsForOs = useCallback(async () => {
+	// 	const { productsForOs } = await getProductsForSo(cookies.jwt, id);
 
-		if (productsForOs != undefined) {
-			setProductsForOs(productsForOs);
-		}
-	}, []);
+	// 	if (productsForOs != undefined) {
+	// 		setProductsForOs(productsForOs);
+	// 	}
+	// }, []);
 
 	useEffect(() => {
-		fetchProductsForOs();
+		//fetchProductsForOs();
 		fetchProducts();
 	}, [fetchProducts]);
 

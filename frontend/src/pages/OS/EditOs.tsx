@@ -8,15 +8,15 @@ import { useCookies } from 'react-cookie';
 import Table from '../../components/table';
 import { getUsers } from '../../http/get-users';
 import { toast } from 'sonner';
-import { getServiceOrdersById } from '../../http/get-service-order-by-id';
 import { useParams } from 'react-router-dom';
-import { updateServiceOrder } from '../../http/update-service-order';
 import AddProductModal from '../../components/add-product-modal';
 import SuccessModal from '../../components/sucess-modal';
 import { getProductsForSo } from '../../http/get-products-for-so';
 import { assign } from '../../data/products-so';
 import EditProductModal from '../../components/edit-product-modal';
 import { relationId } from '../../data/relation-id';
+import { getServiceOrdersById } from '../../http/get-service-order-by-id';
+import { updateServiceOrder } from '../../http/update-service-order';
 // import { productSo } from '../../data/products-so';
 
 interface IUser {
