@@ -42,10 +42,15 @@ export class ProductRepository implements IProductRepository {
     });
   }
 
-  async deleteProduct(id: string): Promise<void> {
-    await prisma.product.delete({
-      where: { id },
-    });
+  async deleteProduct(id: string): Promise<boolean> {
+    try {
+      await prisma.product.delete({
+        where: { id },
+      });
+      return true
+    } catch (e) {
+      return false;
+    }
   }
 
   async getProductCount(companyId: string): Promise<Number> {

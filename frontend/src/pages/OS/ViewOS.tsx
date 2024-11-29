@@ -1,4 +1,3 @@
-import SearchBox from '../../components/search-box';
 import Sidebar from '../../components/sidebar';
 import TopNav from '../../components/top-nav';
 import IconProductsBlack from '../../public/assets/home-page/icons/products/products_icon_b.svg';
@@ -21,6 +20,7 @@ interface IFormValues {
 	extras: string;
 	date: string;
 }
+
 export const ViewOS: React.FC = () => {
 	const { id } = useParams();
 	const today = new Date().toLocaleDateString('pt-BR');
@@ -185,7 +185,6 @@ export const ViewOS: React.FC = () => {
 						</h1>
 						<p className="text-sm text-gray-500">{today}</p>
 					</div>
-					<SearchBox />
 					<TopNav />
 				</header>
 				<BackPageButton route="/orders" />
@@ -258,7 +257,10 @@ export const ViewOS: React.FC = () => {
 									)}
 								</div>
 							))}
-							<div>Valor Total: R${totalValue}</div>
+							<div className='pt-5'>
+								<span className='font-semibold'>Valor Total:</span>
+								<span> R${totalValue}</span>
+							</div>
 						</div>
 						<div className="col-span-4 border rounded-xl shadow-lg max-h-[500px] overflow-y-auto">
 							<Table
@@ -274,7 +276,7 @@ export const ViewOS: React.FC = () => {
 									action: () => {
 										alert('teste');
 									},
-									deleteAction: () => {},
+									deleteAction: () => { },
 								}}
 							/>
 						</div>

@@ -10,6 +10,6 @@ export interface IUserRepository {
     getUserById(id: string): Promise<User | undefined>
     getUsers(companyId: string, userType?: string, except?: string): Promise<IGetUserDto[] | undefined | User>
     updateUser(id: string, user: IUpdateUserDto): Promise<void | undefined>
-    deleteUser(id: string): Promise<void>
+    deleteUser(id: string): Promise<boolean>
     getUserCount(companyId: string, userType?: string, except?: string): Promise<number>
 }

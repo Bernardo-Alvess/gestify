@@ -94,8 +94,13 @@ export class ServiceOrderController {
     async deleteServiceOrder(req: Request, res: Response, next: NextFunction) {
         try {
             const id = req.params.id
-            await this.repository.deleteServiceOrder(id)
-            res.send()
+            const result = await this.repository.deleteServiceOrder(id)
+            if(result){
+                res.json({ message: "Ordem deletada com sucesso!" });
+            }else{
+                res.json({ error: "Ordem com produtos adicionados!" });
+            }
+            
         } catch (e) {
             next(e)
         }

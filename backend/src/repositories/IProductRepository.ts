@@ -6,7 +6,7 @@ export interface IProductRepository {
   updateProduct(id: string, productData: IUpdateProductDto): Promise<Product | undefined>;
   getProducts(companyId: string): Promise<Product[]>;
   createProduct(product: Product): Promise<void>;
-  deleteProduct(id: string): Promise<void>;
+  deleteProduct(id: string): Promise<boolean>;
   getLowStockProducts(companyId: string): Promise<Product[]>
   getProductCount(companyId: string): Promise<Number>
 }

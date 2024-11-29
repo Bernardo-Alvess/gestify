@@ -31,17 +31,17 @@ export class AuthController {
                         secure: true,
                         httpOnly: false,
                         sameSite: 'none',
-                        //domain: cookieDomain
+                        domain: '.onrender.com'
                 })
                 res.cookie(
                     'id', user.id, {
                         path: '/',
                         maxAge: 3 * 24 * 60 * 60 * 1000,
-                        //secure: isProduction,
+                        //secure: true,
                         secure: true,
                         httpOnly: false,
                         sameSite: 'none',
-                        //domain: cookieDomain
+                        domain: '.onrender.com'
                 })
                 return res.json({ logged: true })
             }
