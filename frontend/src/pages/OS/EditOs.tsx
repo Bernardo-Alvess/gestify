@@ -7,15 +7,16 @@ import { useCookies } from 'react-cookie';
 import Table from '../../components/table';
 import { getUsers } from '../../http/get-users';
 import { toast } from 'sonner';
-import { getServiceOrdersById } from '../../http/get-service-order-by-id';
 import { useParams } from 'react-router-dom';
-import { updateServiceOrder } from '../../http/update-service-order';
 import AddProductModal from '../../components/add-product-modal';
 import SuccessModal from '../../components/sucess-modal';
 import { getProductsForSo } from '../../http/get-products-for-so';
 import { assign } from '../../data/products-so';
 import EditProductModal from '../../components/edit-product-modal';
 import { relationId } from '../../data/relation-id';
+import { getServiceOrdersById } from '../../http/get-service-order-by-id';
+import { updateServiceOrder } from '../../http/update-service-order';
+import { deleteProductSo } from '../../http/delete-product-so';
 // import { productSo } from '../../data/products-so';
 
 interface IUser {
@@ -246,6 +247,22 @@ export const EditOs: React.FC = () => {
 		toast.error('Erro ao editar Ordem de Serviço');
 	};
 
+	const handleDeleteAction = async (id: string) => {
+		console.log('allloowwww');
+		try {
+			const deleted = await deleteProductSo(cookies.jwt, id);
+			if (deleted) {
+				toast.success('Item deletado da ordem de serviço');
+				return;
+			}
+			toast.error(
+				'Ocorreu um erro ao deletar o item da ordem de serviço'
+			);
+		} catch (e) {
+			console.error(e);
+		}
+	};
+
 	console.log(products);
 	return (
 		<div className="flex h-screen overflow-hidden">
@@ -395,7 +412,11 @@ export const EditOs: React.FC = () => {
 									action: () => {
 										setToggleModal(!toggleModal);
 									},
-									deleteAction: () => { },
+									editAction: () => {
+										setToggleEditModal(!toggleEditModal);
+									},
+									deleteAction: (id) =>
+										handleDeleteAction(id),
 								}}
 							/>
 						</div>
