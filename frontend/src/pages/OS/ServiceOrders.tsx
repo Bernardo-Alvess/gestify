@@ -42,8 +42,8 @@ export const ServiceOrders = () => {
 	useEffect(() => {
 		const lowerCaseQuery = searchQuery.toLowerCase();
 		const filtered = orders.filter((order: any) => {
-			const technician = order.technicianId;
-			const client = order.clientId;
+			const technician = order.technicianId || "";
+			const client = order.clientId || "";
 			return (
 				technician.toLowerCase().includes(lowerCaseQuery) ||
 				client.toLowerCase().includes(lowerCaseQuery)
