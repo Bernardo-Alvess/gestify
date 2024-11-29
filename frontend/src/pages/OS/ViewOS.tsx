@@ -9,6 +9,7 @@ import Table from '../../components/table';
 import { useParams } from 'react-router-dom';
 import { getProductsForSo } from '../../http/get-products-for-so';
 import { getServiceOrdersById } from '../../http/get-service-order-by-id';
+import jsPDF from 'jspdf';
 
 interface IFormValues {
 	client: string;
@@ -49,7 +50,6 @@ export const ViewOS: React.FC = () => {
 		'Id Relação',
 		'Valor Total',
 	];
-	// const data_table_2 = Array(20).fill(['123', 'Placa Mãe', '2', 'Asus']);
 
 	const fetchServiceOrder = useCallback(async () => {
 		const data = await getServiceOrdersById(cookies.jwt, id);
@@ -71,13 +71,12 @@ export const ViewOS: React.FC = () => {
 
 		if (productsForOs !== undefined) {
 			setProducts(productsForOs);
-			// Calcula o valor total dos produtos
 			const total = productsForOs.reduce(
 				(sum: any, product: any) =>
 					sum + (product.totalValue * product.qtd || 0),
 				0
 			);
-			setTotalValue(total); // Atualiza o estado com o valor calculado
+			setTotalValue(total);
 		}
 	}, []);
 
@@ -85,6 +84,75 @@ export const ViewOS: React.FC = () => {
 		fetchServiceOrder();
 		fetchProductsForOs();
 	}, [fetchServiceOrder, fetchProductsForOs]);
+
+	// const data_table_2 = Array(20).fill(['123', 'Placa Mãe', '2', 'Asus']);
+	const exportPDF = async () => {
+		const pdf = new jsPDF('p', 'mm', 'a4'); // Página A4
+
+		// Defina margens e espaçamento
+		const margin = 10;
+		let yPosition = 20;
+
+		// Título do documento
+		pdf.setFont('helvetica', 'bold');
+		pdf.setFontSize(16);
+		pdf.text('Ordem de Serviço - Visualização', margin, yPosition);
+		yPosition += 10;
+
+		pdf.setFont('helvetica', 'normal');
+		pdf.setFontSize(12);
+
+		// Campos organizados
+		const fields = [
+			{ label: 'Cliente', value: formValues.client },
+			{ label: 'Técnico Responsável', value: formValues.technician },
+			{ label: 'Telefone do cliente', value: formValues.number },
+			{ label: 'Data de abertura', value: formValues.date },
+			{ label: 'Descrição', value: formValues.description },
+			{ label: 'Defeito', value: formValues.defect },
+			{ label: 'Laudo técnico', value: formValues.report },
+			{ label: 'Observações', value: formValues.extras },
+		];
+
+		// Renderize os campos
+		fields.forEach((field) => {
+			if (yPosition > 280) {
+				pdf.addPage();
+				yPosition = margin;
+			}
+			pdf.setFont('helvetica', 'bold');
+			pdf.text(`${field.label}:`, margin, yPosition);
+			yPosition += 6;
+
+			pdf.setFont('helvetica', 'normal');
+			const textLines = pdf.splitTextToSize(field.value || '', 180); // Quebra de texto para largura máxima
+			textLines.forEach((line: string) => {
+				if (yPosition > 280) {
+					pdf.addPage();
+					yPosition = margin;
+				}
+				pdf.text(line, margin, yPosition);
+				yPosition += 6;
+			});
+			yPosition += 4; // Espaçamento entre campos
+		});
+
+		// Adicione o campo de observações manuscritas
+		if (yPosition > 260) {
+			pdf.addPage();
+			yPosition = margin;
+		}
+		pdf.setFont('helvetica', 'bold');
+		pdf.text('Observações (escrita à mão):', margin, yPosition);
+		yPosition += 10;
+
+		// Desenhe um retângulo para o campo de escrita à mão
+		pdf.setDrawColor(0); // Cor da borda
+		pdf.rect(margin, yPosition, 180, 50); // Largura 180mm, Altura 50mm
+
+		// Salve o PDF
+		pdf.save('ordem-de-servico.pdf');
+	};
 
 	const getSelectClass = (): string => {
 		switch (selectedOption) {
@@ -106,7 +174,10 @@ export const ViewOS: React.FC = () => {
 	return (
 		<div className="flex h-screen overflow-hidden">
 			<Sidebar />
-			<main className="flex-1 p-5 bg-blue-200 space-y-3 h-screen overflow-y-auto">
+			<main
+				id="pdf-content"
+				className="flex-1 p-5 bg-blue-200 space-y-3 h-screen overflow-y-auto"
+			>
 				<header className="flex justify-between mb-5">
 					<div className="pt-16 md:pt-16 lg:pt-0">
 						<h1 className="text-2xl font-bold">
@@ -117,13 +188,11 @@ export const ViewOS: React.FC = () => {
 					<SearchBox />
 					<TopNav />
 				</header>
-
 				<BackPageButton route="/orders" />
-
 				<div className="bg-white p-4 rounded-lg shadow-lg w-full">
 					<div className="flex justify-between mb-4">
 						<h2 className="font-bold text-lg mb-4">
-							Ordem de Serviço N°
+							Ordem de Serviço
 						</h2>
 						<span
 							className={`font-bold px-4 py-2 rounded-lg ${getSelectClass()}`}
@@ -209,6 +278,14 @@ export const ViewOS: React.FC = () => {
 								}}
 							/>
 						</div>
+					</div>
+					<div className="w-full flex items-center justify-center">
+						<button
+							onClick={exportPDF}
+							className="bg-primary text-white rounded-lg self-center justify-self-center p-2 w-48"
+						>
+							Gerar PDF
+						</button>
 					</div>
 				</div>
 			</main>
