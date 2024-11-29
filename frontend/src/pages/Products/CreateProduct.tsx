@@ -1,9 +1,9 @@
 import { useCookies } from 'react-cookie';
 
-import UserBlue from '../../public/assets/view-user-page/user-blue.svg';
+import IconProductBlack from '../../public/assets/home-page/icons/products/products_icon_b.svg';
 import TopNav from '../../components/top-nav';
 import Sidebar from '../../components/sidebar';
-import { createClient, ICreateClient } from '../../http/create-client';
+import { createProduct, ICreateProduct } from '../../http/create-product';
 import { toast } from 'sonner';
 
 const CreateProduct = () => {
@@ -13,25 +13,26 @@ const CreateProduct = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
-        const client: ICreateClient = {
-            name: formData.get('name')?.toString(),
-            price: formData.get('price')?.toString(),
-            cost: formData.get('cost')?.toString(),
-            unityType: formData.get('unityType')?.toString(),
-            minQtd: formData.get('minQtd')?.toString(),
-            qtd: formData.get('qtd')?.toString(),
-            companyId: formData.get('companyId')?.toString(),
+        const product: ICreateProduct = {
+            name: formData.get('name')?.toString() ?? '',
+            price: parseFloat(formData.get('price')?.toString() ?? '0'),
+            cost: formData.get('cost') ? parseFloat(formData.get('cost')?.toString() ?? '0') : null,
+            unityType: formData.get('unityType')?.toString() || null,
+            minQtd: formData.get('minQtd') ? parseInt(formData.get('minQtd')?.toString() ?? '0') : null,
+            qtd: formData.get('qtd') ? parseInt(formData.get('qtd')?.toString() ?? '0') : null,
+            companyId: cookies.companyId || '',
         };
-
-        const { id } = await createClient(cookies.jwt, client);
-
-        if (!id) {
-            toast.error('Erro ao criar produto');
+    
+        const { success, error } = await createProduct(cookies.jwt, product);
+    
+        if (!success) {
+            toast.error(`Erro ao criar produto: ${error ? error.message || error : "Erro desconhecido"}`);
             return;
         }
-
+    
         toast.success('Produto adicionado');
     };
+    
 
     return (
         <div className="flex h-screen overflow-hidden">
@@ -46,12 +47,12 @@ const CreateProduct = () => {
                 </header>
                 <div className="bg-white p-6 rounded-lg shadow-lg">
                     <div className="flex items-center gap-2 border-b border-gray-200 pb-4 mb-6">
-                        <img src={UserBlue} alt="" />
+                        <img src={IconProductBlack} alt="Ícone Produto" />
                         <p className="font-bold text-xl">Adicionar novo produto ao sistema</p>
                     </div>
                     <form
-                        id="create-client-form"
-                        className="grid grid-cols-2 gap-6"
+                        id="create-product-form"
+                        className="grid grid-cols-2 py-14 px-32 gap-6"
                         onSubmit={handleSubmit}
                     >
                         <div>
@@ -70,9 +71,8 @@ const CreateProduct = () => {
                                 Custo
                             </label>
                             <input
-                                required
                                 className="w-full p-2 border border-gray-300 rounded-lg"
-                                type="text"
+                                type="number"
                                 name="cost"
                             />
                         </div>
@@ -83,7 +83,7 @@ const CreateProduct = () => {
                             <input
                                 required
                                 className="w-full p-2 border border-gray-300 rounded-lg"
-                                type="text"
+                                type="number"
                                 name="price"
                             />
                         </div>
@@ -103,26 +103,23 @@ const CreateProduct = () => {
                             </label>
                             <input
                                 className="w-full p-2 border border-gray-300 rounded-lg"
-                                type="text"
+                                type="number"
                                 name="qtd"
                             />
                         </div>
-                        <div className='grid grid-cols-2 gap-6'>
-                            <div className="col-span-2">
-                                <label className="block text-sm font-bold mb-1" htmlFor="minQtd">
-                                    Estoque mínimo
-                                </label>
-                                <input
-                                    className="w-full p-2 border border-gray-300 rounded-lg"
-                                    type="text"
-                                    name="minQtd"
-                                />
-                            </div>
-                            <div></div>
+                        <div>
+                            <label className="block text-sm font-bold mb-1" htmlFor="minQtd">
+                                Estoque mínimo
+                            </label>
+                            <input
+                                className="w-full p-2 border border-gray-300 rounded-lg"
+                                type="number"
+                                name="minQtd"
+                            />
                         </div>
                         <div className="col-span-2 flex justify-center mt-6">
                             <button
-                                form="create-client-form"
+                                form="create-product-form"
                                 className="bg-blue-500 text-white px-4 py-2 rounded-lg"
                                 type="submit"
                             >
