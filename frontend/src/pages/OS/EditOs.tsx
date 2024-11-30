@@ -197,6 +197,8 @@ export const EditOs: React.FC = () => {
 		},
 	];
 
+	console.log(inputFields[0].selected);
+
 	const getSelectClass = (): string => {
 		switch (selectedOption) {
 			case 'EM ANDAMENTO':
@@ -219,6 +221,10 @@ export const EditOs: React.FC = () => {
 
 		if (formValues.technician == inputFields[1].selected?.name) {
 			formValues.technician = inputFields[1].selected?.id;
+		}
+
+		if (formValues.client == inputFields[0].selected?.name) {
+			formValues.client = inputFields[0].selected?.id;
 		}
 
 		const updated = await updateServiceOrder(cookies.jwt, id, {
@@ -262,6 +268,8 @@ export const EditOs: React.FC = () => {
 			console.error(e);
 		}
 	};
+
+	console.log(formValues);
 
 	return (
 		<div className="flex h-screen overflow-hidden">
@@ -338,15 +346,49 @@ export const EditOs: React.FC = () => {
 											rows={6}
 											className="w-full p-2 border border-gray-300 rounded-lg"
 										/>
-									) : field.options ? (
+									) : field.name == 'client' &&
+									  field.options ? (
 										<select
 											name={field.name}
-											value={formValues[
-												field.name as keyof IFormValues
-											]?.toString()}
+											value={formValues.client}
 											onChange={handleChange}
 											className="font-medium px-4 py-2 rounded-lg w-full border border-gray-300"
 										>
+											{field.selected ? (
+												<option
+													value={field.selected.id}
+													className="text-gray-400"
+												>
+													{field.selected.name}
+												</option>
+											) : (
+												<option
+													value=""
+													className="text-gray-400"
+												>
+													Escolha um{' '}
+													{field.label.toLowerCase()}
+												</option>
+											)}
+
+											{field.options.map((option) => (
+												<option
+													key={option.id}
+													value={option.id}
+												>
+													{option.name}
+												</option>
+											))}
+										</select>
+									) : field.name == 'technician' &&
+									  field.options ? (
+										<select
+											name={field.name}
+											value={formValues.technician}
+											onChange={handleChange}
+											className="font-medium px-4 py-2 rounded-lg w-full border border-gray-300"
+										>
+											{field.name}
 											{field.selected ? (
 												<option
 													value={field.selected.id}
