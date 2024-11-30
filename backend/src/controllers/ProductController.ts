@@ -54,14 +54,14 @@ class ProductController {
 
     async updateProduct(req: Request, res: Response, next: NextFunction) {
         try {
-            const { id, name, price, cost, unityType, minQtd, qtd } = req.body;
+            const id = req.params.id
+            const { name, price, cost, unityType, minQtd, qtd } = req.body;
             const updatedProduct = await this.repository.updateProduct(id, { name, price, cost, unityType, minQtd, qtd } as IUpdateProductDto);
             res.json({ message: "Product updated successfully", updatedProduct });
         } catch (e) {
             next(e);
         }
     }
-
     async getProduct(req: Request, res: Response, next: NextFunction) {
         try {
             const productId = req.params.id;

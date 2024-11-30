@@ -28,6 +28,7 @@ export class ProductRepository implements IProductRepository {
     return product;
   }
 
+
   async getProducts(companyId: string): Promise<Product[]> {
     return await prisma.product.findMany({
       where: {

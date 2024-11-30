@@ -29,7 +29,7 @@ productRouter.get('/:id', auth, (req, res, next) => {
 });
 
 
-productRouter.put('/', adminMiddleware, (req, res, next) => {
+productRouter.put('/:id', adminMiddleware, (req, res, next) => {
     productController.updateProduct(req, res, next)
 })
 
