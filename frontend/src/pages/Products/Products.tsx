@@ -7,6 +7,8 @@ import IconProductBlack from '../../public/assets/home-page/icons/products/produ
 import { getProducts } from '../../http/get-products';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
+import { deleteProduct } from '../../http/delete-product';
+import { toast } from 'sonner';
 
 export const Products = () => {
 	const navigate = useNavigate();
@@ -38,6 +40,16 @@ export const Products = () => {
 		fetchProducts();
 	}, [fetchProducts]);
 
+	const deleteProductAction = async (id: string) => {
+		const result = await deleteProduct(cookies.jwt, id);
+		if(result.error){
+			toast.error(`Erro: ${result.error ? result.error.message || result.error : "Erro desconhecido"}`);
+		}else{
+			toast.success(`Sucesso: ${result.message}`);
+			fetchProducts();
+		}
+	};
+
 	return (
 		<div className="flex h-screen overflow-hidden">
 			<Sidebar />
@@ -61,7 +73,7 @@ export const Products = () => {
 								showActions: true,
 								actionButtonText: 'Adicionar Produto',
 								action: add,
-								deleteAction: () => {},
+								deleteAction: deleteProductAction,
 							}}
 							viewPage="/view-product"
 						/>
