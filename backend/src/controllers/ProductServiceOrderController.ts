@@ -101,7 +101,6 @@ class ProductServiceOrderController {
         if (product) {
           product.companyId = data!.id
           product.qtd = data?.qtd
-          console.log(product)
           res.json(product)
         }
 

@@ -249,7 +249,6 @@ export const EditOs: React.FC = () => {
 	};
 
 	const handleDeleteAction = async (productId: string) => {
-		console.log('allloowwww');
 		try {
 			const deleted = await deleteProductSo(cookies.jwt, productId, id);
 			if (deleted) {
@@ -264,7 +263,6 @@ export const EditOs: React.FC = () => {
 		}
 	};
 
-	console.log(products);
 	return (
 		<div className="flex h-screen overflow-hidden">
 			<EditProductModal

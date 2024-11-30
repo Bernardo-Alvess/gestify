@@ -3,7 +3,6 @@ export const deleteProductSo = async (
     id: string | undefined,
     serviceOrderId: string | undefined
 ) => {
-    console.log(id, serviceOrderId);
 
     const response = await fetch(`${import.meta.env.VITE_API_URL}/product-service-order/${id}/${serviceOrderId}`, {
         method: "DELETE",

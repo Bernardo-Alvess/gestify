@@ -5,7 +5,6 @@ interface ICreateProductSo {
 }
 
 export const createProductSo = async (token: string, data: ICreateProductSo) => {
-    console.log(data)
 
     const response = await fetch(`${import.meta.env.VITE_API_URL}/product-service-order/`, {
         method: 'POST',
