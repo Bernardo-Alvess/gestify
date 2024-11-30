@@ -32,7 +32,14 @@ export const Home = () => {
 		return savedReminders ? JSON.parse(savedReminders) : [];
 	});
 
-	const column_table_1 = ['Código', 'Nome', 'Quantidade', 'Marca'];
+	const column_table_1 = [
+		'Código',
+		'Nome',
+		'Preço',
+		'Custo',
+		'Tipo Un',
+		'Quantidade',
+	];
 	const column_table_2 = ['Código', 'Data de entrega', 'Cliente', 'Produto'];
 
 	const data_table_2 = [
@@ -94,6 +101,7 @@ export const Home = () => {
 		fetchStats();
 	}, [fetchStats]);
 
+	console.log(statistics.lowStockProducts);
 	return (
 		<div className="flex min-h-screen">
 			<Sidebar />
@@ -143,7 +151,7 @@ export const Home = () => {
 							icon={IconProductsBlack}
 							title="Produtos acabando no estoque"
 							columns={column_table_1}
-							data={produtosEstoque}
+							data={statistics.lowStockProducts}
 						/>
 					</div>
 					<div className="col-span-2">
