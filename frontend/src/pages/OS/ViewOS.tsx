@@ -10,6 +10,7 @@ import { useParams } from 'react-router-dom';
 import { getProductsForSo } from '../../http/get-products-for-so';
 import { getServiceOrdersById } from '../../http/get-service-order-by-id';
 import jsPDF from 'jspdf';
+import ReactInputMask from 'react-input-mask';
 
 interface IFormValues {
 	client: string;
@@ -214,6 +215,7 @@ export const ViewOS: React.FC = () => {
 								{
 									label: 'Telefone',
 									value: formValues.number,
+									mask: '(99) 9 9999-9999',
 								},
 								{
 									label: 'Data de abertura',
@@ -252,9 +254,11 @@ export const ViewOS: React.FC = () => {
 											rows={6}
 										/>
 									) : (
-										<p className="w-full p-2 border border-gray-300 rounded-lg max-h-12">
-											{field.value || '\u00A0'}
-										</p>
+										<ReactInputMask
+											className="w-full p-2 border border-gray-300 rounded-lg max-h-12"
+											mask={field?.mask || ''}
+											value={field.value || '\u00A0'}
+										></ReactInputMask>
 									)}
 								</div>
 							))}

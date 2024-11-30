@@ -1,6 +1,5 @@
 import { useContext, useState } from 'react';
 import { toast } from 'sonner';
-
 import Bro from '../public/assets/signup-page/bro.svg';
 import GestifyText from '../public/assets/gestify_texto.svg';
 import { createCompany } from '../http/create-company';
@@ -8,10 +7,12 @@ import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/auth';
 import { loginUser } from '../http/login';
+import InputMask from 'react-input-mask';
 
 export const SignUp = () => {
 	const { login } = useContext(AuthContext);
 	const [cookies] = useCookies(['jwt', 'id']);
+
 	const navigate = useNavigate();
 
 	const [formData, setFormData] = useState({
@@ -62,6 +63,8 @@ export const SignUp = () => {
 	};
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		const { name, value } = event.target;
+		console.log(name, value); // Depuração: Veja o que está sendo capturado
 		setFormData({ ...formData, [event.target.name]: event.target.value });
 	};
 
@@ -93,7 +96,8 @@ export const SignUp = () => {
 						onSubmit={handleSubmit}
 						className="flex flex-col gap-4 items-center justify-center h-fit text-slate-600"
 					>
-						<input
+						<InputMask
+							mask={'99.999.999/9999.99'}
 							type="text"
 							placeholder="CNPJ *"
 							name="cnpj"

@@ -6,6 +6,7 @@ import Sidebar from '../../components/sidebar';
 import { createClient, ICreateClient } from '../../http/create-client';
 import { toast } from 'sonner';
 import { BackPageButton } from '../../components/back-page-button';
+import InputMask from 'react-input-mask';
 
 const CreateClient = () => {
 	const [cookies] = useCookies();
@@ -81,7 +82,8 @@ const CreateClient = () => {
 									>
 										Documento
 									</label>
-									<input
+									<InputMask
+										mask={'999.999.999-99'}
 										required
 										className="p-1 border rounded-lg"
 										type="text"
@@ -95,7 +97,8 @@ const CreateClient = () => {
 									>
 										Telefone
 									</label>
-									<input
+									<InputMask
+										mask={'(99) 9 9999-9999'}
 										className="p-1 border rounded-lg"
 										type="text"
 										name="number"

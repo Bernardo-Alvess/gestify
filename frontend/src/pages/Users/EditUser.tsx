@@ -9,6 +9,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { getUserById } from '../../http/get-user-by-id';
 import { updateUser } from '../../http/update-user';
 import { BackPageButton } from '../../components/back-page-button';
+import ReactInputMask from 'react-input-mask';
 
 export interface IUpdateUser {
 	name?: string | null | undefined;
@@ -147,7 +148,8 @@ const EditUser = () => {
 									>
 										Telefone
 									</label>
-									<input
+									<ReactInputMask
+										mask="(99) 9 9999-9999"
 										inputMode="numeric"
 										className="p-1 border rounded-lg"
 										type="text"

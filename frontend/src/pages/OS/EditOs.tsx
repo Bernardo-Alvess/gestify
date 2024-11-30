@@ -18,6 +18,7 @@ import { relationId } from '../../data/relation-id';
 import { getServiceOrdersById } from '../../http/get-service-order-by-id';
 import { updateServiceOrder } from '../../http/update-service-order';
 import { deleteProductSo } from '../../http/delete-product-so';
+import ReactInputMask from 'react-input-mask';
 // import { productSo } from '../../data/products-so';
 
 interface IUser {
@@ -169,7 +170,7 @@ export const EditOs: React.FC = () => {
 				(tech) => tech.name == formValues.technician
 			),
 		},
-		{ label: 'Telefone', name: 'number' },
+		{ label: 'Telefone', name: 'number', mask: '(99) 9 9999-9999' },
 		{
 			label: 'Data de abertura',
 			name: 'date',
@@ -428,7 +429,8 @@ export const EditOs: React.FC = () => {
 											className="w-full p-2 border border-gray-300 rounded-lg max-h-12"
 										/>
 									) : (
-										<input
+										<ReactInputMask
+											mask={field?.mask || ''}
 											type={'text'}
 											name={field.name}
 											value={formValues[

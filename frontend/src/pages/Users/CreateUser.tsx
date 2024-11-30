@@ -1,5 +1,5 @@
 import { useCookies } from 'react-cookie';
-
+import InputMask from 'react-input-mask';
 import UserBlue from '../../public/assets/view-user-page/user-blue.svg';
 import TopNav from '../../components/top-nav';
 import Sidebar from '../../components/sidebar';
@@ -84,7 +84,8 @@ const CreateUser = () => {
 							>
 								Documento
 							</label>
-							<input
+							<InputMask
+								mask={'999.999.999-99'}
 								required
 								className="p-2 border border-gray-300 rounded-lg"
 								type="text"
@@ -98,7 +99,8 @@ const CreateUser = () => {
 							>
 								Telefone
 							</label>
-							<input
+							<InputMask
+								mask={'(99) 9 9999-9999'}
 								className="p-2 border border-gray-300 rounded-lg"
 								type="text"
 								name="number"
