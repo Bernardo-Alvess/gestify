@@ -7,6 +7,8 @@ import IconUserBlack from '../../public/assets/home-page/icons/users/user_icon_b
 import { getUsers } from '../../http/get-users';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
+import { deleteClient } from '../../http/delete-client';
+import { toast } from 'sonner';
 
 export const Users = () => {
     const navigate = useNavigate();
@@ -32,6 +34,16 @@ export const Users = () => {
     const add = () => {
         navigate('/create-user');
     };
+
+    const deleteUserAction = async (id: string) => {
+		const result = await deleteClient(cookies.jwt, id);
+		if(result.error){
+			toast.error(`Erro: ${result.error ? result.error.message || result.error : "Erro desconhecido"}`);
+		}else{
+			toast.success(`Sucesso: ${result.message}`);
+			fetchUsers();
+		}
+	}
 
     const fetchUsers = useCallback(async () => {
         const data = await getUsers(cookies.jwt, undefined, 'CLIENT');
@@ -77,7 +89,7 @@ export const Users = () => {
                                 showActions: true,
                                 actionButtonText: 'Adicionar Usuário',
                                 action: add,
-                                deleteAction: () => { },
+                                deleteAction: deleteUserAction,
                             }}
                             viewPage="/view-user"
                             editPage="/edit-user"

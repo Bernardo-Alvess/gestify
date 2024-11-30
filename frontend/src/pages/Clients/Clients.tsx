@@ -7,6 +7,8 @@ import IconClientsBlack from '../../public/assets/home-page/icons/clients/client
 import { getUsers } from '../../http/get-users';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
+import { deleteClient } from '../../http/delete-client';
+import { toast } from 'sonner';
 
 export const Clients = () => {
     const navigate = useNavigate();
@@ -52,6 +54,16 @@ export const Clients = () => {
         setFilteredClients(filtered);
     }, [searchQuery, clients]);
 
+    const deleteClientAction = async (id: string) => {
+		const result = await deleteClient(cookies.jwt, id);
+		if(result.error){
+			toast.error(`Erro: ${result.error ? result.error.message || result.error : "Erro desconhecido"}`);
+		}else{
+			toast.success(`Sucesso: ${result.message}`);
+			fetchClients();
+		}
+	}
+
     return (
         <div className="flex h-screen overflow-hidden">
             <Sidebar />
@@ -78,7 +90,7 @@ export const Clients = () => {
                                 showActions: true,
                                 actionButtonText: 'Adicionar Cliente',
                                 action: add,
-                                deleteAction: () => { },
+                                deleteAction: deleteClientAction,
                             }}
                             viewPage="/view-client"
                             editPage="/edit-client"

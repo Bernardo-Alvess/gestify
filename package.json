@@ -4,6 +4,7 @@
   },
   "dependencies": {
     "@types/jsonwebtoken": "^9.0.7",
-    "jspdf": "^2.5.2"
+    "jspdf": "^2.5.2",
+    "toast": "^0.5.4"
   }
 }
