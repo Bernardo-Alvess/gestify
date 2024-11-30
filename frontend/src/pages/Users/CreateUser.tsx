@@ -5,11 +5,8 @@ import TopNav from '../../components/top-nav';
 import Sidebar from '../../components/sidebar';
 import { toast } from 'sonner';
 import { ICreateUser, createUser } from '../../http/create-user';
-<<<<<<< HEAD
 import { useNavigate } from 'react-router-dom';
-=======
 import { BackPageButton } from '../../components/back-page-button';
->>>>>>> 307db911e2ef926dd6e0d68b97ece748e2345558
 
 const CreateUser = () => {
 	const [cookies] = useCookies();
