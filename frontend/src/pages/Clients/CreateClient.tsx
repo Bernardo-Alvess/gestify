@@ -5,10 +5,12 @@ import TopNav from '../../components/top-nav';
 import Sidebar from '../../components/sidebar';
 import { createClient, ICreateClient } from '../../http/create-client';
 import { toast } from 'sonner';
+import { useNavigate } from 'react-router-dom';
 
 const CreateClient = () => {
 	const [cookies] = useCookies();
 	const today = new Date().toLocaleDateString('pt-BR');
+	const navigate = useNavigate();
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -29,7 +31,7 @@ const CreateClient = () => {
 			toast.error('Erro ao criar cliente');
 			return;
 		}
-
+		navigate('/clients');
 		toast.success('Cliente adicionado');
 	};
 

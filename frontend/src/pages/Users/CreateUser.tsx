@@ -5,10 +5,12 @@ import TopNav from '../../components/top-nav';
 import Sidebar from '../../components/sidebar';
 import { toast } from 'sonner';
 import { ICreateUser, createUser } from '../../http/create-user';
+import { useNavigate } from 'react-router-dom';
 
 const CreateUser = () => {
 	const [cookies] = useCookies();
 	const today = new Date().toLocaleDateString('pt-BR');
+	const navigate = useNavigate();
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -32,6 +34,7 @@ const CreateUser = () => {
 			return;
 		}
 
+		navigate('/users');
 		toast.success('Usuário adicionado');
 	};
 

@@ -13,6 +13,7 @@ import { cleanProductSo, productSo } from '../../data/products-so';
 import { createProductSo } from '../../http/create-product-service-order';
 import SuccessModal from '../../components/sucess-modal';
 import AddProductModal from '../../components/add-product-modal';
+import { useNavigate } from 'react-router-dom';
 
 interface IUser {
 	name: string;
@@ -39,6 +40,7 @@ export const CreateOS: React.FC = () => {
 	const [cookies] = useCookies(['jwt', 'id']);
 	const [addProductModal, setAddProductModal] = useState(false);
 	const [successModal, setSuccessModal] = useState(false);
+	const navigate = useNavigate();
 
 	const [formValues, setFormValues] = useState<IFormValues>({
 		client: '',
@@ -153,7 +155,7 @@ export const CreateOS: React.FC = () => {
 			cleanProductSo();
 			toast.success('Ordem de serviço criada!');
 			setSuccessModal(true);
-			return;
+			navigate('/orders');
 		}else if(selectedOption == ""){
 			toast.error('Selecione um status');
 		}else{
