@@ -88,13 +88,17 @@ export class ServiceOrderRepository implements IServiceOrderRepository {
         })
     }
 
-    async deleteServiceOrder(id: string): Promise<void> {
-
-        await prisma.serviceOrder.delete({
-            where: { id }
-        })
-
-    }
+    async deleteServiceOrder(id: string): Promise<boolean> {
+        try {
+          await prisma.serviceOrder.delete({
+              where: { id }
+          })
+          return true;
+        } catch (error) {
+          return false;
+        }
+  
+      }
 
     async getSoCount(companyId: string): Promise<Number> {
         return await prisma.serviceOrder.count({

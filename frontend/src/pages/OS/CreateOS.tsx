@@ -1,4 +1,3 @@
-import SearchBox from '../../components/search-box';
 import Sidebar from '../../components/sidebar';
 import TopNav from '../../components/top-nav';
 import IconProductsBlack from '../../public/assets/home-page/icons/products/products_icon_b.svg';
@@ -13,6 +12,8 @@ import { cleanProductSo, productSo } from '../../data/products-so';
 import { createProductSo } from '../../http/create-product-service-order';
 import SuccessModal from '../../components/sucess-modal';
 import AddProductModal from '../../components/add-product-modal';
+import { useNavigate } from 'react-router-dom';
+import ReactInputMask from 'react-input-mask';
 
 interface IUser {
 	name: string;
@@ -39,6 +40,7 @@ export const CreateOS: React.FC = () => {
 	const [cookies] = useCookies(['jwt', 'id']);
 	const [addProductModal, setAddProductModal] = useState(false);
 	const [successModal, setSuccessModal] = useState(false);
+	const navigate = useNavigate();
 
 	const [formValues, setFormValues] = useState<IFormValues>({
 		client: '',
@@ -59,7 +61,6 @@ export const CreateOS: React.FC = () => {
 		'Custo',
 		'Valor Total',
 	];
-	//const data_table_2 = Array(20).fill(['123', 'Placa Mãe', '2', 'Asus']);
 
 	const handleChange = (
 		e: ChangeEvent<
@@ -151,13 +152,15 @@ export const CreateOS: React.FC = () => {
 				});
 			});
 			cleanProductSo();
-			toast.success('Produtos adicionados a ordem');
+			toast.success('Ordem de serviço criada!');
 			setSuccessModal(true);
-			return;
+			navigate('/orders');
+		}else if(selectedOption == ""){
+			toast.error('Selecione um status');
+		}else{
+			toast.error('Erro ao criar Ordem de Serviço');
 		}
-
-		toast.error('Erro ao criar Ordem de Serviço');
-	};
+		}
 
 	return (
 		<div className="flex h-screen overflow-hidden">
@@ -181,7 +184,6 @@ export const CreateOS: React.FC = () => {
 						</h1>
 						<p className="text-sm text-gray-500">{today}</p>
 					</div>
-					<SearchBox />
 					<TopNav />
 				</header>
 
@@ -222,7 +224,11 @@ export const CreateOS: React.FC = () => {
 									name: 'technician',
 									options: [...technicians],
 								},
-								{ label: 'Telefone', name: 'number' },
+								{
+									label: 'Telefone',
+									name: 'number',
+									mask: '(99) 9 9999-9999',
+								},
 								{
 									label: 'Data de abertura',
 									name: 'date',
@@ -289,7 +295,8 @@ export const CreateOS: React.FC = () => {
 											))}
 										</select>
 									) : (
-										<input
+										<ReactInputMask
+											mask={field?.mask || ''}
 											type={field.type || 'text'}
 											name={field.name}
 											value={formValues[
@@ -315,7 +322,7 @@ export const CreateOS: React.FC = () => {
 									action: () => {
 										setAddProductModal(true);
 									},
-									deleteAction: () => {},
+									deleteAction: () => { },
 								}}
 							/>
 						</div>

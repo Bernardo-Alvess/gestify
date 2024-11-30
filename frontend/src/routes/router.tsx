@@ -18,6 +18,7 @@ import { EditOs } from '../pages/OS/EditOs';
 import { CreateUser } from '../pages/Users/CreateUser';
 import { CreateProduct } from '../pages/Products/CreateProduct';
 import { ViewProduct } from '../pages/Products/ViewProduct';
+import EditProduct from '../pages/Products/EditProduct';
 
 const router = createBrowserRouter([
 	{
@@ -99,6 +100,9 @@ const router = createBrowserRouter([
 	{
 		path: 'view-product/:id',
 		element: <ProtectedRoute children={<ViewProduct />} />,
+	},{
+		path: 'edit-product/:id',
+		element: <ProtectedRoute children={<EditProduct />} />,
 	},
 ]);
 

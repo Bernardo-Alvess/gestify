@@ -5,10 +5,14 @@ import TopNav from '../../components/top-nav';
 import Sidebar from '../../components/sidebar';
 import { createClient, ICreateClient } from '../../http/create-client';
 import { toast } from 'sonner';
+import { useNavigate } from 'react-router-dom';
+import { BackPageButton } from '../../components/back-page-button';
+import InputMask from 'react-input-mask';
 
 const CreateClient = () => {
 	const [cookies] = useCookies();
 	const today = new Date().toLocaleDateString('pt-BR');
+	const navigate = useNavigate();
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -29,14 +33,14 @@ const CreateClient = () => {
 			toast.error('Erro ao criar cliente');
 			return;
 		}
-
+		navigate('/clients');
 		toast.success('Cliente adicionado');
 	};
 
 	return (
 		<div className="flex h-screen overflow-hidden">
 			<Sidebar />
-			<main className="flex flex-col flex-1 p-10 bg-blue-200 space-y-10 h-screen">
+			<main className="flex flex-col flex-1 p-10 bg-blue-200 space-y-6 h-screen">
 				<header className="flex justify-between">
 					<div className="pt-16 md:pt-16 lg:pt-0">
 						<h1 className="text-2xl font-bold">Clientes</h1>
@@ -44,6 +48,7 @@ const CreateClient = () => {
 					</div>
 					<TopNav />
 				</header>
+				<BackPageButton route={'/clients'} />
 				<div className="flex flex-col gap-10 self-center h-5/6 w-fit bg-white overflow-y-auto rounded-lg shadow-xl p-2 overflow-x-hidden">
 					<div className="flex p-2 w-full h-16 items-center gap-2 border-b border-black border-opacity-10 ">
 						<img src={UserBlue} alt="" />
@@ -79,7 +84,8 @@ const CreateClient = () => {
 									>
 										Documento
 									</label>
-									<input
+									<InputMask
+										mask={'999.999.999-99'}
 										required
 										className="p-1 border rounded-lg"
 										type="text"
@@ -93,7 +99,8 @@ const CreateClient = () => {
 									>
 										Telefone
 									</label>
-									<input
+									<InputMask
+										mask={'(99) 9 9999-9999'}
 										className="p-1 border rounded-lg"
 										type="text"
 										name="number"

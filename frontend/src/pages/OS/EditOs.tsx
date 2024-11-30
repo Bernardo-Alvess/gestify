@@ -1,4 +1,3 @@
-import SearchBox from '../../components/search-box';
 import Sidebar from '../../components/sidebar';
 import TopNav from '../../components/top-nav';
 import IconProductsBlack from '../../public/assets/home-page/icons/products/products_icon_b.svg';
@@ -18,6 +17,7 @@ import { relationId } from '../../data/relation-id';
 import { getServiceOrdersById } from '../../http/get-service-order-by-id';
 import { updateServiceOrder } from '../../http/update-service-order';
 import { deleteProductSo } from '../../http/delete-product-so';
+import ReactInputMask from 'react-input-mask';
 // import { productSo } from '../../data/products-so';
 
 interface IUser {
@@ -169,7 +169,7 @@ export const EditOs: React.FC = () => {
 				(tech) => tech.name == formValues.technician
 			),
 		},
-		{ label: 'Telefone', name: 'number' },
+		{ label: 'Telefone', name: 'number', mask: '(99) 9 9999-9999' },
 		{
 			label: 'Data de abertura',
 			name: 'date',
@@ -197,6 +197,8 @@ export const EditOs: React.FC = () => {
 		},
 	];
 
+	console.log(inputFields[0].selected);
+
 	const getSelectClass = (): string => {
 		switch (selectedOption) {
 			case 'EM ANDAMENTO':
@@ -219,6 +221,10 @@ export const EditOs: React.FC = () => {
 
 		if (formValues.technician == inputFields[1].selected?.name) {
 			formValues.technician = inputFields[1].selected?.id;
+		}
+
+		if (formValues.client == inputFields[0].selected?.name) {
+			formValues.client = inputFields[0].selected?.id;
 		}
 
 		const updated = await updateServiceOrder(cookies.jwt, id, {
@@ -263,6 +269,8 @@ export const EditOs: React.FC = () => {
 		}
 	};
 
+	console.log(formValues);
+
 	return (
 		<div className="flex h-screen overflow-hidden">
 			<EditProductModal
@@ -293,7 +301,6 @@ export const EditOs: React.FC = () => {
 						<h1 className="text-2xl font-bold">Ordens - Editar</h1>
 						<p className="text-sm text-gray-500">{today}</p>
 					</div>
-					<SearchBox />
 					<TopNav />
 				</header>
 
@@ -338,15 +345,49 @@ export const EditOs: React.FC = () => {
 											rows={6}
 											className="w-full p-2 border border-gray-300 rounded-lg"
 										/>
-									) : field.options ? (
+									) : field.name == 'client' &&
+									  field.options ? (
 										<select
 											name={field.name}
-											value={formValues[
-												field.name as keyof IFormValues
-											]?.toString()}
+											value={formValues.client}
 											onChange={handleChange}
 											className="font-medium px-4 py-2 rounded-lg w-full border border-gray-300"
 										>
+											{field.selected ? (
+												<option
+													value={field.selected.id}
+													className="text-gray-400"
+												>
+													{field.selected.name}
+												</option>
+											) : (
+												<option
+													value=""
+													className="text-gray-400"
+												>
+													Escolha um{' '}
+													{field.label.toLowerCase()}
+												</option>
+											)}
+
+											{field.options.map((option) => (
+												<option
+													key={option.id}
+													value={option.id}
+												>
+													{option.name}
+												</option>
+											))}
+										</select>
+									) : field.name == 'technician' &&
+									  field.options ? (
+										<select
+											name={field.name}
+											value={formValues.technician}
+											onChange={handleChange}
+											className="font-medium px-4 py-2 rounded-lg w-full border border-gray-300"
+										>
+											{field.name}
 											{field.selected ? (
 												<option
 													value={field.selected.id}
@@ -386,7 +427,8 @@ export const EditOs: React.FC = () => {
 											className="w-full p-2 border border-gray-300 rounded-lg max-h-12"
 										/>
 									) : (
-										<input
+										<ReactInputMask
+											mask={field?.mask || ''}
 											type={'text'}
 											name={field.name}
 											value={formValues[
