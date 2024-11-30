@@ -11,7 +11,6 @@ import Sidebar from '../components/sidebar';
 import TopNav from '../components/top-nav';
 import Table from '../components/table';
 import Reminder from '../components/reminder';
-import SearchBox from '../components/search-box';
 import { getStats } from '../http/get-stats';
 import { useCookies } from 'react-cookie';
 
@@ -35,12 +34,7 @@ export const Home = () => {
 	const column_table_1 = ['Código', 'Nome', 'Quantidade', 'Marca'];
 	const column_table_2 = ['Código', 'Data de entrega', 'Cliente', 'Produto'];
 
-	// const data_table_1 = [
-	// 	['123', 'Placa Mãe', '2', 'Asus'],
-	// 	['123', 'Placa Mãe', '2', 'Asus'],
-	// 	['123', 'Placa Mãe', '2', 'Asus'],
-	// 	['123', 'Placa Mãe', '2', 'Asus'],
-	// ];
+
 	const data_table_2 = [
 		['123', '23/09/2024', 'Lorenzo Cardoso', 'SSD'],
 		['123', '23/09/2024', 'Lorenzo Cardoso', 'SSD'],
@@ -109,7 +103,6 @@ export const Home = () => {
 						<h1 className="text-2xl font-bold">Dashboard</h1>
 						<p className="text-sm text-gray-500">{today}</p>
 					</div>
-					<SearchBox />
 					<TopNav />
 				</header>
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
