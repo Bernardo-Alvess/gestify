@@ -13,6 +13,7 @@ import { createProductSo } from '../../http/create-product-service-order';
 import SuccessModal from '../../components/sucess-modal';
 import AddProductModal from '../../components/add-product-modal';
 import { useNavigate } from 'react-router-dom';
+import ReactInputMask from 'react-input-mask';
 
 interface IUser {
 	name: string;
@@ -223,7 +224,11 @@ export const CreateOS: React.FC = () => {
 									name: 'technician',
 									options: [...technicians],
 								},
-								{ label: 'Telefone', name: 'number' },
+								{
+									label: 'Telefone',
+									name: 'number',
+									mask: '(99) 9 9999-9999',
+								},
 								{
 									label: 'Data de abertura',
 									name: 'date',
@@ -290,7 +295,8 @@ export const CreateOS: React.FC = () => {
 											))}
 										</select>
 									) : (
-										<input
+										<ReactInputMask
+											mask={field?.mask || ''}
 											type={field.type || 'text'}
 											name={field.name}
 											value={formValues[

@@ -18,15 +18,14 @@ productServiceOrderRouter.get('/', auth, (req, res, next) => {
     productServiceOrderController.getProductServiceOrders(req, res, next)
 })
 
-productServiceOrderRouter.delete('/:id', auth, (req, res, next) => {
+productServiceOrderRouter.delete('/:id/:serviceOrderId', auth, (req, res, next) => {
     const idSchema = z.string().uuid()
     idSchema.parse(req.params.id)
     productServiceOrderController.deleteProductServiceOrder(req, res, next);
 });
 
 productServiceOrderRouter.post('/', auth, (req, res, next) => {
-    console.log('route product service order')
-    console.log(req.body)
+
     createProductServiceOrderSchema.parse(req.body)
     productServiceOrderController.createProductServiceOrder(req, res, next)
 })

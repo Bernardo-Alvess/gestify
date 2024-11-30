@@ -105,11 +105,6 @@ const AddProductModal = ({ toggle, onClose }: AddProductModalProps) => {
 			totalCost: formValues.price! * formValues.quantity!,
 		});
 
-		console.log({
-			id,
-			productId: formValues.id,
-			qtd: formValues.quantity,
-		});
 
 		createProductSo(cookies.jwt, {
 			serviceOrderId: id,

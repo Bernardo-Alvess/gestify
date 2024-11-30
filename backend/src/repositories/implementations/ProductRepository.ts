@@ -3,6 +3,7 @@ import { prisma } from "../../lib/prisma";
 import { Product } from '../../entities/Products/Product';
 import { IProductRepository } from '../IProductRepository';
 import { IUpdateProductDto } from '../../entities/Products/dtos/IUpdateProductDto';
+import { ILowStockProductDTO } from "../../entities/Products/dtos/ILowStockProductDTO";
 
 export class ProductRepository implements IProductRepository {
 
@@ -60,13 +61,12 @@ export class ProductRepository implements IProductRepository {
         companyId
       }
     })
-    console.log(count)
     return count
   }
 
-  async getLowStockProducts(companyId: string): Promise<Product[]> {
-
-    const products = prisma.product.findMany({
+  async getLowStockProducts(companyId: string): Promise<ILowStockProductDTO[]> {
+    try {
+      const products = await prisma.product.findMany({
       where: {
         qtd: {
           lte: prisma.product.fields.minQtd,
@@ -75,10 +75,21 @@ export class ProductRepository implements IProductRepository {
         minQtd: {
           not: null
         }
-      }
-    })
-    console.log(products)
+        },
+        select: {
+          id: true,
+          name: true,
+          price: true,
+          cost: true,
+          unityType: true,
+          qtd: true
+        }
+      })
     return products
+    } catch (e) {
+      console.error(e)
+      return []
+    }
   }
 
 }
