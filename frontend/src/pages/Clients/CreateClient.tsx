@@ -5,6 +5,7 @@ import TopNav from '../../components/top-nav';
 import Sidebar from '../../components/sidebar';
 import { createClient, ICreateClient } from '../../http/create-client';
 import { toast } from 'sonner';
+import { BackPageButton } from '../../components/back-page-button';
 
 const CreateClient = () => {
 	const [cookies] = useCookies();
@@ -36,7 +37,7 @@ const CreateClient = () => {
 	return (
 		<div className="flex h-screen overflow-hidden">
 			<Sidebar />
-			<main className="flex flex-col flex-1 p-10 bg-blue-200 space-y-10 h-screen">
+			<main className="flex flex-col flex-1 p-10 bg-blue-200 space-y-6 h-screen">
 				<header className="flex justify-between">
 					<div className="pt-16 md:pt-16 lg:pt-0">
 						<h1 className="text-2xl font-bold">Clientes</h1>
@@ -44,6 +45,7 @@ const CreateClient = () => {
 					</div>
 					<TopNav />
 				</header>
+				<BackPageButton route={'/clients'} />
 				<div className="flex flex-col gap-10 self-center h-5/6 w-fit bg-white overflow-y-auto rounded-lg shadow-xl p-2 overflow-x-hidden">
 					<div className="flex p-2 w-full h-16 items-center gap-2 border-b border-black border-opacity-10 ">
 						<img src={UserBlue} alt="" />
