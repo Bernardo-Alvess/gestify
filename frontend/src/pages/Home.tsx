@@ -35,12 +35,6 @@ export const Home = () => {
 	const column_table_1 = ['Código', 'Nome', 'Quantidade', 'Marca'];
 	const column_table_2 = ['Código', 'Data de entrega', 'Cliente', 'Produto'];
 
-	// const data_table_1 = [
-	// 	['123', 'Placa Mãe', '2', 'Asus'],
-	// 	['123', 'Placa Mãe', '2', 'Asus'],
-	// 	['123', 'Placa Mãe', '2', 'Asus'],
-	// 	['123', 'Placa Mãe', '2', 'Asus'],
-	// ];
 	const data_table_2 = [
 		['123', '23/09/2024', 'Lorenzo Cardoso', 'SSD'],
 		['123', '23/09/2024', 'Lorenzo Cardoso', 'SSD'],
@@ -144,20 +138,12 @@ export const Home = () => {
 				</div>
 
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-4">
-					<div className="col-span-5">
+					<div className="col-span-10">
 						<Table
 							icon={IconProductsBlack}
 							title="Produtos acabando no estoque"
 							columns={column_table_1}
 							data={produtosEstoque}
-						/>
-					</div>
-					<div className="col-span-5">
-						<Table
-							icon={IconOrdersBlack}
-							title="Ordens para entrega"
-							columns={column_table_2}
-							data={data_table_2}
 						/>
 					</div>
 					<div className="col-span-2">
