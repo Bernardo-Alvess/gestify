@@ -20,6 +20,7 @@ interface TableProps {
 	viewPage?: string;
 	editPage?: string;
 }
+
 const Table: React.FC<TableProps> = ({
 	icon,
 	title,
@@ -101,7 +102,7 @@ const Table: React.FC<TableProps> = ({
 									(cell: any, cellIndex: number) => (
 										<td
 											key={cellIndex}
-											className="px-4 py-2 text-xs font-medium border-none underline truncate text-center max-w-[80px] text-gray-700 decoration-purple-900"
+											className={`px-4 py-2 text-xs font-medium border-none underline truncate text-center max-w-[80px] text-gray-700 decoration-purple-900`}
 										>
 											{isDateString(cell)
 												? new Date(

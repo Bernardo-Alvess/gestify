@@ -67,7 +67,6 @@ export const ServiceOrders = () => {
 			fetchServiceOrders();
 		}
 	}
-
 	return (
 		<div className="flex h-screen overflow-hidden">
 			<Sidebar />

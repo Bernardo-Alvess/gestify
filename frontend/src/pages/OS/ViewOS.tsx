@@ -86,75 +86,6 @@ export const ViewOS: React.FC = () => {
 		fetchProductsForOs();
 	}, [fetchServiceOrder, fetchProductsForOs]);
 
-	// const data_table_2 = Array(20).fill(['123', 'Placa Mãe', '2', 'Asus']);
-	// const exportPDF = async () => {
-	// 	const pdf = new jsPDF('p', 'mm', 'a4'); // Página A4
-
-	// 	// Defina margens e espaçamento
-	// 	const margin = 10;
-	// 	let yPosition = 20;
-
-	// 	// Título do documento
-	// 	pdf.setFont('helvetica', 'bold');
-	// 	pdf.setFontSize(16);
-	// 	pdf.text('Ordem de Serviço - Visualização', margin, yPosition);
-	// 	yPosition += 10;
-
-	// 	pdf.setFont('helvetica', 'normal');
-	// 	pdf.setFontSize(12);
-
-	// 	// Campos organizados
-	// 	const fields = [
-	// 		{ label: 'Cliente', value: formValues.client },
-	// 		{ label: 'Técnico Responsável', value: formValues.technician },
-	// 		{ label: 'Telefone do cliente', value: formValues.number },
-	// 		{ label: 'Data de abertura', value: formValues.date },
-	// 		{ label: 'Descrição', value: formValues.description },
-	// 		{ label: 'Defeito', value: formValues.defect },
-	// 		{ label: 'Laudo técnico', value: formValues.report },
-	// 		{ label: 'Observações', value: formValues.extras },
-	// 	];
-
-	// 	// Renderize os campos
-	// 	fields.forEach((field) => {
-	// 		if (yPosition > 280) {
-	// 			pdf.addPage();
-	// 			yPosition = margin;
-	// 		}
-	// 		pdf.setFont('helvetica', 'bold');
-	// 		pdf.text(`${field.label}:`, margin, yPosition);
-	// 		yPosition += 6;
-
-	// 		pdf.setFont('helvetica', 'normal');
-	// 		const textLines = pdf.splitTextToSize(field.value || '', 180); // Quebra de texto para largura máxima
-	// 		textLines.forEach((line: string) => {
-	// 			if (yPosition > 280) {
-	// 				pdf.addPage();
-	// 				yPosition = margin;
-	// 			}
-	// 			pdf.text(line, margin, yPosition);
-	// 			yPosition += 6;
-	// 		});
-	// 		yPosition += 4; // Espaçamento entre campos
-	// 	});
-
-	// 	// Adicione o campo de observações manuscritas
-	// 	if (yPosition > 260) {
-	// 		pdf.addPage();
-	// 		yPosition = margin;
-	// 	}
-	// 	pdf.setFont('helvetica', 'bold');
-	// 	pdf.text('Observações (escrita à mão):', margin, yPosition);
-	// 	yPosition += 10;
-
-	// 	// Desenhe um retângulo para o campo de escrita à mão
-	// 	pdf.setDrawColor(0); // Cor da borda
-	// 	pdf.rect(margin, yPosition, 180, 50); // Largura 180mm, Altura 50mm
-
-	// 	// Salve o PDF
-	// 	pdf.save('ordem-de-servico.pdf');
-	// };
-
 	const exportPDF = async () => {
 		const pdf = new jsPDF('p', 'mm', 'a4'); // Página A4
 
@@ -308,8 +239,6 @@ export const ViewOS: React.FC = () => {
 				return '';
 		}
 	};
-
-	console.log(products);
 
 	return (
 		<div className="flex h-screen overflow-hidden">
