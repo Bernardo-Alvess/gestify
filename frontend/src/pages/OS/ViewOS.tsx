@@ -87,6 +87,74 @@ export const ViewOS: React.FC = () => {
 	}, [fetchServiceOrder, fetchProductsForOs]);
 
 	// const data_table_2 = Array(20).fill(['123', 'Placa Mãe', '2', 'Asus']);
+	// const exportPDF = async () => {
+	// 	const pdf = new jsPDF('p', 'mm', 'a4'); // Página A4
+
+	// 	// Defina margens e espaçamento
+	// 	const margin = 10;
+	// 	let yPosition = 20;
+
+	// 	// Título do documento
+	// 	pdf.setFont('helvetica', 'bold');
+	// 	pdf.setFontSize(16);
+	// 	pdf.text('Ordem de Serviço - Visualização', margin, yPosition);
+	// 	yPosition += 10;
+
+	// 	pdf.setFont('helvetica', 'normal');
+	// 	pdf.setFontSize(12);
+
+	// 	// Campos organizados
+	// 	const fields = [
+	// 		{ label: 'Cliente', value: formValues.client },
+	// 		{ label: 'Técnico Responsável', value: formValues.technician },
+	// 		{ label: 'Telefone do cliente', value: formValues.number },
+	// 		{ label: 'Data de abertura', value: formValues.date },
+	// 		{ label: 'Descrição', value: formValues.description },
+	// 		{ label: 'Defeito', value: formValues.defect },
+	// 		{ label: 'Laudo técnico', value: formValues.report },
+	// 		{ label: 'Observações', value: formValues.extras },
+	// 	];
+
+	// 	// Renderize os campos
+	// 	fields.forEach((field) => {
+	// 		if (yPosition > 280) {
+	// 			pdf.addPage();
+	// 			yPosition = margin;
+	// 		}
+	// 		pdf.setFont('helvetica', 'bold');
+	// 		pdf.text(`${field.label}:`, margin, yPosition);
+	// 		yPosition += 6;
+
+	// 		pdf.setFont('helvetica', 'normal');
+	// 		const textLines = pdf.splitTextToSize(field.value || '', 180); // Quebra de texto para largura máxima
+	// 		textLines.forEach((line: string) => {
+	// 			if (yPosition > 280) {
+	// 				pdf.addPage();
+	// 				yPosition = margin;
+	// 			}
+	// 			pdf.text(line, margin, yPosition);
+	// 			yPosition += 6;
+	// 		});
+	// 		yPosition += 4; // Espaçamento entre campos
+	// 	});
+
+	// 	// Adicione o campo de observações manuscritas
+	// 	if (yPosition > 260) {
+	// 		pdf.addPage();
+	// 		yPosition = margin;
+	// 	}
+	// 	pdf.setFont('helvetica', 'bold');
+	// 	pdf.text('Observações (escrita à mão):', margin, yPosition);
+	// 	yPosition += 10;
+
+	// 	// Desenhe um retângulo para o campo de escrita à mão
+	// 	pdf.setDrawColor(0); // Cor da borda
+	// 	pdf.rect(margin, yPosition, 180, 50); // Largura 180mm, Altura 50mm
+
+	// 	// Salve o PDF
+	// 	pdf.save('ordem-de-servico.pdf');
+	// };
+
 	const exportPDF = async () => {
 		const pdf = new jsPDF('p', 'mm', 'a4'); // Página A4
 
@@ -138,7 +206,63 @@ export const ViewOS: React.FC = () => {
 			yPosition += 4; // Espaçamento entre campos
 		});
 
-		// Adicione o campo de observações manuscritas
+		// Adicione os produtos como uma tabela
+		if (yPosition > 250) {
+			pdf.addPage();
+			yPosition = margin;
+		}
+
+		pdf.setFont('helvetica', 'bold');
+		pdf.text('Produtos Utilizados:', margin, yPosition);
+		yPosition += 10;
+
+		// Cabeçalho da tabela
+		const tableHeaders = [
+			'Nome',
+			'Quantidade',
+			'Preço Unitário',
+			'Preço Total',
+		];
+		const columnWidths = [40, 80, 30, 30];
+
+		pdf.setFont('helvetica', 'bold');
+		tableHeaders.forEach((header, index) => {
+			pdf.text(
+				header,
+				margin +
+					columnWidths.slice(0, index).reduce((a, b) => a + b, 0),
+				yPosition
+			);
+		});
+		yPosition += 6;
+
+		// Conteúdo da tabela
+		pdf.setFont('helvetica', 'normal');
+		products.forEach((product: any) => {
+			if (yPosition > 280) {
+				pdf.addPage();
+				yPosition = margin;
+			}
+			const productData = [
+				product.name,
+				product.qtd.toString(),
+				`R$ ${product.price}`,
+				`R$ ${product.totalValue}`,
+			];
+			productData.forEach((data, index) => {
+				pdf.text(
+					data,
+					margin +
+						columnWidths.slice(0, index).reduce((a, b) => a + b, 0),
+					yPosition
+				);
+			});
+			yPosition += 6;
+		});
+
+		yPosition += 10;
+
+		// Campo para observações manuscritas
 		if (yPosition > 260) {
 			pdf.addPage();
 			yPosition = margin;
@@ -147,9 +271,22 @@ export const ViewOS: React.FC = () => {
 		pdf.text('Observações (escrita à mão):', margin, yPosition);
 		yPosition += 10;
 
-		// Desenhe um retângulo para o campo de escrita à mão
 		pdf.setDrawColor(0); // Cor da borda
 		pdf.rect(margin, yPosition, 180, 50); // Largura 180mm, Altura 50mm
+		yPosition += 60;
+
+		// Campo para assinatura do técnico responsável
+		if (yPosition > 260) {
+			pdf.addPage();
+			yPosition = margin;
+		}
+		pdf.setFont('helvetica', 'bold');
+		pdf.text('Assinatura do Técnico Responsável:', margin, yPosition);
+		yPosition += 20;
+
+		// Linha para assinatura
+		pdf.setDrawColor(0);
+		pdf.line(margin, yPosition, margin + 100, yPosition); // Linha horizontal para assinatura
 
 		// Salve o PDF
 		pdf.save('ordem-de-servico.pdf');
@@ -171,6 +308,8 @@ export const ViewOS: React.FC = () => {
 				return '';
 		}
 	};
+
+	console.log(products);
 
 	return (
 		<div className="flex h-screen overflow-hidden">
@@ -261,8 +400,10 @@ export const ViewOS: React.FC = () => {
 									)}
 								</div>
 							))}
-							<div className='pt-5'>
-								<span className='font-semibold'>Valor Total:</span>
+							<div className="pt-5">
+								<span className="font-semibold">
+									Valor Total:
+								</span>
 								<span> R${totalValue}</span>
 							</div>
 						</div>
@@ -280,7 +421,7 @@ export const ViewOS: React.FC = () => {
 									action: () => {
 										alert('teste');
 									},
-									deleteAction: () => { },
+									deleteAction: () => {},
 								}}
 							/>
 						</div>

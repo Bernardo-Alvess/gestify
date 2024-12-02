@@ -434,7 +434,6 @@ export const EditOs: React.FC = () => {
 											value={formValues[
 												field.name as keyof IFormValues
 											]?.toString()}
-											required
 											onChange={handleChange}
 											className="w-full p-2 border border-gray-300 rounded-lg max-h-12"
 										/>
