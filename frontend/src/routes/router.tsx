@@ -25,9 +25,13 @@ const router = createBrowserRouter([
 		path: '/',
 		element: <ProtectedRoute children={<Home />} />,
 	},
+	// {
+	// 	path: '/login',
+	// 	element: <ProtectedRoute children={<Home />} />,
+	// },
 	{
 		path: '/login',
-		element: <ProtectedRoute children={<Home />} />,
+		element: <Login />,
 	},
 	{
 		path: '/signup',
@@ -91,7 +95,7 @@ const router = createBrowserRouter([
 	},
 	{
 		path: '/editos/:id',
-		element: <ProtectedRoute children={<EditOs/>}/>
+		element: <ProtectedRoute children={<EditOs />} />,
 	},
 	{
 		path: 'create-product',
@@ -100,7 +104,8 @@ const router = createBrowserRouter([
 	{
 		path: 'view-product/:id',
 		element: <ProtectedRoute children={<ViewProduct />} />,
-	},{
+	},
+	{
 		path: 'edit-product/:id',
 		element: <ProtectedRoute children={<EditProduct />} />,
 	},

@@ -1,5 +1,6 @@
 import { ReactNode, createContext, useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
+import { useNavigate } from 'react-router-dom';
 
 interface AuthContextType {
 	isAuthenticated: boolean;
@@ -35,7 +36,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 		login,
 		logout,
 	};
-	
+
 	return (
 		<AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 	);

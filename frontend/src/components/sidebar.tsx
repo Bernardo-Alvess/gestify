@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import GestifyLogo from '../public/assets/gestify_texto.svg';
 import IconHomeGrey from '../public/assets/home-page/icons/home/home_icon_g.svg';
 import IconOrdersGrey from '../public/assets/home-page/icons/orders/orders_icon_g.svg';
@@ -15,6 +15,7 @@ const Sidebar = () => {
 	const [cookies, setCookie, removeCookie] = useCookies(['id', 'jwt']);
 	const [sidebarOpen, setSidebarOpen] = useState(false);
 	const { logout } = useContext(AuthContext);
+	const navigate = useNavigate();
 	const toggleSidebar = () => {
 		setSidebarOpen(!sidebarOpen);
 	};
@@ -26,6 +27,11 @@ const Sidebar = () => {
 	// 	removeCookie('jwt', { path: '/' });
 	// 	removeCookie('id', { path: '/' });
 	// };
+
+	const logoutAction = () => {
+		logout();
+		navigate('/login');
+	};
 
 	return (
 		<>
@@ -121,7 +127,7 @@ const Sidebar = () => {
 					</nav>
 				</div>
 				<button
-					onClick={logout}
+					onClick={logoutAction}
 					className="flex items-center gap-3 text-gray-500 hover:text-blue-500 size-6 transition text-lg"
 				>
 					<img src={IconLogout} alt="" className="size-6" />
