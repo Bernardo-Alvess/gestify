@@ -58,7 +58,7 @@ export const Home = () => {
 	const fetchStats = useCallback(async () => {
 		const data = await getStats(cookies.jwt);
 		setStatistics(data);
-	}, []);
+	}, [cookies.jwt]);
 
 	useEffect(() => {
 		fetchStats();
