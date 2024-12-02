@@ -84,6 +84,11 @@ class ProductController {
             const product = await this.repository.getProduct(productId)
             if (product) {
                 if (product.qtd) {
+                    if (_qtd < 0) {
+                        await this.repository.updateProduct(productId, {
+                            qtd: product.qtd + (1 * _qtd)
+                        })
+                    }
                     await this.repository.updateProduct(productId, {
                         qtd: product.qtd - _qtd
                     })

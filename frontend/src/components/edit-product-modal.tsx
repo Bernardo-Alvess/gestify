@@ -99,8 +99,14 @@ const EditProductModal = ({
 			return;
 		}
 
+		const diff = formValues.quantity - originalQtd!
+
+		updateStockCount(cookies.jwt, formValues.id, diff);
+
+
 		// if (formValues.quantity >= originalQtd!) {
-		// 	updateStockCount(cookies.jwt, formValues.id, formValues.quantity);
+		// 	let diff = formValues.quantity - originalQtd!
+		// 	updateStockCount(cookies.jwt, formValues.id, diff, "-");
 		// } else {
 		// 	updateStockCount(
 		// 		cookies.jwt,
