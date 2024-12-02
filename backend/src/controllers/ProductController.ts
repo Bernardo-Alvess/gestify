@@ -76,6 +76,24 @@ class ProductController {
             next(e);
         }
     }
+
+    async stockChange(req: Request, res: Response, next: NextFunction) {
+        try {
+            const productId = req.params.id
+            const { _qtd } = req.body
+            const product = await this.repository.getProduct(productId)
+            if (product) {
+                if (product.qtd) {
+                    await this.repository.updateProduct(productId, {
+                        qtd: product.qtd - _qtd
+                    })
+                }
+            }
+            res.send('ok')
+        } catch (e) {
+            next(e)
+        }
+    }
 }
 
 const productRepository = new ProductRepository();

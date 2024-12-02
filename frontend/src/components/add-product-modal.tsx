@@ -5,6 +5,7 @@ import { toast } from 'sonner';
 import { addProductToSo } from '../data/products-so';
 import { useParams } from 'react-router-dom';
 import { createProductSo } from '../http/create-product-service-order';
+import { updateStockCount } from '../http/update-stock-count';
 
 interface AddProductModalProps {
 	toggle: boolean;
@@ -39,7 +40,7 @@ const AddProductModal = ({ toggle, onClose }: AddProductModalProps) => {
 	const [formValues, setFormValues] = useState<IFormValues>({
 		id: undefined,
 		product: undefined,
-		quantity: undefined,
+		quantity: 1,
 		price: undefined,
 		cost: undefined,
 		qtd: undefined,
@@ -105,12 +106,13 @@ const AddProductModal = ({ toggle, onClose }: AddProductModalProps) => {
 			totalCost: formValues.price! * formValues.quantity!,
 		});
 
-
 		createProductSo(cookies.jwt, {
 			serviceOrderId: id,
 			productId: formValues.id,
 			qtd: formValues.quantity,
 		});
+
+		updateStockCount(cookies.jwt, formValues.id, formValues.quantity);
 		toast.success('Produto adicionado a ordem de Serviço');
 	};
 
