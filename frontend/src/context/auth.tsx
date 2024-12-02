@@ -1,6 +1,5 @@
 import { ReactNode, createContext, useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
-import { useNavigate } from 'react-router-dom';
 
 interface AuthContextType {
 	isAuthenticated: boolean;
