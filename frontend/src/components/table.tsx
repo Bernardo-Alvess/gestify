@@ -56,6 +56,15 @@ const Table: React.FC<TableProps> = ({
 		return !isNaN(Date.parse(dateString));
 	}
 
+	function formatDateToUTC(dateString: string): string {
+		const date = new Date(dateString); // Cria o objeto Date
+		// Extraia o dia, mês e ano diretamente no UTC
+		const day = date.getUTCDate().toString().padStart(2, '0');
+		const month = (date.getUTCMonth() + 1).toString().padStart(2, '0'); // UTCMonth é 0-indexado
+		const year = date.getUTCFullYear();
+		return `${day}/${month}/${year}`;
+	}
+
 	return (
 		<div className="bg-white p-4 rounded-lg shadow-lg w-full overflow-y-auto h-full">
 			<div className="flex justify-between items-center p-2">
@@ -105,9 +114,7 @@ const Table: React.FC<TableProps> = ({
 											className={`px-4 py-2 text-xs font-medium border-none underline truncate text-center max-w-[80px] text-gray-700 decoration-purple-900`}
 										>
 											{isDateString(cell)
-												? new Date(
-														cell
-												  ).toLocaleDateString('pt-br')
+												? formatDateToUTC(cell)
 												: cell
 												? cell
 												: 'N/A'}{' '}

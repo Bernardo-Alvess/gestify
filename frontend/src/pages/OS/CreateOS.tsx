@@ -29,7 +29,7 @@ interface IFormValues {
 	report: string | undefined;
 	description: string | undefined;
 	extras: string | undefined;
-	date: string;
+	date: string | Date;
 }
 
 export const CreateOS: React.FC = () => {
@@ -50,7 +50,7 @@ export const CreateOS: React.FC = () => {
 		report: '',
 		description: '',
 		extras: '',
-		date: today,
+		date: new Date(),
 	});
 
 	const columns = [
