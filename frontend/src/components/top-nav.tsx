@@ -1,9 +1,5 @@
-import CachorroTeste from '../public/assets/home-page/img/cachorro_perfil.jpg';
-import IconSettings from '../public/assets/home-page/icons/generic/settings_icon.svg';
-import IconNotification from '../public/assets/home-page/icons/generic/notification_icon.svg';
-
 const TopNav = () => {
-    return (
+	return (
 		// <nav>
 		//     <ul className='flex space-x-5'>
 		//         <li>
@@ -26,6 +22,6 @@ const TopNav = () => {
 		// </nav>
 		<div></div>
 	);
-}
+};
 
-export default TopNav
+export default TopNav;

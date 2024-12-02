@@ -134,7 +134,7 @@ export const CreateOS: React.FC = () => {
 			extras: formValues.extras === '' ? undefined : formValues.extras,
 			status: selectedOption.toUpperCase(),
 			number: formValues.number === '' ? undefined : formValues.number,
-			//date: formValues.date,
+			date: formValues.date ? new Date(formValues.date) : undefined,
 			userId: cookies.id,
 			clientId: formValues.client === '' ? undefined : formValues.client,
 			technicianId:
@@ -155,12 +155,12 @@ export const CreateOS: React.FC = () => {
 			toast.success('Ordem de serviço criada!');
 			setSuccessModal(true);
 			navigate('/orders');
-		}else if(selectedOption == ""){
+		} else if (selectedOption == '') {
 			toast.error('Selecione um status');
-		}else{
+		} else {
 			toast.error('Erro ao criar Ordem de Serviço');
 		}
-		}
+	};
 
 	return (
 		<div className="flex h-screen overflow-hidden">
@@ -302,7 +302,6 @@ export const CreateOS: React.FC = () => {
 											value={formValues[
 												field.name as keyof IFormValues
 											]?.toString()}
-											required
 											onChange={handleChange}
 											className="w-full p-2 border border-gray-300 rounded-lg max-h-12"
 										/>
@@ -322,7 +321,7 @@ export const CreateOS: React.FC = () => {
 									action: () => {
 										setAddProductModal(true);
 									},
-									deleteAction: () => { },
+									deleteAction: () => {},
 								}}
 							/>
 						</div>
