@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import GestifyLogo from '../public/assets/gestify_texto.svg';
 import IconHomeGrey from '../public/assets/home-page/icons/home/home_icon_g.svg';
@@ -9,22 +9,23 @@ import IconClientsGrey from '../public/assets/home-page/icons/clients/clients_ic
 import IconMenu from '../public/assets/home-page/icons/generic/menu_icon.svg';
 import IconLogout from '../public/assets/logout.svg';
 import { useCookies } from 'react-cookie';
+import { AuthContext } from '../context/auth';
 
 const Sidebar = () => {
 	const [cookies, setCookie, removeCookie] = useCookies(['id', 'jwt']);
 	const [sidebarOpen, setSidebarOpen] = useState(false);
-
+	const { logout } = useContext(AuthContext);
 	const toggleSidebar = () => {
 		setSidebarOpen(!sidebarOpen);
 	};
 
-	const logout = () => {
-		localStorage.removeItem('jwt');
-		localStorage.removeItem('id');
+	// const logout = () => {
+	// 	localStorage.removeItem('jwt');
+	// 	localStorage.removeItem('id');
 
-		removeCookie('jwt', { path: '/' });
-		removeCookie('id', { path: '/' });
-	};
+	// 	removeCookie('jwt', { path: '/' });
+	// 	removeCookie('id', { path: '/' });
+	// };
 
 	return (
 		<>
