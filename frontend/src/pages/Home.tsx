@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import IconOrders from '../public/assets/home-page/icons/orders/orders_icon.svg';
-import IconOrdersBlack from '../public/assets/home-page/icons/orders/orders_icon_b.svg';
 import IconProductsBlack from '../public/assets/home-page/icons/products/products_icon_b.svg';
 import IconProducts from '../public/assets/home-page/icons/products/products_icon.svg';
 import IconUsers from '../public/assets/home-page/icons/users/user_icon.svg';
@@ -38,41 +37,6 @@ export const Home = () => {
 		'Custo',
 		'Tipo Un',
 		'Quantidade',
-	];
-	const column_table_2 = ['Código', 'Data de entrega', 'Cliente', 'Produto'];
-
-	const data_table_2 = [
-		['123', '23/09/2024', 'Lorenzo Cardoso', 'SSD'],
-		['123', '23/09/2024', 'Lorenzo Cardoso', 'SSD'],
-		['123', '23/09/2024', 'Lorenzo Cardoso', 'SSD'],
-	];
-
-	const produtosEstoque = [
-		{
-			codigo: 'P001',
-			nome: 'Caneta Esferográfica',
-			quantidade: 5,
-			marca: 'Bic',
-		},
-		{
-			codigo: 'P002',
-			nome: 'Caderno 100 folhas',
-			quantidade: 3,
-			marca: 'Tilibra',
-		},
-		{
-			codigo: 'P003',
-			nome: 'Borracha Escolar',
-			quantidade: 2,
-			marca: 'Faber-Castell',
-		},
-		{ codigo: 'P004', nome: 'Lápis HB', quantidade: 4, marca: 'Staedtler' },
-		{
-			codigo: 'P005',
-			nome: 'Marcador de Texto',
-			quantidade: 1,
-			marca: 'Stabilo',
-		},
 	];
 
 	const addReminder = (reminder: Reminder) => {
