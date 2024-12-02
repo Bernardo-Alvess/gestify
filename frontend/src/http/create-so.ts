@@ -8,6 +8,7 @@ interface IServiceOrder {
     userId: string
     clientId?: string | undefined
     technicianId?: string | undefined
+    date: Date | undefined | string
 }
 
 export const createSo = async (token: string, data: IServiceOrder): Promise<string | undefined> => {

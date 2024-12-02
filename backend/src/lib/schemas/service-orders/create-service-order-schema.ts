@@ -14,4 +14,5 @@ export const createServiceOrderSchema = z.object({
     }),
     technicianId: z.string().uuid().optional().nullable(),
     clientId: z.string().uuid().optional(),
+    date: z.string().optional()
 }).strict()

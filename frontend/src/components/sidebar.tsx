@@ -12,7 +12,7 @@ import { useCookies } from 'react-cookie';
 import { AuthContext } from '../context/auth';
 
 const Sidebar = () => {
-	const [cookies, setCookie, removeCookie] = useCookies(['id', 'jwt']);
+	const [cookies] = useCookies(['id', 'jwt']);
 	const [sidebarOpen, setSidebarOpen] = useState(false);
 	const { logout } = useContext(AuthContext);
 	const navigate = useNavigate();

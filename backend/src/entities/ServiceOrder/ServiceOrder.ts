@@ -14,6 +14,7 @@ interface IServiceOrderProps {
     userId: string;
     technicianId?: string;
     clientId?: string;
+    date: string
 }
 
 export class ServiceOrder {
@@ -23,7 +24,7 @@ export class ServiceOrder {
     public report?: string | null
     public extras?: string | null
     public number?: string | null
-    public date: Date = new Date();
+    public date: Date | string
     public companyId: string;
     public status: StatusEnum
     public userId: string;
@@ -36,13 +37,12 @@ export class ServiceOrder {
         } else {
             this.id = randomUUID()
         }
-
+        this.date = new Date(data.date)
         this.description = data.description
         this.defect = data.defect
         this.extras = data.extras
         this.report = data.report
         this.number = data.number
-        this.date = new Date()
         this.companyId = data.companyId
         this.clientId = data.clientId
         this.technicianId = data.technicianId
