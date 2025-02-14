@@ -1,14 +1,17 @@
 import { useCookies } from 'react-cookie';
-
+import InputMask from 'react-input-mask';
 import UserBlue from '../../public/assets/view-user-page/user-blue.svg';
 import TopNav from '../../components/top-nav';
 import Sidebar from '../../components/sidebar';
 import { createClient, ICreateClient } from '../../http/create-client';
 import { toast } from 'sonner';
+import { useNavigate } from 'react-router-dom';
+import { BackPageButton } from '../../components/back-page-button';
 
 const CreateClient = () => {
 	const [cookies] = useCookies();
 	const today = new Date().toLocaleDateString('pt-BR');
+	const navigate = useNavigate();
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -30,135 +33,137 @@ const CreateClient = () => {
 			return;
 		}
 
+		navigate('/clients');
 		toast.success('Cliente adicionado');
 	};
 
 	return (
 		<div className="flex h-screen overflow-hidden">
 			<Sidebar />
-			<main className="flex flex-col flex-1 p-10 bg-blue-200 space-y-10 h-screen">
-				<header className="flex justify-between">
-					<div className="pt-16 md:pt-16 lg:pt-0">
-						<h1 className="text-2xl font-bold">Clientes</h1>
+			<main className="flex-1 p-6 bg-blue-200 space-y-5 h-screen">
+				<header className="flex justify-between items-center">
+					<div>
+						<h1 className="text-xl font-bold">Clientes - Adicionar</h1>
 						<p className="text-sm text-gray-500">{today}</p>
 					</div>
 					<TopNav />
 				</header>
-				<div className="flex flex-col gap-10 self-center h-5/6 w-fit bg-white overflow-y-auto rounded-lg shadow-xl p-2 overflow-x-hidden">
-					<div className="flex p-2 w-full h-16 items-center gap-2 border-b border-black border-opacity-10 ">
-						<img src={UserBlue} alt="" />
-						<p className="text-bold text-xl">
+				<BackPageButton route={'/clients'} />
+				<div className="bg-white p-6 rounded-lg shadow-md space-y-4">
+					<div className="flex gap-2 border-b pb-3 border-gray-300">
+						<img src={UserBlue} className="w-6" alt="" />
+						<h2 className="font-semibold text-lg">
 							Adicionar novo cliente ao sistema
-						</p>
+						</h2>
 					</div>
-					<div className="flex flex-col gap-10">
-						<form
-							id="create-client-form"
-							className="col-span-4 flex"
-							onSubmit={handleSubmit}
-						>
-							<div className="p-3 flex flex-col gap-12">
-								<div className="flex flex-col gap-1 w-fit">
-									<label
-										className="font-bold text-md"
-										htmlFor="name"
-									>
-										Nome
-									</label>
-									<input
-										required
-										className="p-1 border rounded-lg"
-										type="text"
-										name="name"
-									/>
-								</div>
-								<div className="flex flex-col gap-1 w-fit">
-									<label
-										className="font-bold text-md"
-										htmlFor="document"
-									>
-										Documento
-									</label>
-									<input
-										required
-										className="p-1 border rounded-lg"
-										type="text"
-										name="document"
-									/>
-								</div>
-								<div className="flex flex-col gap-1 w-fit">
-									<label
-										className="font-bold text-md"
-										htmlFor="number"
-									>
-										Telefone
-									</label>
-									<input
-										className="p-1 border rounded-lg"
-										type="text"
-										name="number"
-									/>
-								</div>
-								<div className="flex flex-col gap-1 w-fit">
-									<label
-										className="font-bold text-md"
-										htmlFor="city"
-									>
-										Cidade
-									</label>
-									<input
-										className="p-1 border rounded-lg"
-										type="text"
-										name="city"
-									/>
-								</div>
-							</div>
-							<div className="p-3 flex flex-col gap-12">
-								<div className="flex flex-col gap-1 w-fit">
-									<label
-										className="font-bold text-md"
-										htmlFor="email"
-									>
-										Email
-									</label>
-									<input
-										required
-										className="p-1 border rounded-lg"
-										type="text"
-										name="email"
-									/>
-								</div>
-								<div className="flex flex-col gap-1 w-fit">
-									<label
-										className="font-bold text-md"
-										htmlFor="address"
-									>
-										Endereço
-									</label>
-									<input
-										className="p-1 border rounded-lg"
-										type="text"
-										name="address"
-									/>
-								</div>
-								<div className="flex flex-col gap-1 w-fit">
-									<label
-										className="font-bold text-md"
-										htmlFor="neighborhood"
-									>
-										Bairro
-									</label>
-									<input
-										className="p-1 border rounded-lg"
-										type="text"
-										name="neighborhood"
-									/>
-								</div>
-							</div>
-						</form>
+
+					<form
+						id="create-client-form"
+						className="grid grid-cols-2 gap-4 py-6 px-8"
+						onSubmit={handleSubmit}
+					>
+						<div className="flex flex-col gap-1">
+							<label
+								className="font-semibold text-black"
+								htmlFor="name"
+							>
+								Nome
+							</label>
+							<input
+								required
+								className="p-2 border border-gray-300 rounded-lg"
+								type="text"
+								name="name"
+							/>
+						</div>
+						<div className="flex flex-col gap-1">
+							<label
+								className="font-semibold text-black"
+								htmlFor="document"
+							>
+								Documento
+							</label>
+							<InputMask
+								mask={'999.999.999-99'}
+								required
+								className="p-2 border border-gray-300 rounded-lg"
+								type="text"
+								name="document"
+							/>
+						</div>
+						<div className="flex flex-col gap-1">
+							<label
+								className="font-semibold text-black"
+								htmlFor="number"
+							>
+								Telefone
+							</label>
+							<InputMask
+								mask={'(99) 9 9999-9999'}
+								className="p-2 border border-gray-300 rounded-lg"
+								type="text"
+								name="number"
+							/>
+						</div>
+						<div className="flex flex-col gap-1">
+							<label
+								className="font-semibold text-black"
+								htmlFor="city"
+							>
+								Cidade
+							</label>
+							<input
+								className="p-2 border border-gray-300 rounded-lg"
+								type="text"
+								name="city"
+							/>
+						</div>
+						<div className="flex flex-col gap-1">
+							<label
+								className="font-semibold text-black"
+								htmlFor="email"
+							>
+								Email
+							</label>
+							<input
+								required
+								className="p-2 border border-gray-300 rounded-lg"
+								type="email"
+								name="email"
+							/>
+						</div>
+						<div className="flex flex-col gap-1">
+							<label
+								className="font-semibold text-black"
+								htmlFor="address"
+							>
+								Endereço
+							</label>
+							<input
+								className="p-2 border border-gray-300 rounded-lg"
+								type="text"
+								name="address"
+							/>
+						</div>
+						<div className="flex flex-col gap-1">
+							<label
+								className="font-semibold text-black"
+								htmlFor="neighborhood"
+							>
+								Bairro
+							</label>
+							<input
+								className="p-2 border border-gray-300 rounded-lg"
+								type="text"
+								name="neighborhood"
+							/>
+						</div>
+					</form>
+
+					<div className="flex justify-center mt-4">
 						<button
 							form="create-client-form"
-							className="self-center bg-primary p-2 w-60 h-11 rounded-lg text-white font-bold"
+							className="w-full max-w-sm bg-blue-500 text-white py-2 rounded-lg font-semibold hover:bg-blue-600 transition"
 							type="submit"
 						>
 							Enviar

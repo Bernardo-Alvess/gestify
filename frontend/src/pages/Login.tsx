@@ -1,7 +1,6 @@
 //imports fixos
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
-import { useCookies } from 'react-cookie';
 import { useContext, useState } from 'react';
 
 //imports locais
@@ -15,7 +14,6 @@ import { Link } from 'react-router-dom';
 export const Login = () => {
 	const { login } = useContext(AuthContext);
 	const navigate = useNavigate();
-	const [cookies] = useCookies(['jwt', 'id']);
 
 	const [formData, setFormData] = useState({
 		email: '',
@@ -30,7 +28,7 @@ export const Login = () => {
 			return;
 		}
 
-		const { logged } = await loginUser({
+		const { logged, id } = await loginUser({
 			email: formData.email,
 			password: formData.password,
 		});
@@ -39,10 +37,9 @@ export const Login = () => {
 			toast.error('Erro ao entrar na conta');
 			return;
 		}
-
 		// toast.success('Entrando...');
 		login();
-		navigate(`/home/${cookies.id}`);
+		navigate(`/home/${id}`);
 	};
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

@@ -12,10 +12,10 @@ export class ServiceOrderController {
     async createServiceOrder(req: Request, res: Response, next: NextFunction) {
         try {
             const companyId = (req as CustomRequest).token.ownerId
-            const { id, description, defect, extras, clientId, technicianId, status, userId, report, number } = req.body
+            const { id, description, defect, extras, clientId, technicianId, status, userId, report, number, date } = req.body
 
-            const serviceOrder = new ServiceOrder({ id, description, defect, extras, companyId, clientId, technicianId, status, userId, report, number })
-
+            const serviceOrder = new ServiceOrder({ id, description, defect, extras, companyId, clientId, technicianId, status, userId, report, number, date })
+            console.log(serviceOrder)
             await this.repository.createServiceOrder(serviceOrder)
 
             res.status(201).json({ id: serviceOrder.id })
@@ -94,8 +94,13 @@ export class ServiceOrderController {
     async deleteServiceOrder(req: Request, res: Response, next: NextFunction) {
         try {
             const id = req.params.id
-            await this.repository.deleteServiceOrder(id)
-            res.send()
+            const result = await this.repository.deleteServiceOrder(id)
+            if(result){
+                res.json({ message: "Ordem deletada com sucesso!" });
+            }else{
+                res.json({ error: "Ordem com produtos adicionados!" });
+            }
+            
         } catch (e) {
             next(e)
         }

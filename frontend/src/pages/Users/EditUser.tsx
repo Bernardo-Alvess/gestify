@@ -8,6 +8,8 @@ import { useParams } from 'react-router-dom';
 import { useCallback, useEffect, useState } from 'react';
 import { getUserById } from '../../http/get-user-by-id';
 import { updateUser } from '../../http/update-user';
+import { BackPageButton } from '../../components/back-page-button';
+import ReactInputMask from 'react-input-mask';
 
 export interface IUpdateUser {
 	name?: string | null | undefined;
@@ -89,6 +91,7 @@ const EditUser = () => {
 					</div>
 					<TopNav />
 				</header>
+				<BackPageButton route={'/users'} />
 				<div className="flex flex-col gap-10 self-center h-5/6 w-fit bg-white overflow-y-auto rounded-lg shadow-xl p-2 overflow-x-hidden">
 					<div className="flex p-2 w-full h-16 items-center gap-2 border-b border-black border-opacity-10 ">
 						<img src={UserBlue} alt="" />
@@ -145,7 +148,8 @@ const EditUser = () => {
 									>
 										Telefone
 									</label>
-									<input
+									<ReactInputMask
+										mask="(99) 9 9999-9999"
 										inputMode="numeric"
 										className="p-1 border rounded-lg"
 										type="text"

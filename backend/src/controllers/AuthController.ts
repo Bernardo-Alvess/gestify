@@ -43,7 +43,7 @@ export class AuthController {
                         sameSite: 'none',
                         domain: '.onrender.com'
                 })
-                return res.json({ logged: true })
+                return res.json({ logged: true, id: user.id })
             }
 
             return res.status(400).json({ message: 'Invalid password' })

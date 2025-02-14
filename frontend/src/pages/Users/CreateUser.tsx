@@ -1,14 +1,17 @@
 import { useCookies } from 'react-cookie';
-
+import InputMask from 'react-input-mask';
 import UserBlue from '../../public/assets/view-user-page/user-blue.svg';
 import TopNav from '../../components/top-nav';
 import Sidebar from '../../components/sidebar';
 import { toast } from 'sonner';
 import { ICreateUser, createUser } from '../../http/create-user';
+import { useNavigate } from 'react-router-dom';
+import { BackPageButton } from '../../components/back-page-button';
 
 const CreateUser = () => {
 	const [cookies] = useCookies();
 	const today = new Date().toLocaleDateString('pt-BR');
+	const navigate = useNavigate();
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -32,27 +35,27 @@ const CreateUser = () => {
 			return;
 		}
 
+		navigate('/users');
 		toast.success('Usuário adicionado');
 	};
 
 	return (
 		<div className="flex h-screen overflow-hidden">
 			<Sidebar />
-			<main className="flex-1 p-6 bg-blue-200 space-y-6 h-screen">
+			<main className="flex-1 p-6 bg-blue-200 space-y-5 h-screen">
 				<header className="flex justify-between items-center">
 					<div>
-						<h1 className="text-xl font-bold">Usuários - Adicionar</h1>
+						<h1 className="text-xl font-bold">
+							Usuários - Adicionar
+						</h1>
 						<p className="text-sm text-gray-500">{today}</p>
 					</div>
 					<TopNav />
 				</header>
-
+				<BackPageButton route={'/users'} />
 				<div className="bg-white p-6 rounded-lg shadow-md space-y-4">
 					<div className="flex gap-2 border-b pb-3 border-gray-300">
-						<img
-							src={UserBlue}
-							className="w-6"
-							alt="" />
+						<img src={UserBlue} className="w-6" alt="" />
 						<h2 className="font-semibold text-lg">
 							Adicionar novo usuário ao sistema
 						</h2>
@@ -64,7 +67,10 @@ const CreateUser = () => {
 						onSubmit={handleSubmit}
 					>
 						<div className="flex flex-col gap-1">
-							<label className="font-semibold text-black" htmlFor="name">
+							<label
+								className="font-semibold text-black"
+								htmlFor="name"
+							>
 								Nome
 							</label>
 							<input
@@ -77,10 +83,12 @@ const CreateUser = () => {
 						<div className="flex flex-col gap-1">
 							<label
 								className="font-semibold text-black"
-								htmlFor="document">
+								htmlFor="document"
+							>
 								Documento
 							</label>
-							<input
+							<InputMask
+								mask={'999.999.999-99'}
 								required
 								className="p-2 border border-gray-300 rounded-lg"
 								type="text"
@@ -88,21 +96,24 @@ const CreateUser = () => {
 							/>
 						</div>
 						<div className="flex flex-col gap-1">
-							<label 
-							className="font-semibold text-black" 
-							htmlFor="number">
+							<label
+								className="font-semibold text-black"
+								htmlFor="number"
+							>
 								Telefone
 							</label>
-							<input
+							<InputMask
+								mask={'(99) 9 9999-9999'}
 								className="p-2 border border-gray-300 rounded-lg"
 								type="text"
 								name="number"
 							/>
 						</div>
 						<div className="flex flex-col gap-1">
-							<label 
-							className="font-semibold text-black" 
-							htmlFor="city">
+							<label
+								className="font-semibold text-black"
+								htmlFor="city"
+							>
 								Cidade
 							</label>
 							<input
@@ -112,9 +123,10 @@ const CreateUser = () => {
 							/>
 						</div>
 						<div className="flex flex-col gap-1">
-							<label 
-							className="font-semibold text-black" 
-							htmlFor="email">
+							<label
+								className="font-semibold text-black"
+								htmlFor="email"
+							>
 								Email
 							</label>
 							<input
@@ -125,9 +137,10 @@ const CreateUser = () => {
 							/>
 						</div>
 						<div className="flex flex-col gap-1">
-							<label 
-							className="font-semibold text-black" 
-							htmlFor="password">
+							<label
+								className="font-semibold text-black"
+								htmlFor="password"
+							>
 								Senha
 							</label>
 							<input
@@ -138,9 +151,10 @@ const CreateUser = () => {
 							/>
 						</div>
 						<div className="flex flex-col gap-1">
-							<label 
-							className="font-semibold text-black" 
-							htmlFor="address">
+							<label
+								className="font-semibold text-black"
+								htmlFor="address"
+							>
 								Endereço
 							</label>
 							<input
@@ -150,8 +164,10 @@ const CreateUser = () => {
 							/>
 						</div>
 						<div className="flex flex-col gap-1">
-							<label 
-							className="font-semibold text-black" htmlFor="neighborhood">
+							<label
+								className="font-semibold text-black"
+								htmlFor="neighborhood"
+							>
 								Bairro
 							</label>
 							<input
@@ -161,9 +177,10 @@ const CreateUser = () => {
 							/>
 						</div>
 						<div className="flex flex-col gap-1">
-							<label 
-							className="font-semibold text-black" 
-							htmlFor="userType">
+							<label
+								className="font-semibold text-black"
+								htmlFor="userType"
+							>
 								Tipo de usuário
 							</label>
 							<select

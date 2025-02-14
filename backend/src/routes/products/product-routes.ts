@@ -7,6 +7,13 @@ import { adminMiddleware } from '../../middleware/admin-auth';
 
 const productRouter = Router();
 
+productRouter.put('/stock/:id', auth, (req, res, next) => {
+    // res.json({ msg: 'eu' })
+    console.log('teste')
+    productController.stockChange(req, res, next)
+})
+
+
 productRouter.delete('/:id', auth, (req, res, next) => {
     const idSchema = z.string().uuid()
     idSchema.parse(req.params.id)
@@ -29,7 +36,8 @@ productRouter.get('/:id', auth, (req, res, next) => {
 });
 
 
-productRouter.put('/', adminMiddleware, (req, res, next) => {
+productRouter.put('/:id', adminMiddleware, (req, res, next) => {
+
     productController.updateProduct(req, res, next)
 })
 

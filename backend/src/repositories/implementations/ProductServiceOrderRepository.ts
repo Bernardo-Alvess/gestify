@@ -31,27 +31,12 @@ export class ProductServiceOrderRepository implements IProductServiceOrderReposi
     return all.map((data) => new ProductServiceOrder(data));
   }
 
-  // async updateProductServiceOrder(id: string, data: IUpdateProductServiceOrderDto): Promise<void> {
-  //   try {
-  //     await prisma.productServiceOrder.update({
-  //       where: { id },
-  //       data: {
-  //         ...data,
-  //       },
-  //     });
-  //     return
-
-  //   } catch (e) {
-  //     console.log(e)
-  //   }
-  // }
 
   async updateProductServiceOrder(
     id: string,
     data: IUpdateProductServiceOrderDto
   ): Promise<void> {
     try {
-      console.log(data)
       const updated = await prisma.productServiceOrder.update({
         where: { id },
         data: {
@@ -60,8 +45,6 @@ export class ProductServiceOrderRepository implements IProductServiceOrderReposi
           qtd: data.qtd,
         },
       });
-      console.log('updated')
-      console.log(updated)
     } catch (error) {
       console.error('Error updating ProductServiceOrder:', error);
       throw new Error('Failed to update ProductServiceOrder');
@@ -75,10 +58,20 @@ export class ProductServiceOrderRepository implements IProductServiceOrderReposi
     });
   }
 
-  async deleteProductServiceOrder(id: string): Promise<void> {
-    await prisma.productServiceOrder.delete({
-      where: { id },
+  async deleteProductServiceOrder(productId: string, serviceOrderId: string): Promise<void> {
+    try {
+      await prisma.productServiceOrder.delete({
+        where: {
+          productId_serviceOrderId: {
+            productId,
+            serviceOrderId
+          }
+        }
     });
+    } catch (error) {
+      console.log(error)
+    }
+
   }
 
 }

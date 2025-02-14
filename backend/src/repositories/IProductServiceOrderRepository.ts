@@ -5,5 +5,5 @@ export interface IProductServiceOrderRepository {
   updateProductServiceOrder(id: string, data: ProductServiceOrder): Promise<void>;
   getProductServiceOrders(): Promise<ProductServiceOrder[]>;
   createProductServiceOrder(productServiceOrder: ProductServiceOrder): Promise<void>;
-  deleteProductServiceOrder(id: string): Promise<void>;
+  deleteProductServiceOrder(productId: string, serviceOrderId: string): Promise<void>;
 }

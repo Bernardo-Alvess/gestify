@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import IconOrders from '../public/assets/home-page/icons/orders/orders_icon.svg';
-import IconOrdersBlack from '../public/assets/home-page/icons/orders/orders_icon_b.svg';
 import IconProductsBlack from '../public/assets/home-page/icons/products/products_icon_b.svg';
 import IconProducts from '../public/assets/home-page/icons/products/products_icon.svg';
 import IconUsers from '../public/assets/home-page/icons/users/user_icon.svg';
@@ -11,7 +10,6 @@ import Sidebar from '../components/sidebar';
 import TopNav from '../components/top-nav';
 import Table from '../components/table';
 import Reminder from '../components/reminder';
-import SearchBox from '../components/search-box';
 import { getStats } from '../http/get-stats';
 import { useCookies } from 'react-cookie';
 
@@ -32,7 +30,13 @@ export const Home = () => {
 		return savedReminders ? JSON.parse(savedReminders) : [];
 	});
 
-	const column_table_1 = ['Código', 'Nome', 'Quantidade', 'Marca'];
+	const column_table_1 = [
+		'Código',
+		'Nome',
+		'Preço',
+		'Custo',
+		'Tipo Un',
+		'Quantidade',
 	const column_table_2 = ['Código', 'Data de entrega', 'Cliente', 'Produto'];
 
 	// const data_table_1 = [
@@ -66,12 +70,13 @@ export const Home = () => {
 	const fetchStats = useCallback(async () => {
 		const data = await getStats(cookies.jwt);
 		setStatistics(data);
-	}, []);
+	}, [cookies.jwt]);
 
 	useEffect(() => {
 		fetchStats();
 	}, [fetchStats]);
 
+	console.log(statistics.lowStockProducts);
 	return (
 		<div className="flex min-h-screen">
 			<Sidebar />
@@ -81,7 +86,6 @@ export const Home = () => {
 						<h1 className="text-2xl font-bold">Dashboard</h1>
 						<p className="text-sm text-gray-500">{today}</p>
 					</div>
-					<SearchBox />
 					<TopNav />
 				</header>
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -116,20 +120,12 @@ export const Home = () => {
 				</div>
 
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-4">
-					<div className="col-span-5">
+					<div className="col-span-10">
 						<Table
 							icon={IconProductsBlack}
 							title="Produtos acabando no estoque"
 							columns={column_table_1}
 							data={statistics.lowStockProducts}
-						/>
-					</div>
-					<div className="col-span-5">
-						<Table
-							icon={IconOrdersBlack}
-							title="Ordens para entrega"
-							columns={column_table_2}
-							data={data_table_2}
 						/>
 					</div>
 					<div className="col-span-2">

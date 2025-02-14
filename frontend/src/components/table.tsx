@@ -20,6 +20,7 @@ interface TableProps {
 	viewPage?: string;
 	editPage?: string;
 }
+
 const Table: React.FC<TableProps> = ({
 	icon,
 	title,
@@ -45,7 +46,7 @@ const Table: React.FC<TableProps> = ({
 
 	const editAction = (rowData: Record<string, any>) => {
 		if (actions?.editAction) {
-			assignRelationId(rowData.companyId)
+			assignRelationId(rowData.companyId);
 			actions.editAction();
 		}
 	};
@@ -53,6 +54,15 @@ const Table: React.FC<TableProps> = ({
 	function isDateString(dateString: string): boolean {
 		if (typeof dateString == 'number') return false;
 		return !isNaN(Date.parse(dateString));
+	}
+
+	function formatDateToUTC(dateString: string): string {
+		const date = new Date(dateString); // Cria o objeto Date
+		// Extraia o dia, mês e ano diretamente no UTC
+		const day = date.getUTCDate().toString().padStart(2, '0');
+		const month = (date.getUTCMonth() + 1).toString().padStart(2, '0'); // UTCMonth é 0-indexado
+		const year = date.getUTCFullYear();
+		return `${day}/${month}/${year}`;
 	}
 
 	return (
@@ -101,12 +111,10 @@ const Table: React.FC<TableProps> = ({
 									(cell: any, cellIndex: number) => (
 										<td
 											key={cellIndex}
-											className="px-4 py-2 text-xs font-medium border-none underline truncate text-center max-w-[80px] text-gray-700 decoration-purple-900"
+											className={`px-4 py-2 text-xs font-medium border-none underline truncate text-center max-w-[80px] text-gray-700 decoration-purple-900`}
 										>
 											{isDateString(cell)
-												? new Date(
-														cell
-												  ).toLocaleDateString('pt-br')
+												? formatDateToUTC(cell)
 												: cell
 												? cell
 												: 'N/A'}{' '}
@@ -117,6 +125,7 @@ const Table: React.FC<TableProps> = ({
 									<td className="px-4 py-2 text-xs font-medium border-none flex gap-1 items-center justify-center">
 										{actions.editAction ? (
 											<button
+												type="button"
 												className="size-7"
 												onClick={() => editAction(row)}
 											>
@@ -127,6 +136,7 @@ const Table: React.FC<TableProps> = ({
 											</button>
 										) : (
 											<button
+												type="button"
 												className="size-7"
 												onClick={() => edit(row)}
 											>
@@ -138,12 +148,14 @@ const Table: React.FC<TableProps> = ({
 										)}
 
 										<button
+											type="button"
 											className="size-7"
 											onClick={() => view(row)}
 										>
 											<img src={eyeIcon} alt="View" />
 										</button>
 										<button
+											type="button"
 											className="size-7"
 											onClick={() => del(row)}
 										>

@@ -4,10 +4,11 @@ import TopNav from '../../components/top-nav';
 import Sidebar from '../../components/sidebar';
 import { toast } from 'sonner';
 import { useParams } from 'react-router-dom';
-import { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { getUserById } from '../../http/get-user-by-id';
 import { updateUser } from '../../http/update-user';
 import { BackPageButton } from '../../components/back-page-button';
+import ReactInputMask from 'react-input-mask';
 
 export interface IUpdateClient {
 	name?: string | null | undefined;
@@ -108,7 +109,10 @@ const EditClient = () => {
 							onSubmit={handleSubmit}
 						>
 							<div className="flex flex-col gap-1">
-								<label className="font-semibold text-black" htmlFor="name">
+								<label
+									className="font-semibold text-black"
+									htmlFor="name"
+								>
 									Nome
 								</label>
 								<input
@@ -121,7 +125,10 @@ const EditClient = () => {
 								/>
 							</div>
 							<div className="flex flex-col gap-1">
-								<label className="font-semibold text-black" htmlFor="email">
+								<label
+									className="font-semibold text-black"
+									htmlFor="email"
+								>
 									Email
 								</label>
 								<input
@@ -134,10 +141,14 @@ const EditClient = () => {
 								/>
 							</div>
 							<div className="flex flex-col gap-1">
-								<label className="font-semibold" htmlFor="document">
+								<label
+									className="font-semibold"
+									htmlFor="document"
+								>
 									Documento
 								</label>
-								<input
+								<ReactInputMask
+									mask={'999.999.999-99'}
 									required
 									className="p-2 border border-gray-300 rounded-lg"
 									type="text"
@@ -147,7 +158,10 @@ const EditClient = () => {
 								/>
 							</div>
 							<div className="flex flex-col gap-1">
-								<label className="font-semibold" htmlFor="address">
+								<label
+									className="font-semibold"
+									htmlFor="address"
+								>
 									Endereço
 								</label>
 								<input
@@ -159,7 +173,10 @@ const EditClient = () => {
 								/>
 							</div>
 							<div className="flex flex-col gap-1">
-								<label className="font-semibold" htmlFor="neighborhood">
+								<label
+									className="font-semibold"
+									htmlFor="neighborhood"
+								>
 									Bairro
 								</label>
 								<input
@@ -183,10 +200,14 @@ const EditClient = () => {
 								/>
 							</div>
 							<div className="flex flex-col gap-1">
-								<label className="font-semibold" htmlFor="number">
+								<label
+									className="font-semibold"
+									htmlFor="number"
+								>
 									Telefone
 								</label>
-								<input
+								<ReactInputMask
+									mask={'(99) 9 9999-9999'}
 									className="p-2 border border-gray-300 rounded-lg"
 									type="text"
 									name="number"

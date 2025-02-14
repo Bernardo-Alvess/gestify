@@ -20,11 +20,7 @@ export const getProductForSo = async (token: string, id: string | undefined) => 
 
     const product = await response.json()
 
-    // const product = data.map(({ minQtd, ...resto }: Product) => ({
-    //     ...resto,
-    //     totalValue: (resto.price ?? 0) * (resto.qtd ?? 0)
-    // }));
-    // console.log(productsForOs)
+
 
     return { product }
 }

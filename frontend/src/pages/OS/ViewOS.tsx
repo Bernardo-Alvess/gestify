@@ -1,4 +1,3 @@
-import SearchBox from '../../components/search-box';
 import Sidebar from '../../components/sidebar';
 import TopNav from '../../components/top-nav';
 import IconProductsBlack from '../../public/assets/home-page/icons/products/products_icon_b.svg';
@@ -6,9 +5,12 @@ import { BackPageButton } from '../../components/back-page-button';
 import { useCallback, useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import Table from '../../components/table';
-import { getServiceOrdersById } from '../../http/get-service-order-by-id';
 import { useParams } from 'react-router-dom';
 import { getProductsForSo } from '../../http/get-products-for-so';
+import { getServiceOrdersById } from '../../http/get-service-order-by-id';
+import jsPDF from 'jspdf';
+import ReactInputMask from 'react-input-mask';
+
 
 interface IFormValues {
 	client: string;
@@ -20,6 +22,7 @@ interface IFormValues {
 	extras: string;
 	date: string;
 }
+
 export const ViewOS: React.FC = () => {
 	const { id } = useParams();
 	const today = new Date().toLocaleDateString('pt-BR');
@@ -49,7 +52,6 @@ export const ViewOS: React.FC = () => {
 		'Id Relação',
 		'Valor Total',
 	];
-	// const data_table_2 = Array(20).fill(['123', 'Placa Mãe', '2', 'Asus']);
 
 	const fetchServiceOrder = useCallback(async () => {
 		const data = await getServiceOrdersById(cookies.jwt, id);
@@ -71,12 +73,12 @@ export const ViewOS: React.FC = () => {
 
 		if (productsForOs !== undefined) {
 			setProducts(productsForOs);
-			// Calcula o valor total dos produtos
 			const total = productsForOs.reduce(
-				(sum: any, product: any) => sum + (product.totalValue || 0),
+				(sum: any, product: any) =>
+					sum + (product.totalValue * product.qtd || 0),
 				0
 			);
-			setTotalValue(total); // Atualiza o estado com o valor calculado
+			setTotalValue(total);
 		}
 	}, []);
 
@@ -84,6 +86,143 @@ export const ViewOS: React.FC = () => {
 		fetchServiceOrder();
 		fetchProductsForOs();
 	}, [fetchServiceOrder, fetchProductsForOs]);
+
+	const exportPDF = async () => {
+		const pdf = new jsPDF('p', 'mm', 'a4'); // Página A4
+
+		// Defina margens e espaçamento
+		const margin = 10;
+		let yPosition = 20;
+
+		// Título do documento
+		pdf.setFont('helvetica', 'bold');
+		pdf.setFontSize(16);
+		pdf.text('Ordem de Serviço - Visualização', margin, yPosition);
+		yPosition += 10;
+
+		pdf.setFont('helvetica', 'normal');
+		pdf.setFontSize(12);
+
+		// Campos organizados
+		const fields = [
+			{ label: 'Cliente', value: formValues.client },
+			{ label: 'Técnico Responsável', value: formValues.technician },
+			{ label: 'Telefone do cliente', value: formValues.number },
+			{ label: 'Data de abertura', value: formValues.date },
+			{ label: 'Descrição', value: formValues.description },
+			{ label: 'Defeito', value: formValues.defect },
+			{ label: 'Laudo técnico', value: formValues.report },
+			{ label: 'Observações', value: formValues.extras },
+		];
+
+		// Renderize os campos
+		fields.forEach((field) => {
+			if (yPosition > 280) {
+				pdf.addPage();
+				yPosition = margin;
+			}
+			pdf.setFont('helvetica', 'bold');
+			pdf.text(`${field.label}:`, margin, yPosition);
+			yPosition += 6;
+
+			pdf.setFont('helvetica', 'normal');
+			const textLines = pdf.splitTextToSize(field.value || '', 180); // Quebra de texto para largura máxima
+			textLines.forEach((line: string) => {
+				if (yPosition > 280) {
+					pdf.addPage();
+					yPosition = margin;
+				}
+				pdf.text(line, margin, yPosition);
+				yPosition += 6;
+			});
+			yPosition += 4; // Espaçamento entre campos
+		});
+
+		// Adicione os produtos como uma tabela
+		if (yPosition > 250) {
+			pdf.addPage();
+			yPosition = margin;
+		}
+
+		pdf.setFont('helvetica', 'bold');
+		pdf.text('Produtos Utilizados:', margin, yPosition);
+		yPosition += 10;
+
+		// Cabeçalho da tabela
+		const tableHeaders = [
+			'Nome',
+			'Quantidade',
+			'Preço Unitário',
+			'Preço Total',
+		];
+		const columnWidths = [40, 80, 30, 30];
+
+		pdf.setFont('helvetica', 'bold');
+		tableHeaders.forEach((header, index) => {
+			pdf.text(
+				header,
+				margin +
+					columnWidths.slice(0, index).reduce((a, b) => a + b, 0),
+				yPosition
+			);
+		});
+		yPosition += 6;
+
+		// Conteúdo da tabela
+		pdf.setFont('helvetica', 'normal');
+		products.forEach((product: any) => {
+			if (yPosition > 280) {
+				pdf.addPage();
+				yPosition = margin;
+			}
+			const productData = [
+				product.name,
+				product.qtd.toString(),
+				`R$ ${product.price}`,
+				`R$ ${product.totalValue}`,
+			];
+			productData.forEach((data, index) => {
+				pdf.text(
+					data,
+					margin +
+						columnWidths.slice(0, index).reduce((a, b) => a + b, 0),
+					yPosition
+				);
+			});
+			yPosition += 6;
+		});
+
+		yPosition += 10;
+
+		// Campo para observações manuscritas
+		if (yPosition > 260) {
+			pdf.addPage();
+			yPosition = margin;
+		}
+		pdf.setFont('helvetica', 'bold');
+		pdf.text('Observações (escrita à mão):', margin, yPosition);
+		yPosition += 10;
+
+		pdf.setDrawColor(0); // Cor da borda
+		pdf.rect(margin, yPosition, 180, 50); // Largura 180mm, Altura 50mm
+		yPosition += 60;
+
+		// Campo para assinatura do técnico responsável
+		if (yPosition > 260) {
+			pdf.addPage();
+			yPosition = margin;
+		}
+		pdf.setFont('helvetica', 'bold');
+		pdf.text('Assinatura do Técnico Responsável:', margin, yPosition);
+		yPosition += 20;
+
+		// Linha para assinatura
+		pdf.setDrawColor(0);
+		pdf.line(margin, yPosition, margin + 100, yPosition); // Linha horizontal para assinatura
+
+		// Salve o PDF
+		pdf.save('ordem-de-servico.pdf');
+	};
 
 	const getSelectClass = (): string => {
 		switch (selectedOption) {
@@ -105,7 +244,10 @@ export const ViewOS: React.FC = () => {
 	return (
 		<div className="flex h-screen overflow-hidden">
 			<Sidebar />
-			<main className="flex-1 p-5 bg-blue-200 space-y-3 h-screen overflow-y-auto">
+			<main
+				id="pdf-content"
+				className="flex-1 p-5 bg-blue-200 space-y-3 h-screen overflow-y-auto"
+			>
 				<header className="flex justify-between mb-5">
 					<div className="pt-16 md:pt-16 lg:pt-0">
 						<h1 className="text-2xl font-bold">
@@ -113,16 +255,13 @@ export const ViewOS: React.FC = () => {
 						</h1>
 						<p className="text-sm text-gray-500">{today}</p>
 					</div>
-					<SearchBox />
 					<TopNav />
 				</header>
-
 				<BackPageButton route="/orders" />
-
 				<div className="bg-white p-4 rounded-lg shadow-lg w-full">
 					<div className="flex justify-between mb-4">
 						<h2 className="font-bold text-lg mb-4">
-							Ordem de Serviço N°
+							Ordem de Serviço
 						</h2>
 						<span
 							className={`font-bold px-4 py-2 rounded-lg ${getSelectClass()}`}
@@ -144,6 +283,7 @@ export const ViewOS: React.FC = () => {
 								{
 									label: 'Telefone',
 									value: formValues.number,
+									mask: '(99) 9 9999-9999',
 								},
 								{
 									label: 'Data de abertura',
@@ -182,13 +322,20 @@ export const ViewOS: React.FC = () => {
 											rows={6}
 										/>
 									) : (
-										<p className="w-full p-2 border border-gray-300 rounded-lg max-h-12">
-											{field.value || '\u00A0'}
-										</p>
+										<ReactInputMask
+											className="w-full p-2 border border-gray-300 rounded-lg max-h-12"
+											mask={field?.mask || ''}
+											value={field.value || '\u00A0'}
+										></ReactInputMask>
 									)}
 								</div>
 							))}
-							<div>Valor Total: R${totalValue}</div>
+							<div className="pt-5">
+								<span className="font-semibold">
+									Valor Total:
+								</span>
+								<span> R${totalValue}</span>
+							</div>
 						</div>
 						<div className="col-span-4 border rounded-xl shadow-lg max-h-[500px] overflow-y-auto">
 							<Table
@@ -208,6 +355,14 @@ export const ViewOS: React.FC = () => {
 								}}
 							/>
 						</div>
+					</div>
+					<div className="w-full flex items-center justify-center">
+						<button
+							onClick={exportPDF}
+							className="bg-primary text-white rounded-lg self-center justify-self-center p-2 w-48"
+						>
+							Gerar PDF
+						</button>
 					</div>
 				</div>
 			</main>

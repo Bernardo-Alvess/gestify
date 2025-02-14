@@ -24,7 +24,6 @@ export const getProductsForSo = async (token: string, id: string | undefined) =>
         ...resto,
         totalValue: (resto.price ?? 0) * (resto.qtd ?? 0)
     }));
-    console.log(productsForOs)
 
     return { productsForOs }
 }

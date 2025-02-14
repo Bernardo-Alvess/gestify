@@ -41,8 +41,12 @@ export class UserController {
             const { id } = req.params
 
             const user = await this.repository.deleteUser(id)
-
-            res.status(200).json({ user })
+            if (user) {
+                res.json({ message: "Usuário deletado com sucesso!" });
+            }else{
+                res.json({ error: "Não foi possivel deletar!" });
+            }
+            
         } catch (e) {
             next(e)
         }
@@ -51,9 +55,9 @@ export class UserController {
     async updateUser(req: Request, res: Response, next: NextFunction) {
         try {
             const id = req.params.id
-            const { name, email, password, document, number, address } = req.body
+            const { name, email, password, document, number, neighborhood, city, address } = req.body
 
-            await this.repository.updateUser(id, { name, email, password, document, number, address })
+            await this.repository.updateUser(id, { name, email, password, document, number, neighborhood, city,  address })
 
             res.status(200).json({ updated: true })
         } catch (e) {
