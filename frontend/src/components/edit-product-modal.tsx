@@ -1,7 +1,6 @@
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { toast } from 'sonner';
-import { addProductToSo } from '../data/products-so';
 import { getProductForSo } from '../http/get-product-for-so';
 import { updateProductServiceOrder } from '../http/update-product-service-order';
 import { updateStockCount } from '../http/update-stock-count';
