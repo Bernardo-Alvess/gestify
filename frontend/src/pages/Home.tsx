@@ -37,6 +37,7 @@ export const Home = () => {
 		'Custo',
 		'Tipo Un',
 		'Quantidade',
+	]
 	const column_table_2 = ['Código', 'Data de entrega', 'Cliente', 'Produto'];
 
 	// const data_table_1 = [
