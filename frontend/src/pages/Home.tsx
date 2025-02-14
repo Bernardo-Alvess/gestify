@@ -38,19 +38,6 @@ export const Home = () => {
 		'Tipo Un',
 		'Quantidade',
 	]
-	const column_table_2 = ['Código', 'Data de entrega', 'Cliente', 'Produto'];
-
-	// const data_table_1 = [
-	// 	['123', 'Placa Mãe', '2', 'Asus'],
-	// 	['123', 'Placa Mãe', '2', 'Asus'],
-	// 	['123', 'Placa Mãe', '2', 'Asus'],
-	// 	['123', 'Placa Mãe', '2', 'Asus'],
-	// ];
-	const data_table_2 = [
-		['123', '23/09/2024', 'Lorenzo Cardoso', 'SSD'],
-		['123', '23/09/2024', 'Lorenzo Cardoso', 'SSD'],
-		['123', '23/09/2024', 'Lorenzo Cardoso', 'SSD'],
-	];
 
 	const addReminder = (reminder: Reminder) => {
 		setReminders((prev) => {
