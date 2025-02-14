@@ -13,7 +13,7 @@ interface AuthProviderProps {
 const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
-	const [cookies, setCookie, removeCookie] = useCookies(['jwt', 'id']);
+	const [cookies, , removeCookie] = useCookies(['jwt', 'id']);
 	const [isAuthenticated, setIsAuthenticated] = useState(!!cookies.jwt);
 
 	const login = () => {
