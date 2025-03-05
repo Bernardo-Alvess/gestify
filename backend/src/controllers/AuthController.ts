@@ -27,11 +27,11 @@ export class AuthController {
                     'jwt', token, {
                         path: '/',
                         maxAge: 3 * 24 * 60 * 60 * 1000,
-                        //secure: isProduction,
+                        // secure: isProduction,
                         secure: true,
                         httpOnly: false,
                         sameSite: 'none',
-                        domain: '.onrender.com'
+                        domain: cookieDomain
                 })
                 res.cookie(
                     'id', user.id, {
@@ -41,7 +41,7 @@ export class AuthController {
                         secure: true,
                         httpOnly: false,
                         sameSite: 'none',
-                        domain: '.onrender.com'
+                        domain: cookieDomain
                 })
                 return res.json({ logged: true, id: user.id })
             }
